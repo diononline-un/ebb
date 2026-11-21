@@ -1,0 +1,16 @@
+.git
+.github
+node_modules
+dist
+.env
+.env.*
+*.local
+docs
+e2e
+playwright-report
+test-results
+AGENTS.md
+CLAUDE.md
+DESIGN.md
+PROJECT_STATUS.md
+README.md

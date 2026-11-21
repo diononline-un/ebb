@@ -72,7 +72,7 @@ on-accent-dark: #0E2421
 color-dark: #E3B565 #F08C7E
 radius: 0 8 12 16 9999
 spacing: 0 4 8 12 16 24 32 48 64 96
-fonts: "Atkinson Hyperlegible Next" "Atkinson Hyperlegible Mono"
+fonts: "Atkinson Hyperlegible Next" "Atkinson Hyperlegible Mono" "Hiragino Sans" "Noto Sans CJK JP" "PingFang SC"
 -->
 
 **Kontrast (gemessen am 2026-11-21):**
@@ -251,3 +251,4 @@ Die Linie wird nirgends sonst verwendet. Sie ist das Wiedererkennungsmerkmal.
 | Version | Datum | Änderung | Warum |
 |---|---|---|---|
 | 1.0 | 2026-11-21 | erste Fassung, Richtung „Ebbe“ | Start vor dem ersten UI-Paket |
+| 1.0.1 | 2026-11-21 | CJK-Fallback-Schriften aus §3 in den Token-Block übernommen | Token-Block und §3 waren nicht synchron; der Checker hätte den Fallback als fremde Schrift gezählt (Bericht E1-P6) |

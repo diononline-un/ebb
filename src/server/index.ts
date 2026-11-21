@@ -6,8 +6,10 @@ const port = Number(process.env['PORT'] ?? 2040)
 const app = createApp()
 
 if (process.env['NODE_ENV'] === 'production') {
+  const serveIndex = serveStatic({ path: './dist/web/index.html' })
   app.use('*', serveStatic({ root: './dist/web' }))
-  app.get('*', serveStatic({ path: './dist/web/index.html' }))
+  // Unknown API paths must stay JSON 404s; only app routes fall back to the SPA shell.
+  app.get('*', (c, next) => (c.req.path.startsWith('/api/') ? next() : serveIndex(c, next)))
 }
 
 serve({ fetch: app.fetch, port }, (info) => {

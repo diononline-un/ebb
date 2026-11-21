@@ -3,6 +3,7 @@ import { CalendarDays, Menu as MenuIcon, NotebookPen, Plus, Sun, type LucideIcon
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { cn } from '../../lib/cn.ts'
+import { InstallHint } from './InstallHint.tsx'
 
 type NavEntry = {
   to: '/today' | '/dump' | '/plan' | '/more'
@@ -27,7 +28,8 @@ function NavLinks({ layout }: { layout: 'bar' | 'rail' }) {
           <Link
             to={entry.to}
             className={cn(
-              'motion-quick text-ink-3 hover:text-ink data-[status=active]:text-ink',
+              // Weight as a second cue next to colour, so the active tab never relies on colour alone (WCAG 1.4.1).
+              'motion-quick text-ink-3 hover:text-ink data-[status=active]:font-bold data-[status=active]:text-ink',
               layout === 'bar'
                 ? 'flex flex-1 flex-col items-center justify-center gap-1 py-2 text-meta'
                 : 'flex min-h-11 items-center gap-3 rounded-control px-3 text-body hover:bg-surface-2',
@@ -52,7 +54,10 @@ export function AppShell({ children }: { children: ReactNode }) {
         <NavLinks layout="rail" />
       </aside>
 
-      <main className="mx-auto w-full max-w-content px-4 pt-6 pb-24 lg:pt-12 lg:pb-12">{children}</main>
+      <main className="mx-auto w-full max-w-content px-4 pt-6 pb-24 lg:pt-12 lg:pb-12">
+        {children}
+        <InstallHint />
+      </main>
 
       {/* Quick capture: the sheet it opens arrives in E2-P6. */}
       <button

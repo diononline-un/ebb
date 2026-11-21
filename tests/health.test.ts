@@ -8,4 +8,11 @@ describe('GET /api/health', () => {
     expect(res.status).toBe(200)
     expect(await res.json()).toEqual({ ok: true })
   })
+
+  it('answers unknown API paths with a JSON 404', async () => {
+    const res = await createApp().request('/api/does-not-exist')
+
+    expect(res.status).toBe(404)
+    expect(await res.json()).toEqual({ code: 'not_found' })
+  })
 })

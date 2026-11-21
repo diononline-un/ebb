@@ -4,6 +4,7 @@ import { auth } from './auth.ts'
 import { withUser } from './db.ts'
 import { loadMe } from './domain/users/me.ts'
 import { env } from './env.ts'
+import { dayStartMiddleware } from './middleware/day-start.ts'
 import { requireUser, sessionMiddleware, userOf } from './middleware/session.ts'
 import { devRoutes } from './routes/dev.ts'
 import { settingsRoutes } from './routes/settings.ts'
@@ -20,6 +21,9 @@ export function createApp(): Hono<AppEnv> {
     if (c.req.path.startsWith('/api/auth/')) return next()
     return sessionMiddleware(c, next)
   })
+
+  // After the session: the first request of a user's day rolls unfinished work over (E2-P3).
+  app.use('/api/*', dayStartMiddleware)
 
   app.get('/api/me', requireUser, async (c) => {
     const user = userOf(c)

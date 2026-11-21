@@ -6,6 +6,8 @@ export type SessionUser = { id: string; email: string; name: string }
 export type AppEnv = {
   Variables: {
     user: SessionUser | null
+    /** The user's calendar day, set by middleware/day-start.ts for signed-in API requests. */
+    today: string | undefined
   }
 }
 

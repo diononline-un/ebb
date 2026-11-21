@@ -151,6 +151,8 @@ describe('PATCH /api/settings', () => {
 
   it('keeps onboarding state and last_day_started untouched', async () => {
     const user = await createUser()
+    // The first API request of a day sets last_day_started (E2-P3); measure after that has happened.
+    await as(user).get('/api/settings')
     const before = await withSystem(
       (tx) => tx`select onboarding_step, last_day_started from user_settings where user_id = ${user.id}`,
     )

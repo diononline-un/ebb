@@ -1,11 +1,12 @@
 import { serve } from '@hono/node-server'
 import { serveStatic } from '@hono/node-server/serve-static'
 import { createApp } from './app.ts'
+import { env } from './env.ts'
 
-const port = Number(process.env['PORT'] ?? 2040)
+const port = env.PORT
 const app = createApp()
 
-if (process.env['NODE_ENV'] === 'production') {
+if (env.NODE_ENV === 'production') {
   const serveIndex = serveStatic({ path: './dist/web/index.html' })
   app.use('*', serveStatic({ root: './dist/web' }))
   // Unknown API paths must stay JSON 404s; only app routes fall back to the SPA shell.

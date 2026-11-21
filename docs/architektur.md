@@ -130,6 +130,9 @@ Alle IDs der App-Tabellen sind `uuid` (`gen_random_uuid()`), Nutzer-IDs sind `te
   - `ebb_auth` hat nur Rechte auf die Better-Auth-Tabellen (Passwort-Hashes und Sessions sind für `ebb_app` unlesbar).
 - Verbindungen baut `env.ts` aus `PGHOST`, `PGPORT`, `EBB_DB_NAME` und je einem Passwort pro Rolle. Tests setzen nur `EBB_DB_NAME=ebb_test_<paket>`.
 - `withUser(userId, tx => …)`: Transaktion als `ebb_app` mit `set_config('app.user_id', userId, true)`. **Jede** Abfrage im Request-Pfad läuft darin.
+- **Zeilen kommen in camelCase zurück** (`transform: postgres.camel` in `db.ts`). SQL schreibt man weiter in snake_case: `select do_date from task` liefert `row.doDate`.
+- Die Owner-Verbindung gibt es nur in `scripts/` und `tests/harness.ts`, nie in `src/`. Testdatenbanken müssen mit `ebb_test` beginnen; `db:test-setup` und `resetDb()` verweigern alles andere.
+- Testdateien laufen nacheinander (`fileParallelism: false`), weil sie sich eine Datenbank teilen.
 - `withSystem(tx => …)`: Transaktion als `ebb_system`. Jeder Aufruf bekommt einen Kommentar, warum er plattformweit sein muss.
 - Hilfsfunktionen (SECURITY DEFINER, Schema `app`): `app.uid()` liefert `current_setting('app.user_id', true)`. `app.is_member(space_id)`.
 - Policies:

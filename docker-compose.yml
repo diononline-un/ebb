@@ -1,0 +1,27 @@
+# Development database. Ports come from the port ring (docs/architektur.md); bound to localhost only.
+name: ebb
+
+services:
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:2041:5432"
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ebb_dev}
+      EBB_OWNER_PASSWORD: ${EBB_OWNER_PASSWORD:-ebb_dev}
+      EBB_APP_PASSWORD: ${EBB_APP_PASSWORD:-ebb_dev}
+      EBB_SYSTEM_PASSWORD: ${EBB_SYSTEM_PASSWORD:-ebb_dev}
+      EBB_AUTH_PASSWORD: ${EBB_AUTH_PASSWORD:-ebb_dev}
+      EBB_DB_NAME: ${EBB_DEV_DB_NAME:-ebb}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  pgdata:

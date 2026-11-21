@@ -2,7 +2,16 @@ import postgres, { type TransactionSql } from 'postgres'
 import { dbUrl } from './env.ts'
 
 // Rows come back camelCase (postgres.camel); SQL text stays snake_case.
-const options = { max: 10, onnotice: () => {}, transform: postgres.camel } as const
+// `date` columns stay 'YYYY-MM-DD' strings: the default parser turns them into a UTC-midnight Date,
+// which serialises as a timestamp and shifts the day for anyone west of UTC.
+const options = {
+  max: 10,
+  onnotice: () => {},
+  transform: postgres.camel,
+  types: {
+    calendarDate: { to: 1082, from: [1082], serialize: (value: string) => value, parse: (value: string) => value },
+  },
+}
 
 /** Request role: no BYPASSRLS. Only ever used through withUser(). */
 const appSql = postgres(dbUrl('app'), options)

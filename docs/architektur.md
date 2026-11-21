@@ -131,6 +131,8 @@ Alle IDs der App-Tabellen sind `uuid` (`gen_random_uuid()`), Nutzer-IDs sind `te
 - Verbindungen baut `env.ts` aus `PGHOST`, `PGPORT`, `EBB_DB_NAME` und je einem Passwort pro Rolle. Tests setzen nur `EBB_DB_NAME=ebb_test_<paket>`.
 - `withUser(userId, tx => …)`: Transaktion als `ebb_app` mit `set_config('app.user_id', userId, true)`. **Jede** Abfrage im Request-Pfad läuft darin.
 - **Zeilen kommen in camelCase zurück** (`transform: postgres.camel` in `db.ts`). SQL schreibt man weiter in snake_case: `select do_date from task` liefert `row.doDate`.
+- **`date`-Spalten kommen als String `'YYYY-MM-DD'`** zurück (eigener Parser in `db.ts`), Zeitstempel als `Date`. Kalendertage nie in `Date` umwandeln; rechnen mit `src/shared/day.ts`.
+- Invarianten von `task` hält der Trigger `app.task_before_write` (Migration `0020`): Persönliche Aufgaben gehören immer dem Owner, geteilte nur Mitgliedern; `created_by`/`created_at` sind unveränderlich, `updated_at` setzt er selbst. Neue Spalten in E5 brauchen dort nichts.
 - Die Owner-Verbindung gibt es nur in `scripts/` und `tests/harness.ts`, nie in `src/`. Testdatenbanken müssen mit `ebb_test` beginnen; `db:test-setup` und `resetDb()` verweigern alles andere.
 - Testdateien laufen nacheinander (`fileParallelism: false`), weil sie sich eine Datenbank teilen.
 - `withSystem(tx => …)`: Transaktion als `ebb_system`. Jeder Aufruf bekommt einen Kommentar, warum er plattformweit sein muss.

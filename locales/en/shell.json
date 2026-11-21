@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "label": "Main",
+    "today": "Today",
+    "dump": "Dump",
+    "plan": "Plan",
+    "more": "More"
+  },
+  "quickCapture": "Add a thought",
+  "today": {
+    "title": "Today",
+    "empty": "Nothing here yet. Your day takes shape as soon as something lands in it."
+  },
+  "dump": {
+    "title": "Dump",
+    "empty": "Empty. Every thought you drop here waits until you decide what it is."
+  },
+  "plan": {
+    "title": "Plan",
+    "empty": "Nothing planned beyond today."
+  },
+  "more": {
+    "title": "More",
+    "empty": "Goals, habits, projects and settings arrive in the next steps."
+  }
+}

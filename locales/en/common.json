@@ -1,0 +1,11 @@
+{
+  "app": {
+    "name": "Ebb"
+  },
+  "actions": {
+    "cancel": "Cancel",
+    "close": "Close",
+    "save": "Save",
+    "delete": "Delete"
+  }
+}

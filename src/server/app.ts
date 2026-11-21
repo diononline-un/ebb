@@ -7,6 +7,7 @@ import { env } from './env.ts'
 import { dayStartMiddleware } from './middleware/day-start.ts'
 import { requireUser, sessionMiddleware, userOf } from './middleware/session.ts'
 import { devRoutes } from './routes/dev.ts'
+import { dumpRoutes } from './routes/dump.ts'
 import { settingsRoutes } from './routes/settings.ts'
 
 export function createApp(): Hono<AppEnv> {
@@ -31,6 +32,7 @@ export function createApp(): Hono<AppEnv> {
   })
 
   app.route('/api/settings', settingsRoutes)
+  app.route('/api/dump', dumpRoutes)
 
   if (env.APP_MODE === 'development') app.route('/api/dev', devRoutes)
 

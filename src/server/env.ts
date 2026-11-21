@@ -21,9 +21,16 @@ const schema = z.object({
   EBB_AUTH_PASSWORD: secret,
   // Only scripts/test-setup.ts uses it, to create test databases and missing roles.
   POSTGRES_SUPERUSER_URL: z.string().default('postgres://postgres:ebb_dev@127.0.0.1:2041/postgres'),
+  // Signs session cookies and tokens (Better Auth).
+  AUTH_SECRET: deployed ? z.string().min(32) : z.string().default('development-only-secret-do-not-deploy-0000'),
+  // Without SMTP: development captures mails (GET /api/dev/mails), selfhost skips verification.
+  SMTP_URL: z.string().optional(),
+  MAIL_FROM: z.string().default('Ebb <no-reply@localhost>'),
 })
 
-const parsed = schema.safeParse(raw)
+const parsed = schema
+  .refine((value) => value.APP_MODE !== 'production' || Boolean(value.SMTP_URL), { path: ['SMTP_URL'] })
+  .safeParse(raw)
 if (!parsed.success) {
   const fields = parsed.error.issues.map((issue) => issue.path.join('.')).join(', ')
   throw new Error(`Invalid or missing environment variables: ${fields}`)

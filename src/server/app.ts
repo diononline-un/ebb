@@ -1,8 +1,10 @@
 import { Hono } from 'hono'
 import type { AppEnv } from './app-env.ts'
 import { auth } from './auth.ts'
+import { withUser } from './db.ts'
+import { loadMe } from './domain/users/me.ts'
 import { env } from './env.ts'
-import { requireUser, sessionMiddleware } from './middleware/session.ts'
+import { requireUser, sessionMiddleware, userOf } from './middleware/session.ts'
 import { devRoutes } from './routes/dev.ts'
 
 export function createApp(): Hono<AppEnv> {
@@ -18,7 +20,10 @@ export function createApp(): Hono<AppEnv> {
     return sessionMiddleware(c, next)
   })
 
-  app.get('/api/me', requireUser, (c) => c.json(c.var.user))
+  app.get('/api/me', requireUser, async (c) => {
+    const user = userOf(c)
+    return c.json(await withUser(user.id, (tx) => loadMe(tx, user)))
+  })
 
   if (env.APP_MODE === 'development') app.route('/api/dev', devRoutes)
 

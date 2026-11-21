@@ -141,6 +141,10 @@ Alle IDs der App-Tabellen sind `uuid` (`gen_random_uuid()`), Nutzer-IDs sind `te
   - `space`: Lesen bei Mitgliedschaft. Ändern und Löschen nur durch den Owner.
   - Beitreten nur über `app.accept_invite(token)` (SECURITY DEFINER).
 - Jede neue Tabelle bekommt `ENABLE` + `FORCE ROW LEVEL SECURITY` in derselben Migration.
+- **Policies nennen immer ihre Rolle** (`CREATE POLICY … TO ebb_app`). FORCE bindet auch `ebb_owner`, und damit die SECURITY-DEFINER-Funktionen in `app`. Braucht eine solche Funktion eine Tabelle, bekommt diese eine eigene, kommentierte Policy `TO ebb_owner` (Beispiel: `member_read_by_definer` auf `space_member` in `0003`). Ohne sie gäbe es Rekursion (`is_member` → Policy → `is_member`) oder leere Ergebnisse.
+- Was `ebb_app` nie darf, wird zusätzlich per `REVOKE` entzogen. So gibt es einen Fehler statt stiller 0 Zeilen (z. B. `user_access` ändern, Mitgliedschaften anlegen). Spalten, die geändert werden dürfen, stehen als Spalten-`GRANT` (z. B. `space.name`).
+- Gemeinsame Bereiche entstehen nur über eine SECURITY-DEFINER-Funktion (E7-P1), weil die Owner-Mitgliedschaft im selben Schritt angelegt werden muss.
+- Tests prüfen Daten über `withSystem`, nicht über die Owner-Verbindung (die sieht auf geforceten Tabellen nichts).
 - Pflichttest pro Endpunkt (`tests/isolation.test.ts`): Nutzer B bekommt für jede ID von Nutzer A `404`, nie `403` (keine Existenz verraten) und nie Daten.
 
 ## Tagesbeginn und Rollover

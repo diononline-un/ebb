@@ -70,9 +70,9 @@ describe('sign-up, verification, sign-in', () => {
 
     const me = await app.request('/api/me', { headers: { cookie: cookieOf(signIn) } })
     expect(me.status).toBe(200)
-    const body = (await me.json()) as { id: string; email: string }
-    expect(body.email).toBe('mara@example.test')
-    expect(body.id).toMatch(/\S+/)
+    const body = (await me.json()) as { user: { id: string; email: string } }
+    expect(body.user.email).toBe('mara@example.test')
+    expect(body.user.id).toMatch(/\S+/)
   })
 
   it('calls bootstrapUser exactly once with the new user id', async () => {

@@ -11,9 +11,15 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DumpRouteImport } from './routes/dump'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as MoreRouteImport } from './routes/more'
 import { Route as PlanRouteImport } from './routes/plan'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as SignInRouteImport } from './routes/sign-in'
+import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as TodayRouteImport } from './routes/today'
+import { Route as VerifyEmailRouteImport } from './routes/verify-email'
+import { Route as SettingsSecurityRouteImport } from './routes/settings.security'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,6 +29,11 @@ const IndexRoute = IndexRouteImport.update({
 const DumpRoute = DumpRouteImport.update({
   id: '/dump',
   path: '/dump',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MoreRoute = MoreRouteImport.update({
@@ -35,48 +46,131 @@ const PlanRoute = PlanRouteImport.update({
   path: '/plan',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignInRoute = SignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignUpRoute = SignUpRouteImport.update({
+  id: '/sign-up',
+  path: '/sign-up',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TodayRoute = TodayRouteImport.update({
   id: '/today',
   path: '/today',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VerifyEmailRoute = VerifyEmailRouteImport.update({
+  id: '/verify-email',
+  path: '/verify-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsSecurityRoute = SettingsSecurityRouteImport.update({
+  id: '/settings/security',
+  path: '/settings/security',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dump': typeof DumpRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/more': typeof MoreRoute
   '/plan': typeof PlanRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
   '/today': typeof TodayRoute
+  '/verify-email': typeof VerifyEmailRoute
+  '/settings/security': typeof SettingsSecurityRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dump': typeof DumpRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/more': typeof MoreRoute
   '/plan': typeof PlanRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
   '/today': typeof TodayRoute
+  '/verify-email': typeof VerifyEmailRoute
+  '/settings/security': typeof SettingsSecurityRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dump': typeof DumpRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/more': typeof MoreRoute
   '/plan': typeof PlanRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
   '/today': typeof TodayRoute
+  '/verify-email': typeof VerifyEmailRoute
+  '/settings/security': typeof SettingsSecurityRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dump' | '/more' | '/plan' | '/today'
+  fullPaths:
+    | '/'
+    | '/dump'
+    | '/forgot-password'
+    | '/more'
+    | '/plan'
+    | '/reset-password'
+    | '/sign-in'
+    | '/sign-up'
+    | '/today'
+    | '/verify-email'
+    | '/settings/security'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dump' | '/more' | '/plan' | '/today'
-  id: '__root__' | '/' | '/dump' | '/more' | '/plan' | '/today'
+  to:
+    | '/'
+    | '/dump'
+    | '/forgot-password'
+    | '/more'
+    | '/plan'
+    | '/reset-password'
+    | '/sign-in'
+    | '/sign-up'
+    | '/today'
+    | '/verify-email'
+    | '/settings/security'
+  id:
+    | '__root__'
+    | '/'
+    | '/dump'
+    | '/forgot-password'
+    | '/more'
+    | '/plan'
+    | '/reset-password'
+    | '/sign-in'
+    | '/sign-up'
+    | '/today'
+    | '/verify-email'
+    | '/settings/security'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DumpRoute: typeof DumpRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   MoreRoute: typeof MoreRoute
   PlanRoute: typeof PlanRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  SignInRoute: typeof SignInRoute
+  SignUpRoute: typeof SignUpRoute
   TodayRoute: typeof TodayRoute
+  VerifyEmailRoute: typeof VerifyEmailRoute
+  SettingsSecurityRoute: typeof SettingsSecurityRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -95,6 +189,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DumpRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/more': {
       id: '/more'
       path: '/more'
@@ -109,11 +210,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlanRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sign-in': {
+      id: '/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof SignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sign-up': {
+      id: '/sign-up'
+      path: '/sign-up'
+      fullPath: '/sign-up'
+      preLoaderRoute: typeof SignUpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/today': {
       id: '/today'
       path: '/today'
       fullPath: '/today'
       preLoaderRoute: typeof TodayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/verify-email': {
+      id: '/verify-email'
+      path: '/verify-email'
+      fullPath: '/verify-email'
+      preLoaderRoute: typeof VerifyEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/security': {
+      id: '/settings/security'
+      path: '/settings/security'
+      fullPath: '/settings/security'
+      preLoaderRoute: typeof SettingsSecurityRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -122,9 +258,15 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DumpRoute: DumpRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   MoreRoute: MoreRoute,
   PlanRoute: PlanRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
+  SignInRoute: SignInRoute,
+  SignUpRoute: SignUpRoute,
   TodayRoute: TodayRoute,
+  VerifyEmailRoute: VerifyEmailRoute,
+  SettingsSecurityRoute: SettingsSecurityRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

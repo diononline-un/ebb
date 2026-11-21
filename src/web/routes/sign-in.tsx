@@ -11,7 +11,10 @@ export const Route = createFileRoute('/sign-in')({
   // Only same-app paths are allowed as a return target (no open redirect).
   validateSearch: (search: Record<string, unknown>): { next?: string } => {
     const next = search['next']
-    return typeof next === 'string' && next.startsWith('/') && !next.startsWith('//') ? { next } : {}
+    // Backslashes are refused too: browsers normalise "/\evil.example" to "//evil.example".
+    return typeof next === 'string' && next.startsWith('/') && !next.startsWith('//') && !next.includes('\\')
+      ? { next }
+      : {}
   },
   component: SignInPage,
 })

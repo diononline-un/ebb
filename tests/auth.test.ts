@@ -1,7 +1,12 @@
 import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
-const bootstrap = vi.hoisted(() => vi.fn(async (_userId: string) => {}))
-vi.mock('../src/server/domain/users/bootstrap.ts', () => ({ bootstrapUser: bootstrap }))
+// Counts calls but runs the real bootstrap, so signed-in users have settings like in production.
+const bootstrap = vi.hoisted(() => vi.fn<(userId: string) => Promise<void>>())
+vi.mock('../src/server/domain/users/bootstrap.ts', async (importActual) => {
+  const actual = await importActual<typeof import('../src/server/domain/users/bootstrap.ts')>()
+  bootstrap.mockImplementation(actual.bootstrapUser)
+  return { bootstrapUser: bootstrap }
+})
 
 const { createApp } = await import('../src/server/app.ts')
 const { appRoleSqlForTests, closeDb, withSystem } = await import('../src/server/db.ts')

@@ -54,8 +54,11 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise
   const response = await fetch(path, { ...init, headers, credentials: 'include' })
 
   if (response.status === 401) {
-    // Hard navigation on purpose: the sign-in route arrives in E1-P7 and transport stays router-free.
-    window.location.assign('/sign-in')
+    // Hard navigation keeps transport router-free; next brings the user back after signing in.
+    if (!window.location.pathname.startsWith('/sign-in')) {
+      const next = encodeURIComponent(window.location.pathname + window.location.search)
+      window.location.assign(`/sign-in?next=${next}`)
+    }
     throw new ApiError(401, 'unauthenticated')
   }
 

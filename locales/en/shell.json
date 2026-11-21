@@ -21,6 +21,7 @@
   },
   "more": {
     "title": "More",
-    "empty": "Goals, habits, projects and settings arrive in the next steps."
+    "security": "Sign-in and security",
+    "empty": "Goals, habits, projects and the other settings arrive in the next steps."
   }
 }

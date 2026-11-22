@@ -16,6 +16,7 @@ import {
   useSpaces,
 } from './api.ts'
 import { MembersList } from './MembersList.tsx'
+import { Unassigned } from './Unassigned.tsx'
 
 export type SpacePageProps = { spaceId: string }
 
@@ -190,6 +191,8 @@ export function SpacePage({ spaceId }: SpacePageProps) {
         <h2 className="text-heading">{t('peopleHeading')}</h2>
         <MembersList members={members.data ?? []} canRemove={isOwner} onRemove={(userId) => void kick(userId)} />
       </div>
+
+      {shared ? <Unassigned spaceId={space.id} /> : null}
 
       {shared && !isOwner ? (
         <Button type="button" variant="danger" onClick={() => void walkAway()}>

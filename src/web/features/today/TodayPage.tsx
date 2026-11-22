@@ -14,6 +14,7 @@ import { HabitsSection } from '../habits/HabitsToday.tsx'
 import { resetReady, useReset } from '../reset/api.ts'
 import { ritualSkipped, useSetEnergy } from '../ritual/api.ts'
 import { deleteTask, usePatchTask, useToday } from '../tasks/api.ts'
+import { SpaceNamesProvider } from '../tasks/TaskRow.tsx'
 import { TaskSheet } from '../tasks/TaskSheet.tsx'
 import { AnchorBlock } from './AnchorBlock.tsx'
 import { DoneToday } from './DoneToday.tsx'
@@ -284,28 +285,31 @@ export function TodayPage() {
         </Link>
       )}
 
-      <DndContext
-        sensors={sensors}
-        onDragEnd={dragEnd}
-        accessibility={{
-          screenReaderInstructions: { draggable: t('move.instructions') },
-          announcements: {
-            onDragStart: ({ active }) => t('move.onDragStart', { title: titleOf(String(active.id)) }),
-            onDragOver: ({ active, over }) =>
-              t('move.onDragOver', { title: titleOf(String(active.id)), zone: zoneOf(over ? String(over.id) : '') }),
-            onDragEnd: ({ active, over }) =>
-              t('move.onDragEnd', { title: titleOf(String(active.id)), zone: zoneOf(over ? String(over.id) : '') }),
-            onDragCancel: ({ active }) => t('move.onDragCancel', { title: titleOf(String(active.id)) }),
-          },
-        }}
-      >
-        <TaskList heading={t('inboxHeading')} tasks={view.slots.inbox} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
-        <TaskList heading={t('mustHeading')} tasks={view.must} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
-        <TaskList heading={t('block1')} slot="block1" tasks={view.slots.block1} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
-        <TaskList heading={t('block2')} slot="block2" tasks={view.slots.block2} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
-        <TaskList heading={t('block3')} slot="block3" tasks={view.slots.block3} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
-        <TaskList heading={t('block4')} slot="block4" tasks={view.slots.block4} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
-      </DndContext>
+      {/* The open tasks of the day name the shared space they come from. */}
+      <SpaceNamesProvider spaces={view.spaces}>
+        <DndContext
+          sensors={sensors}
+          onDragEnd={dragEnd}
+          accessibility={{
+            screenReaderInstructions: { draggable: t('move.instructions') },
+            announcements: {
+              onDragStart: ({ active }) => t('move.onDragStart', { title: titleOf(String(active.id)) }),
+              onDragOver: ({ active, over }) =>
+                t('move.onDragOver', { title: titleOf(String(active.id)), zone: zoneOf(over ? String(over.id) : '') }),
+              onDragEnd: ({ active, over }) =>
+                t('move.onDragEnd', { title: titleOf(String(active.id)), zone: zoneOf(over ? String(over.id) : '') }),
+              onDragCancel: ({ active }) => t('move.onDragCancel', { title: titleOf(String(active.id)) }),
+            },
+          }}
+        >
+          <TaskList heading={t('inboxHeading')} tasks={view.slots.inbox} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
+          <TaskList heading={t('mustHeading')} tasks={view.must} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
+          <TaskList heading={t('block1')} slot="block1" tasks={view.slots.block1} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
+          <TaskList heading={t('block2')} slot="block2" tasks={view.slots.block2} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
+          <TaskList heading={t('block3')} slot="block3" tasks={view.slots.block3} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
+          <TaskList heading={t('block4')} slot="block4" tasks={view.slots.block4} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
+        </DndContext>
+      </SpaceNamesProvider>
 
       <ErrandsLine count={view.errandsOpen} />
 

@@ -1,10 +1,19 @@
 import { Clock } from 'lucide-react'
-import type { CSSProperties, ReactNode } from 'react'
+import { createContext, useContext, useMemo, type CSSProperties, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { addDays, isBefore } from '../../../shared/day.ts'
-import type { Task } from '../../../shared/schemas/task.ts'
+import type { Task, TodayView } from '../../../shared/schemas/task.ts'
 import { Checkbox } from '../../ui/Checkbox.tsx'
 import { cn } from '../../lib/cn.ts'
+
+// A shared space names itself in the meta line of every row of today (E7). The names arrive in the
+// day's own payload, so they travel by context instead of through every list in between.
+const SpaceNames = createContext<ReadonlyMap<string, string>>(new Map())
+
+export function SpaceNamesProvider({ spaces, children }: { spaces: TodayView['spaces']; children: ReactNode }) {
+  const names = useMemo(() => new Map((spaces ?? []).map((space) => [space.id, space.name])), [spaces])
+  return <SpaceNames.Provider value={names}>{children}</SpaceNames.Provider>
+}
 
 export type TaskRowProps = {
   task: Task
@@ -34,6 +43,7 @@ export function TaskRow({
   dragging = false,
 }: TaskRowProps) {
   const { t, i18n } = useTranslation('tasks')
+  const spaceName = useContext(SpaceNames).get(task.spaceId) ?? null
   const done = task.status === 'done'
   const dueSoon = task.deadline !== null && !done && isBefore(task.deadline, addDays(today, 3))
   // Calendar days are read in UTC so the label never slips to the day before (E2 review note).
@@ -73,8 +83,9 @@ export function TaskRow({
             {task.title}
           </span>
         </span>
-        {dueSoon || (showPushCount && task.pushCount >= 2) ? (
+        {spaceName !== null || dueSoon || (showPushCount && task.pushCount >= 2) ? (
           <span className="flex items-center gap-1 text-meta text-ink-3">
+            {spaceName !== null ? <span>{spaceName}</span> : null}
             {dueSoon ? (
               <>
                 <Clock size={16} aria-hidden="true" className="text-warn" />

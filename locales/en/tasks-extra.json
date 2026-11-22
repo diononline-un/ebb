@@ -32,6 +32,13 @@
       "monthly": "Monthly on day {{day}}"
     }
   },
+  "space": {
+    "heading": "Space and assignee",
+    "label": "Space",
+    "assigneeLabel": "Responsible",
+    "nobody": "Nobody yet",
+    "take": "Take this one"
+  },
   "errors": {
     "subtask_too_deep": "Subtasks go one level deep.",
     "subtask_other_space": "The task above lives in another space.",

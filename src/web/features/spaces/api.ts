@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { InviteIssued, Member, Space } from '../../../shared/schemas/spaces.ts'
+import type { Task } from '../../../shared/schemas/task.ts'
 import { apiFetch } from '../../lib/api.ts'
 
 const SPACES_KEY = ['spaces'] as const
@@ -15,6 +16,14 @@ export function useMembers(spaceId: string | null) {
     queryKey: ['spaces', spaceId ?? '', 'members'] as const,
     queryFn: () => apiFetch<Member[]>(`/api/spaces/${spaceId}/members`),
     enabled: spaceId !== null,
+  })
+}
+
+/** The tasks of one space nobody took yet; they stand in no day until someone pulls them (PRD F13). */
+export function useUnassigned(spaceId: string) {
+  return useQuery({
+    queryKey: ['spaces', spaceId, 'tasks', 'unassigned'] as const,
+    queryFn: () => apiFetch<Task[]>(`/api/spaces/${spaceId}/tasks?filter=unassigned`),
   })
 }
 

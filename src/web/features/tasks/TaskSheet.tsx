@@ -10,7 +10,9 @@ import { Sheet } from '../../ui/Sheet.tsx'
 import { Textarea } from '../../ui/Textarea.tsx'
 
 import type { DeleteHandler, PatchHandler, TaskPatcher, TaskResult, TaskStatus } from './api.ts'
+import { AssigneeField } from './AssigneeField.tsx'
 import { RecurrenceField } from './RecurrenceField.tsx'
+import { SpaceField } from './SpaceField.tsx'
 import { Subtasks } from './Subtasks.tsx'
 
 const STATUSES: TaskStatus[] = ['todo', 'doing', 'waiting', 'done', 'skipped']
@@ -255,6 +257,8 @@ export function TaskSheet({ task, onOpenChange, onPatch, onDelete }: TaskSheetPr
             <>
               <Subtasks task={task} />
               <RecurrenceField task={task} />
+              <SpaceField task={task} />
+              <AssigneeField task={task} />
             </>
           }
         />

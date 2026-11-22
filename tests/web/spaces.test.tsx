@@ -61,6 +61,7 @@ vi.mock('@tanstack/react-router', () => ({
 vi.mock('../../src/web/features/spaces/api.ts', () => ({
   useSpaces: () => ({ data: state.spaces, isPending: false }),
   useMembers: () => ({ data: state.members, isPending: false }),
+  useUnassigned: () => ({ data: [], isPending: false }),
   useCreateSpace: () => ({ mutateAsync: spies.create }),
   useRenameSpace: () => ({ mutateAsync: spies.rename }),
   useCreateInvite: () => ({ mutateAsync: spies.invite }),

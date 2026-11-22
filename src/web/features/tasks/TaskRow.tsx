@@ -1,4 +1,5 @@
 import { Clock } from 'lucide-react'
+import type { CSSProperties, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { addDays, isBefore } from '../../../shared/day.ts'
 import type { Task } from '../../../shared/schemas/task.ts'
@@ -13,10 +14,25 @@ export type TaskRowProps = {
   onOpen: (task: Task) => void
   /** Only Plan and the weekly reset show "↻ 3×" (DESIGN §6); Today never does. */
   showPushCount?: boolean
+  /** Drag handle and move menu (E2-P8); the row stays a plain list item without them. */
+  trailing?: ReactNode
+  rowRef?: (node: HTMLLIElement | null) => void
+  rowStyle?: CSSProperties
+  dragging?: boolean
 }
 
 /** DESIGN §6: checkbox, optional must dot, title, then a quiet meta line. */
-export function TaskRow({ task, today, onToggle, onOpen, showPushCount = false }: TaskRowProps) {
+export function TaskRow({
+  task,
+  today,
+  onToggle,
+  onOpen,
+  showPushCount = false,
+  trailing,
+  rowRef,
+  rowStyle,
+  dragging = false,
+}: TaskRowProps) {
   const { t, i18n } = useTranslation('tasks')
   const done = task.status === 'done'
   const dueSoon = task.deadline !== null && !done && isBefore(task.deadline, addDays(today, 3))
@@ -28,7 +44,14 @@ export function TaskRow({ task, today, onToggle, onOpen, showPushCount = false }
     : ''
 
   return (
-    <li className="flex min-h-13 items-start gap-1 border-b border-line py-1 last:border-b-0">
+    <li
+      ref={rowRef}
+      style={rowStyle}
+      className={cn(
+        'flex min-h-13 items-start gap-1 border-b border-line py-1 last:border-b-0',
+        dragging && 'opacity-60',
+      )}
+    >
       <Checkbox
         checked={done}
         onCheckedChange={() => onToggle(task)}
@@ -62,6 +85,7 @@ export function TaskRow({ task, today, onToggle, onOpen, showPushCount = false }
           </span>
         ) : null}
       </button>
+      {trailing}
     </li>
   )
 }

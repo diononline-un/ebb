@@ -1,3 +1,5 @@
+import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core'
+import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,8 +12,31 @@ import { AnchorBlock } from './AnchorBlock.tsx'
 import { DoneToday } from './DoneToday.tsx'
 import { ErrandsLine } from './ErrandsLine.tsx'
 import { RolloverNote } from './RolloverNote.tsx'
+import type { MoveTarget } from './MoveMenu.tsx'
 import { TaskList } from './TaskList.tsx'
 import { UndoBar } from './UndoBar.tsx'
+
+type Bucket = 'inbox' | 'block1' | 'block2' | 'block3' | 'block4'
+
+/** Moves a task between the cached slot lists so a drag or a menu pick lands before the server answers. */
+function moveInView(view: TodayView, id: string, slot: Bucket): TodayView {
+  const isIn = (task: Task) => task.id !== id
+  const moved =
+    [...view.slots.inbox, ...view.slots.block1, ...view.slots.block2, ...view.slots.block3, ...view.slots.block4].find(
+      (task) => task.id === id,
+    ) ?? null
+  if (!moved) return view
+
+  const slots = {
+    inbox: view.slots.inbox.filter(isIn),
+    block1: view.slots.block1.filter(isIn),
+    block2: view.slots.block2.filter(isIn),
+    block3: view.slots.block3.filter(isIn),
+    block4: view.slots.block4.filter(isIn),
+  }
+  slots[slot] = [...slots[slot], { ...moved, slot }]
+  return { ...view, slots }
+}
 
 function findTask(view: TodayView, id: string | null): Task | null {
   if (!id) return null
@@ -36,6 +61,12 @@ export function TodayPage() {
   const queryClient = useQueryClient()
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [undo, setUndo] = useState<Task | null>(null)
+  // Mouse drags start right away; a finger has to hold the grip for 250 ms first (E2-P8).
+  const sensors = useSensors(
+    useSensor(MouseSensor, { activationConstraint: { distance: 4 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 8 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
+  )
 
   useEffect(() => {
     if (!undo) return
@@ -91,6 +122,50 @@ export function TodayPage() {
   }
 
   const patch = (id: string, body: TaskPatch) => patchTask.mutateAsync({ id, patch: body })
+
+  const move = (id: string, target: MoveTarget) => {
+    const body: TaskPatch = 'doDate' in target ? { doDate: target.doDate } : { slot: target.slot, ...(target.position === undefined ? {} : { position: target.position }) }
+    if ('slot' in target) {
+      const cached = queryClient.getQueryData<TodayView>(['today'])
+      if (cached && target.slot !== 'errands') queryClient.setQueryData(['today'], moveInView(cached, id, target.slot))
+    }
+    void patchTask.mutateAsync({ id, patch: body }).catch(() => {
+      // The cache falls back in usePatchTask's onError and the refetch settles the final order.
+    })
+  }
+
+  const locate = (taskId: string): { slot: Bucket; index: number } | null => {
+    const lists: [Bucket, Task[]][] = [
+      ['inbox', view.slots.inbox],
+      ['block1', view.slots.block1],
+      ['block2', view.slots.block2],
+      ['block3', view.slots.block3],
+      ['block4', view.slots.block4],
+    ]
+    for (const [slot, tasks] of lists) {
+      const index = tasks.findIndex((task) => task.id === taskId)
+      if (index >= 0) return { slot, index }
+    }
+    return null
+  }
+
+  const taskById = (id: string): Task | null =>
+    [...view.must, ...view.slots.inbox, ...view.slots.block1, ...view.slots.block2, ...view.slots.block3, ...view.slots.block4].find(
+      (task) => task.id === id,
+    ) ?? null
+  const titleOf = (id: string) => taskById(id)?.title ?? ''
+  const zoneOf = (id: string) => {
+    const bucket = locate(id)
+    return bucket ? t(bucket.slot) : t('inboxHeading')
+  }
+
+  const dragEnd = (event: DragEndEvent) => {
+    const active = locate(String(event.active.id))
+    const over = event.over ? locate(String(event.over.id)) : null
+    if (!active || !over) return
+    if (active.slot === over.slot && active.index === over.index) return
+    move(String(event.active.id), { slot: over.slot, position: over.index })
+  }
   const remove = async (id: string) => {
     await deleteTask(id)
     await queryClient.invalidateQueries({ queryKey: ['today'] })
@@ -118,11 +193,28 @@ export function TodayPage() {
 
       <TideLine animateIn={anchor !== null} />
 
-      <TaskList heading={t('mustHeading')} tasks={view.must} today={view.date} onToggle={toggle} onOpen={open} />
-      <TaskList heading={t('block1')} tasks={view.slots.block1} today={view.date} onToggle={toggle} onOpen={open} />
-      <TaskList heading={t('block2')} tasks={view.slots.block2} today={view.date} onToggle={toggle} onOpen={open} />
-      <TaskList heading={t('block3')} tasks={view.slots.block3} today={view.date} onToggle={toggle} onOpen={open} />
-      <TaskList heading={t('block4')} tasks={view.slots.block4} today={view.date} onToggle={toggle} onOpen={open} />
+      <DndContext
+        sensors={sensors}
+        onDragEnd={dragEnd}
+        accessibility={{
+          screenReaderInstructions: { draggable: t('move.instructions') },
+          announcements: {
+            onDragStart: ({ active }) => t('move.onDragStart', { title: titleOf(String(active.id)) }),
+            onDragOver: ({ active, over }) =>
+              t('move.onDragOver', { title: titleOf(String(active.id)), zone: zoneOf(over ? String(over.id) : '') }),
+            onDragEnd: ({ active, over }) =>
+              t('move.onDragEnd', { title: titleOf(String(active.id)), zone: zoneOf(over ? String(over.id) : '') }),
+            onDragCancel: ({ active }) => t('move.onDragCancel', { title: titleOf(String(active.id)) }),
+          },
+        }}
+      >
+        <TaskList heading={t('inboxHeading')} tasks={view.slots.inbox} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
+          <TaskList heading={t('mustHeading')} tasks={view.must} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
+        <TaskList heading={t('block1')} tasks={view.slots.block1} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
+        <TaskList heading={t('block2')} tasks={view.slots.block2} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
+        <TaskList heading={t('block3')} tasks={view.slots.block3} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
+        <TaskList heading={t('block4')} tasks={view.slots.block4} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
+      </DndContext>
 
       <ErrandsLine count={view.errandsOpen} />
 

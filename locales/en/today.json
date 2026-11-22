@@ -28,5 +28,22 @@
   "doneHeading_other": "Done today ({{count}})",
   "undoMessage": "Marked as done.",
   "undoAction": "Undo",
-  "undoClose": "Hide this"
+  "undoClose": "Hide this",
+  "move": {
+    "menuLabel": "Move {{title}}",
+    "grab": "Move {{title}} with drag and drop",
+    "inbox": "To the inbox",
+    "errands": "To errands",
+    "anotherDay": "To another day…",
+    "pickDay": "Which day?",
+    "confirmDay": "Move it",
+    "instructions": "Press space or enter to pick up a task, use the arrow keys to choose where it goes, then space or enter to drop it. Escape cancels.",
+    "onDragStart": "Picked up {{title}}.",
+    "onDragOver": "{{title}} is over {{zone}}.",
+    "onDragEnd": "{{title}} is now in {{zone}}.",
+    "onDragCancel": "Moving {{title}} was cancelled.",
+    "failed": "That did not work. The task stayed where it was.",
+    "pickDayLabel": "Date"
+  },
+  "inboxHeading": "Inbox"
 }

@@ -1,0 +1,30 @@
+{
+  "title": "Dump",
+  "composer": {
+    "label": "Add a thought",
+    "placeholder": "What is on your mind?",
+    "hint": "Enter keeps it. Shift and Enter starts a new line.",
+    "submit": "Keep it"
+  },
+  "toTask": "→ Task",
+  "archive": "Archive",
+  "openTask": "Open task",
+  "waiting": "Waiting for connection",
+  "pending_one": "{{count}} thought waiting for connection",
+  "pending_other": "{{count}} thoughts waiting for connection",
+  "prompts": {
+    "title": "Nothing here yet. A thought only has to leave your head, it does not have to make sense.",
+    "prompt1": "What keeps coming back today?",
+    "prompt2": "What did you promise someone?",
+    "prompt3": "What have you carried around for a while?"
+  },
+  "quickCapture": {
+    "title": "Add a thought",
+    "placeholder": "What is on your mind?",
+    "submit": "Keep it"
+  },
+  "errors": {
+    "tooLong": "A thought fits in 500 characters. Cut it down and try again.",
+    "generic": "That did not work. Your thought is still in the field."
+  }
+}

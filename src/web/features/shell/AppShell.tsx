@@ -1,8 +1,9 @@
 import { Link } from '@tanstack/react-router'
 import { CalendarDays, Menu as MenuIcon, NotebookPen, Plus, Sun, type LucideIcon } from 'lucide-react'
-import type { ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { cn } from '../../lib/cn.ts'
+import { QuickCapture } from '../dump/QuickCapture.tsx'
 import { InstallHint } from './InstallHint.tsx'
 
 type NavEntry = {
@@ -46,6 +47,7 @@ function NavLinks({ layout }: { layout: 'bar' | 'rail' }) {
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useTranslation('shell')
+  const [capturing, setCapturing] = useState(false)
 
   return (
     <div className="min-h-dvh lg:flex">
@@ -59,14 +61,15 @@ export function AppShell({ children }: { children: ReactNode }) {
         <InstallHint />
       </main>
 
-      {/* Quick capture: the sheet it opens arrives in E2-P6. */}
       <button
         type="button"
         aria-label={t('quickCapture')}
+        onClick={() => setCapturing(true)}
         className="fixed right-4 bottom-24 flex size-14 items-center justify-center rounded-pill bg-signal text-signal-ink shadow-float motion-quick hover:bg-signal-hover lg:hidden"
       >
         <Plus size={24} aria-hidden="true" />
       </button>
+      <QuickCapture open={capturing} onOpenChange={setCapturing} />
 
       <nav
         aria-label={t('nav.label')}

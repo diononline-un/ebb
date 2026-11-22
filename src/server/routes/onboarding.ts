@@ -3,6 +3,7 @@ import { z } from 'zod'
 import type { AppEnv } from '../app-env.ts'
 import { withUser } from '../db.ts'
 import { finishOnboarding, saveOnboardingStep } from '../domain/onboarding/onboarding.ts'
+import { todayOf } from '../middleware/day-start.ts'
 import { requireUser, userOf } from '../middleware/session.ts'
 import { fieldErrors, invalidBody, readJson } from './http.ts'
 
@@ -19,6 +20,6 @@ export const onboardingRoutes = new Hono<AppEnv>()
     return c.json(await withUser(userOf(c).id, (tx) => saveOnboardingStep(tx, parsed.data.step)))
   })
   .post('/done', requireUser, async (c) => {
-    const done = await withUser(userOf(c).id, (tx) => finishOnboarding(tx))
+    const done = await withUser(userOf(c).id, (tx) => finishOnboarding(tx, todayOf(c)))
     return c.json({ onboardingDoneAt: done.onboardingDoneAt.toISOString() })
   })

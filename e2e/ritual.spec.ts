@@ -3,13 +3,17 @@ import { expect, test, type Page } from '@playwright/test'
 const PASSWORD = 'correct horse battery'
 const VERIFICATION_SUBJECT = 'Confirm your email for Ebb'
 
-// Signing up is limited to five a minute per client IP, and the dev server runs without a proxy
-// header of its own, so every spec would share one bucket. A stated client keeps this file out of
-// the others' way, the same trick tests/harness.ts uses with its own addresses.
-test.use({ extraHTTPHeaders: { 'x-forwarded-for': '10.77.0.1' } })
-
 function uniqueEmail(prefix: string): string {
   return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@example.test`
+}
+
+/**
+ * Finishes the onboarding from inside the page: an in-page fetch keeps the session cookie in the
+ * browser's own jar, while page.request can rotate it under a hard navigation.
+ */
+async function markOnboarded(page: Page): Promise<void> {
+  const ok = await page.evaluate(async () => (await fetch('/api/onboarding/done', { method: 'POST' })).ok)
+  expect(ok).toBe(true)
 }
 
 async function register(page: Page, email: string): Promise<void> {
@@ -25,8 +29,22 @@ async function register(page: Page, email: string): Promise<void> {
   const link = /https?:\/\/\S+/.exec(mail?.text ?? '')?.[0]
   expect(link).toBeTruthy()
 
-  // A fresh day opens the morning ritual instead of the board (E3-P2).
+  // The onboarding owns the first visit (E4) and finishes the first day's ritual with it, so the
+  // next day is the one that opens the ritual again.
   await page.goto(link as string)
+  await expect(page).toHaveURL(/\/welcome$/)
+  await markOnboarded(page)
+  // A day later the ritual opens again; the clock runs inside the page for the same cookie reason.
+  const clock = await page.evaluate(async () => {
+    const res = await fetch('/api/dev/clock', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ offsetMinutes: 24 * 60 }),
+    })
+    return res.ok
+  })
+  expect(clock).toBe(true)
+  await page.goto('/today')
   await expect(page).toHaveURL(/\/ritual$/)
 }
 

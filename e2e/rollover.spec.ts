@@ -6,6 +6,15 @@ function uniqueEmail(prefix: string): string {
   return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@example.test`
 }
 
+/**
+ * Finishes the onboarding from inside the page: an in-page fetch keeps the session cookie in the
+ * browser's own jar, while page.request can rotate it under a hard navigation.
+ */
+async function markOnboarded(page: Page): Promise<void> {
+  const ok = await page.evaluate(async () => (await fetch('/api/onboarding/done', { method: 'POST' })).ok)
+  expect(ok).toBe(true)
+}
+
 async function register(page: Page, email: string): Promise<void> {
   await page.goto('/sign-up')
   await page.getByLabel('Email').fill(email)
@@ -19,7 +28,10 @@ async function register(page: Page, email: string): Promise<void> {
   expect(link).toBeTruthy()
 
   await page.goto(link as string)
-  await leaveRitual(page)
+  // The onboarding owns the first visit (E4) and counts as the first ritual; these flows start after it.
+  await markOnboarded(page)
+  await page.goto('/today')
+  await expect(page).toHaveURL(/\/today$/)
 }
 
 /** A fresh day opens the morning ritual (E3-P2); these flows live after it. */

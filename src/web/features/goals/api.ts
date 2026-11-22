@@ -20,7 +20,7 @@ export async function deleteGoal(id: string): Promise<void> {
   await apiFetch(`/api/goals/${id}`, { method: 'DELETE' })
 }
 
-function useGoalWrite<TInput>(write: (input: TInput) => Promise<unknown>) {
+function useGoalWrite<TInput, TResult = unknown>(write: (input: TInput) => Promise<TResult>) {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: write,

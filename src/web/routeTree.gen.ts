@@ -24,6 +24,7 @@ import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as TodayRouteImport } from './routes/today'
 import { Route as TriageRouteImport } from './routes/triage'
 import { Route as VerifyEmailRouteImport } from './routes/verify-email'
+import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as GoalsGoalIdRouteImport } from './routes/goals_.$goalId'
 import { Route as SettingsSecurityRouteImport } from './routes/settings.security'
 
@@ -102,6 +103,11 @@ const VerifyEmailRoute = VerifyEmailRouteImport.update({
   path: '/verify-email',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WelcomeRoute = WelcomeRouteImport.update({
+  id: '/welcome',
+  path: '/welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GoalsGoalIdRoute = GoalsGoalIdRouteImport.update({
   id: '/goals_/$goalId',
   path: '/goals/$goalId',
@@ -129,6 +135,7 @@ export interface FileRoutesByFullPath {
   '/today': typeof TodayRoute
   '/triage': typeof TriageRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/welcome': typeof WelcomeRoute
   '/goals/$goalId': typeof GoalsGoalIdRoute
   '/settings/security': typeof SettingsSecurityRoute
 }
@@ -148,6 +155,7 @@ export interface FileRoutesByTo {
   '/today': typeof TodayRoute
   '/triage': typeof TriageRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/welcome': typeof WelcomeRoute
   '/goals/$goalId': typeof GoalsGoalIdRoute
   '/settings/security': typeof SettingsSecurityRoute
 }
@@ -168,6 +176,7 @@ export interface FileRoutesById {
   '/today': typeof TodayRoute
   '/triage': typeof TriageRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/welcome': typeof WelcomeRoute
   '/goals_/$goalId': typeof GoalsGoalIdRoute
   '/settings/security': typeof SettingsSecurityRoute
 }
@@ -189,6 +198,7 @@ export interface FileRouteTypes {
     | '/today'
     | '/triage'
     | '/verify-email'
+    | '/welcome'
     | '/goals/$goalId'
     | '/settings/security'
   fileRoutesByTo: FileRoutesByTo
@@ -208,6 +218,7 @@ export interface FileRouteTypes {
     | '/today'
     | '/triage'
     | '/verify-email'
+    | '/welcome'
     | '/goals/$goalId'
     | '/settings/security'
   id:
@@ -227,6 +238,7 @@ export interface FileRouteTypes {
     | '/today'
     | '/triage'
     | '/verify-email'
+    | '/welcome'
     | '/goals_/$goalId'
     | '/settings/security'
   fileRoutesById: FileRoutesById
@@ -247,6 +259,7 @@ export interface RootRouteChildren {
   TodayRoute: typeof TodayRoute
   TriageRoute: typeof TriageRoute
   VerifyEmailRoute: typeof VerifyEmailRoute
+  WelcomeRoute: typeof WelcomeRoute
   GoalsGoalIdRoute: typeof GoalsGoalIdRoute
   SettingsSecurityRoute: typeof SettingsSecurityRoute
 }
@@ -358,6 +371,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VerifyEmailRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/welcome': {
+      id: '/welcome'
+      path: '/welcome'
+      fullPath: '/welcome'
+      preLoaderRoute: typeof WelcomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/goals_/$goalId': {
       id: '/goals_/$goalId'
       path: '/goals/$goalId'
@@ -391,6 +411,7 @@ const rootRouteChildren: RootRouteChildren = {
   TodayRoute: TodayRoute,
   TriageRoute: TriageRoute,
   VerifyEmailRoute: VerifyEmailRoute,
+  WelcomeRoute: WelcomeRoute,
   GoalsGoalIdRoute: GoalsGoalIdRoute,
   SettingsSecurityRoute: SettingsSecurityRoute,
 }

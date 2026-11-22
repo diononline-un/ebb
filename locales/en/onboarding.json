@@ -1,0 +1,56 @@
+{
+  "progressLabel": "Onboarding progress",
+  "loading": "One moment.",
+  "welcome": {
+    "title": "Let's set up your day.",
+    "text": "Nine short steps, and none of them is binding. Everything stays changeable later.",
+    "timezoneNote": "Your days start in {{timezone}}.",
+    "start": "Start"
+  },
+  "goals": {
+    "question": "What are you doing this for?",
+    "hint": "One goal is enough. Three is plenty.",
+    "suggestionsLabel": "Examples",
+    "ownLabel": "Or your own",
+    "ownPlaceholder": "A goal in a few words",
+    "continue": "Continue",
+    "skip": "Skip",
+    "limit": "Three goals are enough to start."
+  },
+  "habits": {
+    "question": "What would you like to do regularly?",
+    "hint": "Two habits are enough for the start, more can come later.",
+    "suggestionsLabel": "Suggestions",
+    "ownLabel": "Or your own",
+    "ownPlaceholder": "A habit in a few words",
+    "continue": "Continue",
+    "skip": "Skip",
+    "limit": "Two habits are enough for now."
+  },
+  "dump": {
+    "question": "What must not slip your mind?",
+    "continue": "Continue",
+    "skip": "Skip"
+  },
+  "toTasks": {
+    "question": "Which of these is a task?",
+    "continue": "Continue",
+    "skip": "Skip",
+    "empty": "Nothing waiting. That is fine."
+  },
+  "rituals": {
+    "question": "When should the day start?",
+    "morningLabel": "Morning ritual",
+    "resetDayLabel": "Weekly reset on",
+    "resetTimeLabel": "at",
+    "iosHint": "On the iPhone, put the app on the home screen first. Only then can reminders reach you.",
+    "reminderHint": "Reminders stay quiet at night. The weekly reset looks back on {{day}}.",
+    "finish": "Done",
+    "skip": "Skip"
+  },
+  "goalSuggestions": ["Be calmer at work", "Have the evenings for myself", "Finish what I start"],
+  "habitSuggestions": ["Ten minutes of tidying", "A page before bed", "A walk after lunch"],
+  "errors": {
+    "generic": "That did not save. Check the connection and try again."
+  }
+}

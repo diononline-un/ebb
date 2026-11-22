@@ -8,6 +8,7 @@ import type {
   HabitPatch,
   HabitsToday,
   HabitToday,
+  HabitWithWeek,
 } from '../../../shared/schemas/habits.ts'
 import type { Tx } from '../../db.ts'
 
@@ -56,12 +57,41 @@ function toHabit(row: HabitRow): Habit {
   }
 }
 
-/** Active habits first, then the archived ones; each group in its own order. */
-export async function listHabits(tx: Tx): Promise<Habit[]> {
+/** The week ends on the weekly reset day, so it starts the day after it (same rule as E6). */
+async function weekStartFor(tx: Tx, today: string): Promise<string> {
+  const [settings] = await tx<{ weeklyResetDow: number }[]>`
+    select weekly_reset_dow from user_settings where user_id = app.uid()`
+  return weekStart(today, ((settings?.weeklyResetDow ?? 0) + 1) % 7)
+}
+
+/** The logged days of that week per habit. */
+async function logsOfWeek(tx: Tx, weekStartDate: string): Promise<Map<string, string[]>> {
+  const logs = await tx<{ habitId: string; date: string }[]>`
+    select habit_id, date from habit_log
+     where date between ${weekStartDate} and ${addDays(weekStartDate, 6)}`
+  const byHabit = new Map<string, string[]>()
+  for (const log of logs) {
+    const dates = byHabit.get(log.habitId) ?? []
+    dates.push(log.date)
+    byHabit.set(log.habitId, dates)
+  }
+  return byHabit
+}
+
+/**
+ * Active habits first, then the archived ones; each with the week it stands on, so the Habits page,
+ * a goal page and the Today section all read the same number.
+ */
+export async function listHabits(tx: Tx, today: string): Promise<HabitWithWeek[]> {
+  const weekStartDate = await weekStartFor(tx, today)
   const rows = await tx.unsafe<HabitRow[]>(
     `select ${COLUMNS} from habit order by (archived_at is not null), position, created_at`,
   )
-  return rows.map(toHabit)
+  const byHabit = await logsOfWeek(tx, weekStartDate)
+  return rows.map((row) => {
+    const habit = toHabit(row)
+    return { ...habit, week: habitWeek(habit, byHabit.get(habit.id) ?? [], weekStartDate) }
+  })
 }
 
 async function loadHabit(tx: Tx, id: string): Promise<HabitRow> {
@@ -174,24 +204,11 @@ export async function clearHabitDay(tx: Tx, id: string, date: string, today: str
  * a tap can be taken back). A weekly count stays on the list while it still needs work.
  */
 export async function habitsToday(tx: Tx, today: string): Promise<HabitsToday> {
-  const [settings] = await tx<{ weeklyResetDow: number }[]>`
-    select weekly_reset_dow from user_settings where user_id = app.uid()`
-  // The week ends on the weekly reset day, so it starts the day after it (same rule as E6).
-  const weekStartDate = weekStart(today, ((settings?.weeklyResetDow ?? 0) + 1) % 7)
-  const weekEnd = addDays(weekStartDate, 6)
-
+  const weekStartDate = await weekStartFor(tx, today)
   const rows = await tx.unsafe<HabitRow[]>(
     `select ${COLUMNS} from habit where archived_at is null order by position, created_at`,
   )
-  const logs = await tx<{ habitId: string; date: string }[]>`
-    select habit_id, date from habit_log where date between ${weekStartDate} and ${weekEnd}`
-
-  const byHabit = new Map<string, string[]>()
-  for (const log of logs) {
-    const dates = byHabit.get(log.habitId) ?? []
-    dates.push(log.date)
-    byHabit.set(log.habitId, dates)
-  }
+  const byHabit = await logsOfWeek(tx, weekStartDate)
 
   const habits: HabitToday[] = []
   for (const row of rows) {

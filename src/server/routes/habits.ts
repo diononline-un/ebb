@@ -28,7 +28,9 @@ function dateOf(value: string | undefined): string | null {
 }
 
 export const habitRoutes = new Hono<AppEnv>()
-  .get('/', requireUser, async (c) => c.json(await withUser(userOf(c).id, (tx) => listHabits(tx))))
+  .get('/', requireUser, async (c) =>
+    c.json(await withUser(userOf(c).id, (tx) => listHabits(tx, todayOf(c)))),
+  )
   .get('/today', requireUser, async (c) =>
     c.json(await withUser(userOf(c).id, (tx) => habitsToday(tx, todayOf(c)))),
   )

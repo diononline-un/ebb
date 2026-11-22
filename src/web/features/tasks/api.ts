@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { z } from 'zod'
+import type { Recurrence, RecurrenceCreate } from '../../../shared/schemas/recurrence.ts'
 import {
   TaskResult as TaskResultSchema,
   TaskStatus as TaskStatusSchema,
@@ -21,7 +22,20 @@ export type TaskPatcher = (id: string, patch: TaskPatch) => Promise<TaskResult>
 export type PatchHandler = (patch: TaskPatch) => Promise<TaskResult>
 export type DeleteHandler = (id: string) => Promise<void>
 
+/** The task inside the sheet, with the subtasks under it (GET /api/tasks/:id, E5). */
+export type TaskDetail = {
+  task: Task
+  subtasks: Task[]
+  /** done / (all subtasks − skipped); null while no subtask exists. */
+  progress: { done: number; total: number } | null
+}
+/** A rule that makes tasks on its own days; it lives in its own list (GET /api/recurrences). */
+export type RecurrenceRule = Recurrence['rule']
+
+export type SubtaskInput = { title: string; parentId: string; projectId?: string }
+
 const TODAY_KEY = ['today'] as const
+const RECURRENCES_KEY = ['recurrences'] as const
 
 export function useToday() {
   return useQuery({ queryKey: TODAY_KEY, queryFn: () => apiFetch<TodayView>('/api/today') })
@@ -100,6 +114,51 @@ export function usePatchTask() {
     },
     onSettled: async () => {
       await queryClient.invalidateQueries({ queryKey: TODAY_KEY })
+    },
+  })
+}
+
+/** The open task with its subtasks; disabled while the sheet shows nothing. */
+export function useTaskDetail(id: string | null) {
+  return useQuery({
+    queryKey: ['tasks', 'detail', id ?? ''] as const,
+    queryFn: () => apiFetch<TaskDetail>(`/api/tasks/${id}`),
+    enabled: id !== null,
+  })
+}
+
+/** Adds a subtask under the open task. The server keeps subtasks one level deep. */
+export function useAddSubtask() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (input: SubtaskInput) => createTask(input),
+    onSettled: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['tasks'] }),
+        queryClient.invalidateQueries({ queryKey: TODAY_KEY }),
+      ])
+    },
+  })
+}
+
+/** Every rule of the user. The sheet lists the ones its task came from. */
+export function useRecurrences() {
+  return useQuery({ queryKey: RECURRENCES_KEY, queryFn: () => apiFetch<Recurrence[]>('/api/recurrences') })
+}
+
+/** A new rule starts today and makes its first task at the next day start (E5-P3). */
+export function useCreateRecurrence() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (input: RecurrenceCreate) =>
+      apiFetch<Recurrence>('/api/recurrences', { method: 'POST', body: JSON.stringify(input) }),
+    onSettled: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: RECURRENCES_KEY }),
+        queryClient.invalidateQueries({ queryKey: TODAY_KEY }),
+      ])
     },
   })
 }

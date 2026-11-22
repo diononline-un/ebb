@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from 'react'
+import { useState, type ChangeEvent, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Task, TaskPatch } from '../../../shared/schemas/task.ts'
 import { ApiError } from '../../lib/api.ts'
@@ -10,6 +10,8 @@ import { Sheet } from '../../ui/Sheet.tsx'
 import { Textarea } from '../../ui/Textarea.tsx'
 
 import type { DeleteHandler, PatchHandler, TaskPatcher, TaskResult, TaskStatus } from './api.ts'
+import { RecurrenceField } from './RecurrenceField.tsx'
+import { Subtasks } from './Subtasks.tsx'
 
 const STATUSES: TaskStatus[] = ['todo', 'doing', 'waiting', 'done', 'skipped']
 
@@ -18,13 +20,15 @@ export type TaskSheetFieldsProps = {
   onPatch: PatchHandler
   onDelete: () => Promise<void>
   onClose: () => void
+  /** Subtasks and repeat read the server, so the sheet adds them; the fields stay free of queries. */
+  sections?: ReactNode
 }
 
 /**
  * Everything inside the task sheet. Split out so a component test can drive it without the dialog
  * machinery around it.
  */
-export function TaskSheetFields({ task, onPatch, onDelete, onClose }: TaskSheetFieldsProps) {
+export function TaskSheetFields({ task, onPatch, onDelete, onClose, sections }: TaskSheetFieldsProps) {
   const { t } = useTranslation('tasks')
   const [title, setTitle] = useState(task.title)
   const [notes, setNotes] = useState(task.notes)
@@ -174,6 +178,8 @@ export function TaskSheetFields({ task, onPatch, onDelete, onClose }: TaskSheetF
         </select>
       </div>
 
+      {sections}
+
       {warnings.length > 0 ? (
         <ul className="flex flex-col gap-1">
           {warnings.map((warning) => (
@@ -245,6 +251,12 @@ export function TaskSheet({ task, onOpenChange, onPatch, onDelete }: TaskSheetPr
           onPatch={(patch) => onPatch(task.id, patch)}
           onDelete={() => onDelete(task.id)}
           onClose={() => onOpenChange(false)}
+          sections={
+            <>
+              <Subtasks task={task} />
+              <RecurrenceField task={task} />
+            </>
+          }
         />
       ) : null}
     </Sheet>

@@ -1,0 +1,42 @@
+{
+  "subtasks": {
+    "heading": "Subtasks",
+    "progress": "{{done}} of {{total}} done",
+    "empty": "No subtasks yet.",
+    "addLabel": "Add a subtask",
+    "addAction": "Add",
+    "markDone": "Mark {{title}} as done",
+    "markOpen": "Take the tick back for {{title}}"
+  },
+  "repeat": {
+    "heading": "Repeat",
+    "freqLabel": "Repeat",
+    "freq": {
+      "daily": "Every day",
+      "weekdays": "Every weekday",
+      "weekly": "Certain days of the week",
+      "every_n_days": "Every few days",
+      "monthly": "Every month"
+    },
+    "weekdaysLabel": "On which days",
+    "intervalLabel": "Every how many days",
+    "monthDayLabel": "On which day of the month",
+    "startHint": "Starts today.",
+    "add": "Repeat from today",
+    "empty": "This task does not repeat yet.",
+    "rule": {
+      "daily": "Every day",
+      "weekdays": "Every weekday",
+      "weekly": "Weekly on {{days}}",
+      "every_n_days": "Every {{interval}} days",
+      "monthly": "Monthly on day {{day}}"
+    }
+  },
+  "errors": {
+    "subtask_too_deep": "Subtasks go one level deep.",
+    "subtask_other_space": "The task above lives in another space.",
+    "unknown_parent": "The task above is not there any more.",
+    "unknown_project": "That project is not there any more.",
+    "generic": "That did not save. Check the connection and try again."
+  }
+}

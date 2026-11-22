@@ -3,6 +3,11 @@ import { expect, test, type Page } from '@playwright/test'
 const PASSWORD = 'correct horse battery'
 const VERIFICATION_SUBJECT = 'Confirm your email for Ebb'
 
+// Signing up is limited to five a minute per client IP, and the dev server runs without a proxy
+// header of its own, so every spec would share one bucket. A stated client keeps this file out of
+// the others' way, the same trick tests/harness.ts uses with its own addresses.
+test.use({ extraHTTPHeaders: { 'x-forwarded-for': '10.77.0.1' } })
+
 function uniqueEmail(prefix: string): string {
   return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@example.test`
 }

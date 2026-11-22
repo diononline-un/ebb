@@ -27,6 +27,10 @@ async function confirmByMail(page: Page, email: string): Promise<void> {
   expect(link, 'verification link inside the mail text').toBeTruthy()
 
   await page.goto(link as string)
+
+  // A fresh day opens the morning ritual (E3-P2); these flows live after it.
+  await expect(page).toHaveURL(/\/ritual$/)
+  await page.getByRole('button', { name: 'Leave', exact: true }).click()
   await expect(page).toHaveURL(/\/today$/)
   await expect(page.getByRole('heading', { name: 'Today' })).toBeVisible()
 }

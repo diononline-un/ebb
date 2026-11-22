@@ -1,0 +1,65 @@
+{
+  "nav": "Spaces",
+  "title": "Spaces",
+  "loading": "One moment.",
+  "loadError": "The spaces did not load. Check the connection and try again.",
+  "empty": "No shared space yet. Your personal space is enough for the day.",
+  "add": "New space",
+  "open": "Open {{name}}",
+  "kind": {
+    "personal": "Personal space",
+    "shared": "Shared space"
+  },
+  "memberCount_one": "{{count}} person",
+  "memberCount_other": "{{count}} people",
+  "backToSpaces": "All spaces",
+  "peopleHeading": "People",
+  "peopleEmpty": "Just you so far.",
+  "role": {
+    "owner": "Owner",
+    "member": "Member"
+  },
+  "remove": "Remove",
+  "removeLabel": "Remove {{name}}",
+  "renameLabel": "Space name",
+  "renameAction": "Rename",
+  "invite": "Invite someone",
+  "inviteHint": "This link works once and runs out in seven days. It is shown only now.",
+  "inviteLinkLabel": "Invitation link",
+  "copy": "Copy link",
+  "copied": "Link copied",
+  "share": "Share",
+  "inviteDone": "Done",
+  "leave": "Leave space",
+  "delete": "Delete space",
+  "deleteQuestion": "Delete this space?",
+  "deleteText": "Everything in it goes too. Type the name of the space to confirm.",
+  "deleteNameLabel": "Type the name of the space",
+  "deleteConfirm": "Delete",
+  "cancel": "Keep it",
+  "sheet": {
+    "createTitle": "New space",
+    "nameLabel": "Space",
+    "hint": "You can invite people once it exists.",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "join": {
+    "title": "Join space",
+    "action": "Join the space",
+    "hint": "You will see the tasks of this space and take the ones you want.",
+    "joined": "You are in {{name}}.",
+    "open": "Open {{name}}",
+    "openFallback": "Open the space"
+  },
+  "errors": {
+    "name_mismatch": "The name did not match. The space stays as it is.",
+    "owner_cannot_leave": "The owner cannot leave the space. Delete it instead.",
+    "personal_space": "Your personal space stays.",
+    "owner_only": "Only the owner can do that.",
+    "already_assigned": "Someone else took this task already.",
+    "not_your_plan": "Only the person responsible plans this task.",
+    "invite_invalid": "This invitation is not valid any more. Ask for a new one.",
+    "generic": "That did not save. Check the connection and try again."
+  }
+}

@@ -24,14 +24,17 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RitualRouteImport } from './routes/ritual'
 import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as SignUpRouteImport } from './routes/sign-up'
+import { Route as SpacesRouteImport } from './routes/spaces'
 import { Route as TodayRouteImport } from './routes/today'
 import { Route as TriageRouteImport } from './routes/triage'
 import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as GoalsGoalIdRouteImport } from './routes/goals_.$goalId'
+import { Route as JoinTokenRouteImport } from './routes/join.$token'
 import { Route as ProjectsProjectIdRouteImport } from './routes/projects_.$projectId'
 import { Route as ResetHistoryRouteImport } from './routes/reset_.history'
 import { Route as SettingsSecurityRouteImport } from './routes/settings.security'
+import { Route as SpacesSpaceIdRouteImport } from './routes/spaces_.$spaceId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -108,6 +111,11 @@ const SignUpRoute = SignUpRouteImport.update({
   path: '/sign-up',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SpacesRoute = SpacesRouteImport.update({
+  id: '/spaces',
+  path: '/spaces',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TodayRoute = TodayRouteImport.update({
   id: '/today',
   path: '/today',
@@ -133,6 +141,11 @@ const GoalsGoalIdRoute = GoalsGoalIdRouteImport.update({
   path: '/goals/$goalId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JoinTokenRoute = JoinTokenRouteImport.update({
+  id: '/join/$token',
+  path: '/join/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjectsProjectIdRoute = ProjectsProjectIdRouteImport.update({
   id: '/projects_/$projectId',
   path: '/projects/$projectId',
@@ -146,6 +159,11 @@ const ResetHistoryRoute = ResetHistoryRouteImport.update({
 const SettingsSecurityRoute = SettingsSecurityRouteImport.update({
   id: '/settings/security',
   path: '/settings/security',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SpacesSpaceIdRoute = SpacesSpaceIdRouteImport.update({
+  id: '/spaces_/$spaceId',
+  path: '/spaces/$spaceId',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -165,14 +183,17 @@ export interface FileRoutesByFullPath {
   '/ritual': typeof RitualRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
+  '/spaces': typeof SpacesRoute
   '/today': typeof TodayRoute
   '/triage': typeof TriageRoute
   '/verify-email': typeof VerifyEmailRoute
   '/welcome': typeof WelcomeRoute
   '/goals/$goalId': typeof GoalsGoalIdRoute
+  '/join/$token': typeof JoinTokenRoute
   '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/reset/history': typeof ResetHistoryRoute
   '/settings/security': typeof SettingsSecurityRoute
+  '/spaces/$spaceId': typeof SpacesSpaceIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -190,14 +211,17 @@ export interface FileRoutesByTo {
   '/ritual': typeof RitualRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
+  '/spaces': typeof SpacesRoute
   '/today': typeof TodayRoute
   '/triage': typeof TriageRoute
   '/verify-email': typeof VerifyEmailRoute
   '/welcome': typeof WelcomeRoute
   '/goals/$goalId': typeof GoalsGoalIdRoute
+  '/join/$token': typeof JoinTokenRoute
   '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/reset/history': typeof ResetHistoryRoute
   '/settings/security': typeof SettingsSecurityRoute
+  '/spaces/$spaceId': typeof SpacesSpaceIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -216,14 +240,17 @@ export interface FileRoutesById {
   '/ritual': typeof RitualRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
+  '/spaces': typeof SpacesRoute
   '/today': typeof TodayRoute
   '/triage': typeof TriageRoute
   '/verify-email': typeof VerifyEmailRoute
   '/welcome': typeof WelcomeRoute
   '/goals_/$goalId': typeof GoalsGoalIdRoute
+  '/join/$token': typeof JoinTokenRoute
   '/projects_/$projectId': typeof ProjectsProjectIdRoute
   '/reset_/history': typeof ResetHistoryRoute
   '/settings/security': typeof SettingsSecurityRoute
+  '/spaces_/$spaceId': typeof SpacesSpaceIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -243,14 +270,17 @@ export interface FileRouteTypes {
     | '/ritual'
     | '/sign-in'
     | '/sign-up'
+    | '/spaces'
     | '/today'
     | '/triage'
     | '/verify-email'
     | '/welcome'
     | '/goals/$goalId'
+    | '/join/$token'
     | '/projects/$projectId'
     | '/reset/history'
     | '/settings/security'
+    | '/spaces/$spaceId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -268,14 +298,17 @@ export interface FileRouteTypes {
     | '/ritual'
     | '/sign-in'
     | '/sign-up'
+    | '/spaces'
     | '/today'
     | '/triage'
     | '/verify-email'
     | '/welcome'
     | '/goals/$goalId'
+    | '/join/$token'
     | '/projects/$projectId'
     | '/reset/history'
     | '/settings/security'
+    | '/spaces/$spaceId'
   id:
     | '__root__'
     | '/'
@@ -293,14 +326,17 @@ export interface FileRouteTypes {
     | '/ritual'
     | '/sign-in'
     | '/sign-up'
+    | '/spaces'
     | '/today'
     | '/triage'
     | '/verify-email'
     | '/welcome'
     | '/goals_/$goalId'
+    | '/join/$token'
     | '/projects_/$projectId'
     | '/reset_/history'
     | '/settings/security'
+    | '/spaces_/$spaceId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -319,14 +355,17 @@ export interface RootRouteChildren {
   RitualRoute: typeof RitualRoute
   SignInRoute: typeof SignInRoute
   SignUpRoute: typeof SignUpRoute
+  SpacesRoute: typeof SpacesRoute
   TodayRoute: typeof TodayRoute
   TriageRoute: typeof TriageRoute
   VerifyEmailRoute: typeof VerifyEmailRoute
   WelcomeRoute: typeof WelcomeRoute
   GoalsGoalIdRoute: typeof GoalsGoalIdRoute
+  JoinTokenRoute: typeof JoinTokenRoute
   ProjectsProjectIdRoute: typeof ProjectsProjectIdRoute
   ResetHistoryRoute: typeof ResetHistoryRoute
   SettingsSecurityRoute: typeof SettingsSecurityRoute
+  SpacesSpaceIdRoute: typeof SpacesSpaceIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -436,6 +475,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignUpRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/spaces': {
+      id: '/spaces'
+      path: '/spaces'
+      fullPath: '/spaces'
+      preLoaderRoute: typeof SpacesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/today': {
       id: '/today'
       path: '/today'
@@ -471,6 +517,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GoalsGoalIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/join/$token': {
+      id: '/join/$token'
+      path: '/join/$token'
+      fullPath: '/join/$token'
+      preLoaderRoute: typeof JoinTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/projects_/$projectId': {
       id: '/projects_/$projectId'
       path: '/projects/$projectId'
@@ -492,6 +545,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsSecurityRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/spaces_/$spaceId': {
+      id: '/spaces_/$spaceId'
+      path: '/spaces/$spaceId'
+      fullPath: '/spaces/$spaceId'
+      preLoaderRoute: typeof SpacesSpaceIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -511,14 +571,17 @@ const rootRouteChildren: RootRouteChildren = {
   RitualRoute: RitualRoute,
   SignInRoute: SignInRoute,
   SignUpRoute: SignUpRoute,
+  SpacesRoute: SpacesRoute,
   TodayRoute: TodayRoute,
   TriageRoute: TriageRoute,
   VerifyEmailRoute: VerifyEmailRoute,
   WelcomeRoute: WelcomeRoute,
   GoalsGoalIdRoute: GoalsGoalIdRoute,
+  JoinTokenRoute: JoinTokenRoute,
   ProjectsProjectIdRoute: ProjectsProjectIdRoute,
   ResetHistoryRoute: ResetHistoryRoute,
   SettingsSecurityRoute: SettingsSecurityRoute,
+  SpacesSpaceIdRoute: SpacesSpaceIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

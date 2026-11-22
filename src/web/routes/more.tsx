@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { CalendarCheck, ChevronRight, FolderKanban, Repeat, ShieldCheck, Target } from 'lucide-react'
+import { CalendarCheck, ChevronRight, FolderKanban, Repeat, ShieldCheck, Target, Users } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { EmptyState } from '../ui/EmptyState.tsx'
 
@@ -13,6 +13,8 @@ function MorePage() {
   const { t: tProjects } = useTranslation('projects')
   // Same for the reset: its label belongs to the reset package.
   const { t: tReset } = useTranslation('reset')
+  // And the spaces: their label belongs to the spaces package.
+  const { t: tSpaces } = useTranslation('spaces')
 
   return (
     <section className="flex flex-col gap-8 lg:gap-12">
@@ -43,6 +45,13 @@ function MorePage() {
           <Link to="/reset" className="flex min-h-13 items-center gap-3 text-body motion-quick hover:text-ink-2">
             <CalendarCheck size={20} aria-hidden="true" />
             <span className="flex-1">{tReset('nav')}</span>
+            <ChevronRight size={20} aria-hidden="true" className="text-ink-3" />
+          </Link>
+        </li>
+        <li className="border-b border-line">
+          <Link to="/spaces" className="flex min-h-13 items-center gap-3 text-body motion-quick hover:text-ink-2">
+            <Users size={20} aria-hidden="true" />
+            <span className="flex-1">{tSpaces('nav')}</span>
             <ChevronRight size={20} aria-hidden="true" className="text-ink-3" />
           </Link>
         </li>

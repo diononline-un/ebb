@@ -15,7 +15,16 @@ async function endTrial(user: TestUser): Promise<void> {
 }
 
 const SAFE = new Set(['GET', 'HEAD', 'OPTIONS'])
-const EXEMPT = [/^\/api\/auth\//, /^\/api\/billing\//, /^\/api\/export\b/, /^\/api\/settings\b/, /^\/api\/account\b/]
+// Mirrors middleware/entitlement.ts: product events stay open, so the metrics of a read-only
+// account are not silently empty.
+const EXEMPT = [
+  /^\/api\/auth\//,
+  /^\/api\/billing\//,
+  /^\/api\/export\b/,
+  /^\/api\/settings\b/,
+  /^\/api\/account\b/,
+  /^\/api\/events\b/,
+]
 
 describe('writing without access', () => {
   it('answers 402 on every writing route that is not exempt', async () => {

@@ -9,6 +9,7 @@ import { requireUser, sessionMiddleware, userOf } from './middleware/session.ts'
 import { dayRoutes } from './routes/day.ts'
 import { devRoutes } from './routes/dev.ts'
 import { dumpRoutes } from './routes/dump.ts'
+import { exportRoutes } from './routes/export.ts'
 import { focusRoutes } from './routes/focus.ts'
 import { goalRoutes } from './routes/goals.ts'
 import { habitRoutes } from './routes/habits.ts'
@@ -43,6 +44,7 @@ export function createApp(): Hono<AppEnv> {
 
   app.route('/api/settings', settingsRoutes)
   app.route('/api/dump', dumpRoutes)
+  app.route('/api/export', exportRoutes)
   app.route('/api', taskRoutes)
   app.route('/api/day', dayRoutes)
   app.route('/api/focus', focusRoutes)

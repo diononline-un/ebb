@@ -127,15 +127,29 @@ async function memberCall(tx: Tx, run: () => Promise<unknown>): Promise<void> {
   }
 }
 
+/**
+ * The tasks of a person leaving go back to "nobody" and lose their plan (PRD F13). The request role
+ * does it while the membership still exists, because the RLS policies are written for it; the
+ * definer function then only removes the membership.
+ */
+async function releaseTasks(tx: Tx, spaceId: string, userId: string): Promise<void> {
+  await tx`
+    update task set assignee_id = null, slot = 'inbox', must = false, anchor = false, do_date = null
+     where space_id = ${spaceId} and assignee_id = ${userId}`
+}
+
 /** The owner removes a member; tasks of that person in the space fall back to "nobody". */
 export async function removeMember(tx: Tx, spaceId: string, userId: string): Promise<void> {
   await memberRow(tx, spaceId)
+  await releaseTasks(tx, spaceId, userId)
   await memberCall(tx, () => tx`select app.remove_member(${spaceId}, ${userId})`)
 }
 
 /** A member leaves; the owner has to delete the space instead (the owner cannot walk away). */
 export async function leaveSpace(tx: Tx, spaceId: string): Promise<void> {
   await memberRow(tx, spaceId)
+  const [me] = await tx<{ uid: string }[]>`select app.uid() as uid`
+  if (me?.uid) await releaseTasks(tx, spaceId, me.uid)
   await memberCall(tx, () => tx`select app.leave_space(${spaceId})`)
 }
 

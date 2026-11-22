@@ -119,14 +119,13 @@ export function TriageFlow({ view, onTriage, onChooseAnchor, onDone }: TriageFlo
     await send({ kind: 'errand' })
   }
 
-  const candidates = [
-    ...view.must,
-    ...queue,
-    ...view.slots.block1,
-    ...view.slots.block2,
-    ...view.slots.block3,
-    ...view.slots.block4,
-  ].filter((task) => !sortedAway.includes(task.id))
+  // The queue is the snapshot from the start, so a task that was just triaged appears there and in
+  // the live view; the Map keeps one entry per task (found by the E2E of E2-P11).
+  const candidates = [...new Map(
+    [...view.must, ...queue, ...view.slots.block1, ...view.slots.block2, ...view.slots.block3, ...view.slots.block4].map(
+      (task) => [task.id, task],
+    ),
+  ).values()].filter((task) => !sortedAway.includes(task.id))
 
   const chooseAnchor = async (task: Task, replace: boolean): Promise<'ok' | 'conflict'> => {
     const result = await onChooseAnchor(task.id, replace)

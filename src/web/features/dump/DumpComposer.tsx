@@ -14,9 +14,13 @@ export function DumpComposer({ onSubmit, busy, error }: DumpComposerProps) {
   }
 
   const keep = async () => {
-    if (!draft.trim()) return
-    const kept = await onSubmit(draft)
-    if (kept) setDraft('')
+    const text = draft
+    if (!text.trim()) return
+    // Empty the field before waiting for the server: otherwise a thought typed in the meantime
+    // would be wiped when the previous answer arrives (found by the E2E of E2-P11).
+    setDraft('')
+    const kept = await onSubmit(text)
+    if (!kept) setDraft(text)
   }
 
   const keyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {

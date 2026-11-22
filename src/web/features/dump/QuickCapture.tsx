@@ -38,10 +38,14 @@ export function QuickCapture({ open, onOpenChange }: QuickCaptureProps) {
   }
 
   const keep = async () => {
-    if (!draft.trim()) return
-    const kept = await submit(draft)
-    if (!kept) return
+    const text = draft
+    if (!text.trim()) return
     setDraft('')
+    const kept = await submit(text)
+    if (!kept) {
+      setDraft(text)
+      return
+    }
     onOpenChange(false)
   }
 

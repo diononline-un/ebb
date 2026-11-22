@@ -1,16 +1,25 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import type { ResetCurrent, ResetPatch, StuckDecision } from '../../../shared/schemas/reset.ts'
+import type { ResetCurrent, ResetHistoryWeek, ResetPatch, StuckDecision } from '../../../shared/schemas/reset.ts'
 import { apiFetch } from '../../lib/api.ts'
 
 // The weekly reset (PRD F12): one week, four steps, everything saved as it comes in. The server owns
 // the week, the step and the answers; this module only moves the shapes to and from /api/reset.
 
 const RESET_KEY = ['reset'] as const
+const HISTORY_KEY = ['reset', 'history'] as const
 const TODAY_KEY = ['today'] as const
 
 /** The week's reset: answers, step, the numbers, the stuck tasks and the seven days ahead. */
 export function useReset() {
   return useQuery({ queryKey: RESET_KEY, queryFn: () => apiFetch<ResetCurrent>('/api/reset/current') })
+}
+
+/** Earlier weeks, newest first: the week's start, whether it was closed, and the three answers. */
+export function useResetHistory() {
+  return useQuery({
+    queryKey: HISTORY_KEY,
+    queryFn: () => apiFetch<ResetHistoryWeek[]>('/api/reset/history'),
+  })
 }
 
 /**

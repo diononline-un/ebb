@@ -1,3 +1,4 @@
+import { withSystem } from '../src/server/db.ts'
 import { as, type TestUser } from './harness.ts'
 
 export type IsolationRoute = {
@@ -29,6 +30,15 @@ async function seedFocus(owner: TestUser): Promise<string> {
 async function seedGoal(owner: TestUser): Promise<string> {
   const response = await as(owner).post('/api/goals', { title: 'isolation seed' })
   return ((await response.json()) as { id: string }).id
+}
+
+async function seedStuck(owner: TestUser): Promise<string> {
+  // A task that slid three times is a Dauerschieber and thus reachable through /api/reset/stuck/:id.
+  const response = await as(owner).post('/api/tasks', { title: 'isolation seed' })
+  const id = ((await response.json()) as { task: { id: string } }).task.id
+  // FORCE RLS binds the owner too, so the system role makes the seed: it would not update otherwise.
+  await withSystem((tx) => tx`update task set push_count = 3 where id = ${id}`)
+  return id
 }
 
 async function seedProject(owner: TestUser): Promise<string> {
@@ -74,6 +84,7 @@ export const isolationRoutes: IsolationRoute[] = [
   { method: 'DELETE', path: '/api/projects/:id', seed: seedProject },
   { method: 'PATCH', path: '/api/recurrences/:id', seed: seedRecurrence, body: { title: 'stolen' } },
   { method: 'DELETE', path: '/api/recurrences/:id', seed: seedRecurrence },
+  { method: 'POST', path: '/api/reset/stuck/:id', seed: seedStuck, body: { decision: 'skip' } },
 ]
 
 /** Parameterised paths that carry no user data of their own. */

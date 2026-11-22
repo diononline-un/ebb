@@ -1,14 +1,15 @@
 # Projektstatus
 
-**Stand:** 2026-11-22 · **Phase:** E1 und E2 fertig, auf `main` · nächstes Epic: E3 (wird nachgeschärft)
+**Stand:** 2026-11-22 · **Phase:** E3 (Energie) auf Branch `ds/e3` · E1 und E2 auf `main`
 
 | Bereich | Stand |
 |---|---|
 | Planung | Analyse, PRD, Architektur, DESIGN.md 1.0.1, Specs |
 | E1 Fundament | 9/9 fertig, geprüft, auf `main` |
 | E2 Kern-Ablauf | 11/11 fertig, geprüft, auf `main` |
-| E3–E10 | `needs-refinement`, werden vor dem Start am Code nachgeschärft |
-| Tests | 215 Vitest + 5 Playwright grün · Check 0 Fehler (Server, Web, Web-Tests) · Design-Drift 0 · CI grün |
+| E3 Energie | Spec nachgeschärft · P1 (Kern, Claude) fertig auf `ds/e3` · offen: P4 Timer, P2 Ritual, P3 Low-Modus (dsh) |
+| E4–E10 | `needs-refinement`, werden vor dem Start am Code nachgeschärft |
+| Tests | 227 Vitest + 5 Playwright grün · Check 0 Fehler (Server, Web, Web-Tests) · Design-Drift 0 · CI grün |
 | Bundle | erster Chunk 107 KB gzip (Budget 250), Seiten als eigene Chunks |
 
 **Arbeitsordner:** `/home/dsh/Projekte/ebb` (Klon von `diononline-un/ebb`, Branch `main`). Neue Arbeit auf eigenen Branches `ds/<epic>` von dort.

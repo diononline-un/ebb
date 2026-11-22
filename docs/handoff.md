@@ -6,7 +6,7 @@ Einmal lesen, dann übernehmen und löschen. Alles Weitere steht in Git und in d
 
 - `main` = Review-Stand nach E3 (`12f3e25`).
 - **`ds/e5`** (gepusht) trägt einen Stapel: E4 komplett, dann E5 (Kern + API + Web), E6 (Kern + API), E7-P1/P2. Der Branch enthält die E4-Commits, weil E5 auf E4 aufsetzt; ein Merge nach `main` nimmt alles mit.
-- **`ds/e6-web`** (Subagent, läuft zum Zeitpunkt dieses Textes) bringt E6-P3/P4 und wird nach `ds/e5` gepickt.
+- **`ds/e6-web`** (Subagent) bringt E6-P3/P4 (Reset-Ablauf, frühere Wochen) und wird nach `ds/e5` gepickt.
 - Verifikation auf `ds/e5`: `npm run check` 0 Fehler · `npx vitest run` 447 Tests grün (44 Dateien) · `npx playwright test` 8 grün · `python3 scripts/check-design.py` sauber (172 Dateien). Entwicklungsdatenbank und `ebb_test` wurden neu aufgebaut (`migrations/0001`–`0071`).
 
 ## Fertig
@@ -17,14 +17,18 @@ Einmal lesen, dann übernehmen und löschen. Alles Weitere steht in Git und in d
 
 **E6 Weekly Reset** (P1–P2 Kern/API): `0060_weekly_reset.sql`, `domain/reset/stats.ts` (Woche endet am Reset-Tag; Anker-Tage, erledigte Aufgaben, Habits-Wochenstand, Projekte, Fokus-Minuten, Rollover; Dauerschieber `push_count >= 3` oder älter 14 Tage; Ausblick 7 Tage), `/api/reset/{current,stuck/:id,complete,history}`. Web (P3/P4) läuft als Subagent.
 
-**E7 Geteilte Bereiche** (P1–P2 Kern/API): `0070_invites.sql` und `0071_space_members.sql` — `app.create_shared_space`, `app.accept_invite` (Token 32 Byte, nur SHA-256 in der DB, 7 Tage, einmal), `app.leave_space`, `app.remove_member` (Aufgaben der Person werden „niemand“, Planungsfelder zurück), `app.space_members`; `/api/spaces` mit anlegen, umbenennen, löschen (nur mit getipptem Namen), Mitglieder, entfernen, verlassen, einladen, widerrufen, `/join`.
+**E7 Geteilte Bereiche** (P1–P3): `0070_invites.sql` und `0071_space_members.sql` — `app.create_shared_space`, `app.accept_invite` (Token 32 Byte, nur SHA-256 in der DB, 7 Tage, einmal), `app.leave_space`, `app.remove_member` (Aufgaben der Person werden „niemand“, Planungsfelder zurück), `app.space_members`; `/api/spaces` mit anlegen, umbenennen, löschen (nur mit getipptem Namen), Mitglieder, entfernen, verlassen, einladen, widerrufen, `/join`.
+P3: `assigneeId` in Aufgabe anlegen/ändern (422 `assignee_not_member`), `POST /api/tasks/:id/claim` (409 `already_assigned`), Planungsfelder einer geteilten Aufgabe nur für die zuständige Person (403 `not_your_plan`), `GET /api/spaces/:id/tasks?filter=unassigned|all`, und `TodayView`/`TaskListView` nennen die Bereiche ihrer Aufgaben (`spaces`).
+
+**E8** (P1): `src/shared/entitlement.ts` mit `hasAccess` — selfhost immer, laufender Trial, eigenes Abo oder Sitz; `past_due` und `canceled` bis Periodenende, `paused` nicht. 16 Tabellenfälle grün.
+
+**E9-P4 Export** (siehe oben) ist fertig.
 
 ## Offen, in dieser Reihenfolge
 
 1. **E6-P3/P4 Web** (Subagent) — nach `ds/e5` picken, dann `npm run check`, `npx vitest run tests/web`, Design-Check, `npx playwright test`.
-2. **E7-P3** Zuweisen/Übernehmen: Regeln in `domain/tasks/rules.ts` (Planungsfelder nur die zuständige Person), `POST /api/tasks/:id/claim`, `PATCH assigneeId`, `GET /api/spaces/:id/tasks`, Today/Plan zeigen Aufgaben aus allen Bereichen mit Bereichsnamen.
-3. **E7-P4/P5 Web** (`features/spaces/*`, `routes/spaces*.tsx`, `join.$token.tsx`, `SpaceField`/`AssigneeField`) und **E7-P6** Adversary-Tests.
-4. **E8 Trial/Abo/Sitze/Selfhost**: P1 reine Logik (`shared/entitlement.ts`), P2 Webhook + Ereignisspeicher, P3 Verarbeitung, P4 Middleware/Read-only-UI, P6 Sitze, P8 Trial-Mails sind ohne Zugangsdaten baubar. **P5 Checkout/Seite braucht Entscheidungen (siehe Blocker).**
+2. **E7-P4/P5 Web** (`features/spaces/*`, `routes/spaces*.tsx`, `join.$token.tsx`, `SpaceField`/`AssigneeField`, Bereichsliste mit „Übernehmen“) und **E7-P6** Adversary-Tests (Bereichsfremder, Owner-Rechte, Planfelder einer fremden Aufgabe).
+4. **E8 Trial/Abo/Sitze/Selfhost**: P2 Webhook + Ereignisspeicher, P3 Verarbeitung, P4 Middleware/Read-only-UI (402 auf allen schreibenden Routen, Banner), P6 Sitze, P8 Trial-Mails sind ohne Zugangsdaten baubar — die Signaturprüfung braucht nur `PADDLE_WEBHOOK_SECRET` als ENV, Beispiel-Payloads stehen in der Paddle-Doku. **P5 Checkout/Seite braucht Entscheidungen (siehe Blocker).**
 5. **E9 Betrieb**: P1 Push-Grundlage (VAPID), P2 Erinnerungs-Job, P3 Web-Einstellungen, P4 Export, P5 Kontolöschung, P6 Lasttest, P7 Compose/Caddy/Backups, P8 Monitoring — alle baubar, P7/P8 sind Doku + Konfiguration.
 6. **E10 Launch**: P1 Übersetzungs-Skript/Pseudo-Locale, P5 PWA-Feinschliff, P6 Produkt-Events sind baubar. **P2 Übersetzungen, P3 Rechtsseiten, P4 Landingpage hängen an Entscheidungen (siehe Blocker).**
 

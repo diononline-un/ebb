@@ -21,6 +21,13 @@ async function register(page: Page, email: string): Promise<void> {
   expect(link).toBeTruthy()
 
   await page.goto(link as string)
+  await leaveRitual(page)
+}
+
+/** A fresh day opens the morning ritual (E3-P2); these flows live after it. */
+async function leaveRitual(page: Page): Promise<void> {
+  await expect(page).toHaveURL(/\/ritual$/)
+  await page.getByRole('button', { name: 'Leave', exact: true }).click()
   await expect(page).toHaveURL(/\/today$/)
 }
 

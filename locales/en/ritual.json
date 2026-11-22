@@ -1,0 +1,24 @@
+{
+  "leave": "Leave",
+  "progressLabel": "Morning ritual progress",
+  "startYourDay": "Start your day",
+  "loading": "One moment.",
+  "loadError": "The day did not load. Check the connection and try again.",
+  "energy": {
+    "question": "How much battery do you have today?",
+    "low": "Low",
+    "good": "Good"
+  },
+  "rollover": {
+    "continue": "Continue"
+  },
+  "dump": {
+    "question": "What is on your mind?",
+    "done": "Done",
+    "skip": "Skip"
+  },
+  "start": {
+    "question": "Ready for the first block?",
+    "notNow": "Not now"
+  }
+}

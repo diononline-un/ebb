@@ -16,6 +16,7 @@ import { Route as LowRouteImport } from './routes/low'
 import { Route as MoreRouteImport } from './routes/more'
 import { Route as PlanRouteImport } from './routes/plan'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as RitualRouteImport } from './routes/ritual'
 import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as TodayRouteImport } from './routes/today'
@@ -58,6 +59,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RitualRoute = RitualRouteImport.update({
+  id: '/ritual',
+  path: '/ritual',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignInRoute = SignInRouteImport.update({
   id: '/sign-in',
   path: '/sign-in',
@@ -97,6 +103,7 @@ export interface FileRoutesByFullPath {
   '/more': typeof MoreRoute
   '/plan': typeof PlanRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/ritual': typeof RitualRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/today': typeof TodayRoute
@@ -112,6 +119,7 @@ export interface FileRoutesByTo {
   '/more': typeof MoreRoute
   '/plan': typeof PlanRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/ritual': typeof RitualRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/today': typeof TodayRoute
@@ -128,6 +136,7 @@ export interface FileRoutesById {
   '/more': typeof MoreRoute
   '/plan': typeof PlanRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/ritual': typeof RitualRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/today': typeof TodayRoute
@@ -145,6 +154,7 @@ export interface FileRouteTypes {
     | '/more'
     | '/plan'
     | '/reset-password'
+    | '/ritual'
     | '/sign-in'
     | '/sign-up'
     | '/today'
@@ -160,6 +170,7 @@ export interface FileRouteTypes {
     | '/more'
     | '/plan'
     | '/reset-password'
+    | '/ritual'
     | '/sign-in'
     | '/sign-up'
     | '/today'
@@ -175,6 +186,7 @@ export interface FileRouteTypes {
     | '/more'
     | '/plan'
     | '/reset-password'
+    | '/ritual'
     | '/sign-in'
     | '/sign-up'
     | '/today'
@@ -191,6 +203,7 @@ export interface RootRouteChildren {
   MoreRoute: typeof MoreRoute
   PlanRoute: typeof PlanRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  RitualRoute: typeof RitualRoute
   SignInRoute: typeof SignInRoute
   SignUpRoute: typeof SignUpRoute
   TodayRoute: typeof TodayRoute
@@ -250,6 +263,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ritual': {
+      id: '/ritual'
+      path: '/ritual'
+      fullPath: '/ritual'
+      preLoaderRoute: typeof RitualRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sign-in': {
       id: '/sign-in'
       path: '/sign-in'
@@ -303,6 +323,7 @@ const rootRouteChildren: RootRouteChildren = {
   MoreRoute: MoreRoute,
   PlanRoute: PlanRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  RitualRoute: RitualRoute,
   SignInRoute: SignInRoute,
   SignUpRoute: SignUpRoute,
   TodayRoute: TodayRoute,

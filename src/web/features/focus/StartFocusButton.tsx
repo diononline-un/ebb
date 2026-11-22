@@ -1,6 +1,7 @@
 import { Play } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { FocusSession } from '../../../shared/schemas/focus.ts'
 import type { BlockSlot } from '../../../shared/triage.ts'
 import { Button } from '../../ui/Button.tsx'
 import { Input } from '../../ui/Input.tsx'
@@ -16,10 +17,13 @@ export type StartFocusButtonProps = {
   taskId?: string
   /** A fixed length starts right away and skips the menu; the low-energy mode passes 10. */
   minutes?: number
+  /** Rings once the server has started the session (the morning ritual leaves for today then). */
+  onStart?: (session: FocusSession) => void
+  className?: string
 }
 
 /** Starts a focus session: the usual length first, then the fixed ones, then a custom length. */
-export function StartFocusButton({ slot, taskId, minutes }: StartFocusButtonProps) {
+export function StartFocusButton({ slot, taskId, minutes, onStart, className }: StartFocusButtonProps) {
   const { t } = useTranslation('focus')
   const start = useStartFocus()
   const usual = useTimerDefault()
@@ -31,17 +35,20 @@ export function StartFocusButton({ slot, taskId, minutes }: StartFocusButtonProp
     if (typeof Notification !== 'undefined' && Notification.permission === 'default') {
       void Notification.requestPermission().catch(() => {})
     }
-    start.mutate({
-      plannedMinutes: length,
-      ...(slot ? { slot } : {}),
-      ...(taskId ? { taskId } : {}),
-    })
+    start.mutate(
+      {
+        plannedMinutes: length,
+        ...(slot ? { slot } : {}),
+        ...(taskId ? { taskId } : {}),
+      },
+      { onSuccess: (session) => onStart?.(session) },
+    )
     setAsking(false)
   }
 
   if (minutes !== undefined) {
     return (
-      <Button type="button" variant="secondary" disabled={start.isPending} onClick={() => begin(minutes)}>
+      <Button type="button" variant="secondary" className={className} disabled={start.isPending} onClick={() => begin(minutes)}>
         <Play size={20} aria-hidden="true" />
         {t('start.fixed', { minutes })}
       </Button>
@@ -82,7 +89,7 @@ export function StartFocusButton({ slot, taskId, minutes }: StartFocusButtonProp
   return (
     <Menu>
       <MenuTrigger asChild>
-        <Button type="button" variant="ghost" disabled={start.isPending}>
+        <Button type="button" variant="ghost" className={className} disabled={start.isPending}>
           <Play size={20} aria-hidden="true" />
           {t('start.label')}
         </Button>

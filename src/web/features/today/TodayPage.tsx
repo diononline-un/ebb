@@ -1,9 +1,9 @@
 import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core'
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { useQueryClient } from '@tanstack/react-query'
-import { Link } from '@tanstack/react-router'
+import { Link, useRouter } from '@tanstack/react-router'
 import { ArrowRight } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Task, TaskPatch, TodayView } from '../../../shared/schemas/task.ts'
 import { ApiError, apiFetch } from '../../lib/api.ts'
@@ -11,6 +11,7 @@ import { Button } from '../../ui/Button.tsx'
 import { TideLine } from '../../ui/TideLine.tsx'
 import { useCurrentFocus, useStopFocus } from '../focus/api.ts'
 import { FocusTimer } from '../focus/FocusTimer.tsx'
+import { ritualSkipped } from '../ritual/api.ts'
 import { deleteTask, usePatchTask, useToday } from '../tasks/api.ts'
 import { TaskSheet } from '../tasks/TaskSheet.tsx'
 import { AnchorBlock } from './AnchorBlock.tsx'
@@ -62,6 +63,9 @@ function findTask(view: TodayView, id: string | null): Task | null {
 export function TodayPage() {
   const { t, i18n } = useTranslation('today')
   const { t: tLow } = useTranslation('low')
+  const { t: tRitual } = useTranslation('ritual')
+  const router = useRouter()
+  const redirected = useRef(false)
   const query = useToday()
   const focus = useCurrentFocus()
   const stopFocus = useStopFocus()
@@ -81,6 +85,15 @@ export function TodayPage() {
     const timer = window.setTimeout(() => setUndo(null), 5000)
     return () => window.clearTimeout(timer)
   }, [undo])
+
+  // A fresh day opens the morning ritual once (E3-P2). Whoever left it gets the line below instead.
+  useEffect(() => {
+    if (redirected.current) return
+    const view = query.data
+    if (!view || view.ritualDoneAt !== null || ritualSkipped(view.date)) return
+    redirected.current = true
+    void router.navigate({ to: '/ritual' })
+  }, [query.data, router])
 
   if (query.isPending) {
     return <p className="text-body text-ink-2">{t('loading')}</p>
@@ -194,8 +207,20 @@ export function TodayPage() {
         <p className="text-meta text-ink-3">{dateLabel}</p>
       </header>
 
+      {view.ritualDoneAt === null && ritualSkipped(view.date) ? (
+        <Link
+          to="/ritual"
+          className="flex min-h-11 items-center justify-between gap-3 rounded-control border border-line px-4 text-body motion-quick hover:bg-surface-2"
+        >
+          <span>{tRitual('startYourDay')}</span>
+          <ArrowRight size={20} aria-hidden="true" />
+        </Link>
+      ) : null}
+
       <div className="flex flex-col gap-2">
-        {view.energy ? <p className="text-small text-ink-2">{t(`energy.${view.energy}`)}</p> : null}
+        <p className="text-small text-ink-2">
+          {view.energy ? t(`energy.${view.energy}`) : tRitual('energy.question')}
+        </p>
         <div role="group" aria-label={tLow('toggle.label')} className="flex gap-2">
           <Button
             type="button"

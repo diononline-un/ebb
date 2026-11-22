@@ -19,6 +19,13 @@ async function register(page: Page, email: string): Promise<void> {
   expect(link).toBeTruthy()
 
   await page.goto(link as string)
+  await leaveRitual(page)
+}
+
+/** A fresh day opens the morning ritual (E3-P2); these flows live after it. */
+async function leaveRitual(page: Page): Promise<void> {
+  await expect(page).toHaveURL(/\/ritual$/)
+  await page.getByRole('button', { name: 'Leave', exact: true }).click()
   await expect(page).toHaveURL(/\/today$/)
 }
 
@@ -38,7 +45,9 @@ test('a task from yesterday comes along when the day starts', async ({ page }) =
   const clock = await page.request.post('/api/dev/clock', { data: { offsetMinutes: 24 * 60 } })
   expect(clock.status()).toBe(200)
 
+  // The new day opens the ritual again; leave it so the rollover note is on screen.
   await page.goto('/today')
+  await leaveRitual(page)
   await expect(page.getByText('1 task came along from yesterday. It is waiting in your inbox.')).toBeVisible()
   await expect(page.locator('h2', { hasText: 'Inbox' })).toBeVisible()
   await expect(page.getByText('the thing from yesterday')).toBeVisible()

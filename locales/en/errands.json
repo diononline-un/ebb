@@ -1,0 +1,12 @@
+{
+  "title": "Errands",
+  "loading": "One moment.",
+  "loadError": "The errands did not load. Check the connection and try again.",
+  "dayLine_one": "Errand day · {{count}} errand",
+  "dayLine_other": "Errand day · {{count}} errands",
+  "openHeading": "Open",
+  "doneHeading": "Done in the last 7 days",
+  "empty": "No errands waiting.",
+  "emptyDone": "No errand finished in the last 7 days.",
+  "planLink": "Open errands"
+}

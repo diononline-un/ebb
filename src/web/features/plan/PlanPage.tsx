@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/Tabs.tsx'
@@ -7,6 +8,8 @@ import { PlanList } from './PlanList.tsx'
 /** The slow lane of the app: everything that is not today, grouped by day where it makes sense. */
 export function PlanPage() {
   const { t } = useTranslation('plan')
+  // Errands moved to their own page (E5-P8); the label for the way there is theirs.
+  const { t: tErrands } = useTranslation('errands')
   const [view, setView] = useState<ListView>('inbox')
 
   return (
@@ -22,7 +25,13 @@ export function PlanPage() {
         </TabsList>
         {PLAN_VIEWS.map((entry) => (
           <TabsContent key={entry} value={entry}>
-            <PlanList view={entry} />
+            {entry === 'errands' ? (
+              <Link to="/errands" className="text-body text-ink-2 underline hover:text-ink">
+                {tErrands('planLink')}
+              </Link>
+            ) : (
+              <PlanList view={entry} />
+            )}
           </TabsContent>
         ))}
       </Tabs>

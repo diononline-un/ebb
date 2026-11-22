@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DumpRouteImport } from './routes/dump'
+import { Route as ErrandsRouteImport } from './routes/errands'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as GoalsRouteImport } from './routes/goals'
 import { Route as HabitsRouteImport } from './routes/habits'
@@ -38,6 +39,11 @@ const IndexRoute = IndexRouteImport.update({
 const DumpRoute = DumpRouteImport.update({
   id: '/dump',
   path: '/dump',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ErrandsRoute = ErrandsRouteImport.update({
+  id: '/errands',
+  path: '/errands',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
@@ -134,6 +140,7 @@ const SettingsSecurityRoute = SettingsSecurityRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dump': typeof DumpRoute
+  '/errands': typeof ErrandsRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
@@ -156,6 +163,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dump': typeof DumpRoute
+  '/errands': typeof ErrandsRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
@@ -179,6 +187,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dump': typeof DumpRoute
+  '/errands': typeof ErrandsRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
@@ -203,6 +212,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/dump'
+    | '/errands'
     | '/forgot-password'
     | '/goals'
     | '/habits'
@@ -225,6 +235,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/dump'
+    | '/errands'
     | '/forgot-password'
     | '/goals'
     | '/habits'
@@ -247,6 +258,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/dump'
+    | '/errands'
     | '/forgot-password'
     | '/goals'
     | '/habits'
@@ -270,6 +282,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DumpRoute: typeof DumpRoute
+  ErrandsRoute: typeof ErrandsRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   GoalsRoute: typeof GoalsRoute
   HabitsRoute: typeof HabitsRoute
@@ -304,6 +317,13 @@ declare module '@tanstack/react-router' {
       path: '/dump'
       fullPath: '/dump'
       preLoaderRoute: typeof DumpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/errands': {
+      id: '/errands'
+      path: '/errands'
+      fullPath: '/errands'
+      preLoaderRoute: typeof ErrandsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/forgot-password': {
@@ -438,6 +458,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DumpRoute: DumpRoute,
+  ErrandsRoute: ErrandsRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   GoalsRoute: GoalsRoute,
   HabitsRoute: HabitsRoute,

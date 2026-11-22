@@ -11,6 +11,7 @@ import { Button } from '../../ui/Button.tsx'
 import { TideLine } from '../../ui/TideLine.tsx'
 import { CurrentFocusTimer } from '../focus/FocusTimer.tsx'
 import { HabitsSection } from '../habits/HabitsToday.tsx'
+import { resetReady, useReset } from '../reset/api.ts'
 import { ritualSkipped, useSetEnergy } from '../ritual/api.ts'
 import { deleteTask, usePatchTask, useToday } from '../tasks/api.ts'
 import { TaskSheet } from '../tasks/TaskSheet.tsx'
@@ -64,9 +65,13 @@ export function TodayPage() {
   const { t, i18n } = useTranslation('today')
   const { t: tLow } = useTranslation('low')
   const { t: tRitual } = useTranslation('ritual')
+  const { t: tReset } = useTranslation('reset')
   const router = useRouter()
   const redirected = useRef(false)
   const query = useToday()
+  // shortcut: the quiet line for the reset reuses the week payload, so Today also loads the week's
+  // numbers. Give the reset its own small status endpoint once Today's payload shows up in a profile.
+  const reset = useReset()
   const setEnergy = useSetEnergy()
   const patchTask = usePatchTask()
   const queryClient = useQueryClient()
@@ -210,6 +215,17 @@ export function TodayPage() {
           className="flex min-h-11 items-center justify-between gap-3 rounded-control border border-line px-4 text-body motion-quick hover:bg-surface-2"
         >
           <span>{tRitual('startYourDay')}</span>
+          <ArrowRight size={20} aria-hidden="true" />
+        </Link>
+      ) : null}
+
+      {/* One quiet line on the reset day, and only while this week is still open (E6). */}
+      {resetReady(reset.data, view.date) ? (
+        <Link
+          to="/reset"
+          className="flex min-h-11 items-center justify-between gap-3 rounded-control border border-line px-4 text-body motion-quick hover:bg-surface-2"
+        >
+          <span>{tReset('todayReady')}</span>
           <ArrowRight size={20} aria-hidden="true" />
         </Link>
       ) : null}

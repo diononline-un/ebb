@@ -19,6 +19,7 @@ import { Route as LowRouteImport } from './routes/low'
 import { Route as MoreRouteImport } from './routes/more'
 import { Route as PlanRouteImport } from './routes/plan'
 import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as ResetRouteImport } from './routes/reset'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RitualRouteImport } from './routes/ritual'
 import { Route as SignInRouteImport } from './routes/sign-in'
@@ -29,6 +30,7 @@ import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as GoalsGoalIdRouteImport } from './routes/goals_.$goalId'
 import { Route as ProjectsProjectIdRouteImport } from './routes/projects_.$projectId'
+import { Route as ResetHistoryRouteImport } from './routes/reset_.history'
 import { Route as SettingsSecurityRouteImport } from './routes/settings.security'
 
 const IndexRoute = IndexRouteImport.update({
@@ -81,6 +83,11 @@ const ProjectsRoute = ProjectsRouteImport.update({
   path: '/projects',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetRoute = ResetRouteImport.update({
+  id: '/reset',
+  path: '/reset',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
@@ -131,6 +138,11 @@ const ProjectsProjectIdRoute = ProjectsProjectIdRouteImport.update({
   path: '/projects/$projectId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetHistoryRoute = ResetHistoryRouteImport.update({
+  id: '/reset_/history',
+  path: '/reset/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsSecurityRoute = SettingsSecurityRouteImport.update({
   id: '/settings/security',
   path: '/settings/security',
@@ -148,6 +160,7 @@ export interface FileRoutesByFullPath {
   '/more': typeof MoreRoute
   '/plan': typeof PlanRoute
   '/projects': typeof ProjectsRoute
+  '/reset': typeof ResetRoute
   '/reset-password': typeof ResetPasswordRoute
   '/ritual': typeof RitualRoute
   '/sign-in': typeof SignInRoute
@@ -158,6 +171,7 @@ export interface FileRoutesByFullPath {
   '/welcome': typeof WelcomeRoute
   '/goals/$goalId': typeof GoalsGoalIdRoute
   '/projects/$projectId': typeof ProjectsProjectIdRoute
+  '/reset/history': typeof ResetHistoryRoute
   '/settings/security': typeof SettingsSecurityRoute
 }
 export interface FileRoutesByTo {
@@ -171,6 +185,7 @@ export interface FileRoutesByTo {
   '/more': typeof MoreRoute
   '/plan': typeof PlanRoute
   '/projects': typeof ProjectsRoute
+  '/reset': typeof ResetRoute
   '/reset-password': typeof ResetPasswordRoute
   '/ritual': typeof RitualRoute
   '/sign-in': typeof SignInRoute
@@ -181,6 +196,7 @@ export interface FileRoutesByTo {
   '/welcome': typeof WelcomeRoute
   '/goals/$goalId': typeof GoalsGoalIdRoute
   '/projects/$projectId': typeof ProjectsProjectIdRoute
+  '/reset/history': typeof ResetHistoryRoute
   '/settings/security': typeof SettingsSecurityRoute
 }
 export interface FileRoutesById {
@@ -195,6 +211,7 @@ export interface FileRoutesById {
   '/more': typeof MoreRoute
   '/plan': typeof PlanRoute
   '/projects': typeof ProjectsRoute
+  '/reset': typeof ResetRoute
   '/reset-password': typeof ResetPasswordRoute
   '/ritual': typeof RitualRoute
   '/sign-in': typeof SignInRoute
@@ -205,6 +222,7 @@ export interface FileRoutesById {
   '/welcome': typeof WelcomeRoute
   '/goals_/$goalId': typeof GoalsGoalIdRoute
   '/projects_/$projectId': typeof ProjectsProjectIdRoute
+  '/reset_/history': typeof ResetHistoryRoute
   '/settings/security': typeof SettingsSecurityRoute
 }
 export interface FileRouteTypes {
@@ -220,6 +238,7 @@ export interface FileRouteTypes {
     | '/more'
     | '/plan'
     | '/projects'
+    | '/reset'
     | '/reset-password'
     | '/ritual'
     | '/sign-in'
@@ -230,6 +249,7 @@ export interface FileRouteTypes {
     | '/welcome'
     | '/goals/$goalId'
     | '/projects/$projectId'
+    | '/reset/history'
     | '/settings/security'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -243,6 +263,7 @@ export interface FileRouteTypes {
     | '/more'
     | '/plan'
     | '/projects'
+    | '/reset'
     | '/reset-password'
     | '/ritual'
     | '/sign-in'
@@ -253,6 +274,7 @@ export interface FileRouteTypes {
     | '/welcome'
     | '/goals/$goalId'
     | '/projects/$projectId'
+    | '/reset/history'
     | '/settings/security'
   id:
     | '__root__'
@@ -266,6 +288,7 @@ export interface FileRouteTypes {
     | '/more'
     | '/plan'
     | '/projects'
+    | '/reset'
     | '/reset-password'
     | '/ritual'
     | '/sign-in'
@@ -276,6 +299,7 @@ export interface FileRouteTypes {
     | '/welcome'
     | '/goals_/$goalId'
     | '/projects_/$projectId'
+    | '/reset_/history'
     | '/settings/security'
   fileRoutesById: FileRoutesById
 }
@@ -290,6 +314,7 @@ export interface RootRouteChildren {
   MoreRoute: typeof MoreRoute
   PlanRoute: typeof PlanRoute
   ProjectsRoute: typeof ProjectsRoute
+  ResetRoute: typeof ResetRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   RitualRoute: typeof RitualRoute
   SignInRoute: typeof SignInRoute
@@ -300,6 +325,7 @@ export interface RootRouteChildren {
   WelcomeRoute: typeof WelcomeRoute
   GoalsGoalIdRoute: typeof GoalsGoalIdRoute
   ProjectsProjectIdRoute: typeof ProjectsProjectIdRoute
+  ResetHistoryRoute: typeof ResetHistoryRoute
   SettingsSecurityRoute: typeof SettingsSecurityRoute
 }
 
@@ -375,6 +401,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset': {
+      id: '/reset'
+      path: '/reset'
+      fullPath: '/reset'
+      preLoaderRoute: typeof ResetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reset-password': {
       id: '/reset-password'
       path: '/reset-password'
@@ -445,6 +478,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsProjectIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset_/history': {
+      id: '/reset_/history'
+      path: '/reset/history'
+      fullPath: '/reset/history'
+      preLoaderRoute: typeof ResetHistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings/security': {
       id: '/settings/security'
       path: '/settings/security'
@@ -466,6 +506,7 @@ const rootRouteChildren: RootRouteChildren = {
   MoreRoute: MoreRoute,
   PlanRoute: PlanRoute,
   ProjectsRoute: ProjectsRoute,
+  ResetRoute: ResetRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   RitualRoute: RitualRoute,
   SignInRoute: SignInRoute,
@@ -476,6 +517,7 @@ const rootRouteChildren: RootRouteChildren = {
   WelcomeRoute: WelcomeRoute,
   GoalsGoalIdRoute: GoalsGoalIdRoute,
   ProjectsProjectIdRoute: ProjectsProjectIdRoute,
+  ResetHistoryRoute: ResetHistoryRoute,
   SettingsSecurityRoute: SettingsSecurityRoute,
 }
 export const routeTree = rootRouteImport

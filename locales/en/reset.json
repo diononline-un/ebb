@@ -1,0 +1,71 @@
+{
+  "nav": "Weekly reset",
+  "title": "Weekly reset",
+  "loading": "One moment.",
+  "loadError": "The week did not load. Check the connection and try again.",
+  "saveError": "That did not save. Check the connection and try again.",
+  "progressLabel": "Weekly reset progress",
+  "todayReady": "Weekly reset is ready",
+  "review": {
+    "question": "How did the week go?",
+    "wentWell": "What went well?",
+    "wentBadly": "What did not?",
+    "change": "What will I change?",
+    "continue": "Continue"
+  },
+  "numbers": {
+    "question": "The week in numbers",
+    "anchorLabel": "Anchor done on",
+    "anchorValue": "{{done}} of 7 days",
+    "tasksLabel": "Tasks done",
+    "tasksValue_one": "{{count}} task",
+    "tasksValue_other": "{{count}} tasks",
+    "focusLabel": "Focus",
+    "focusValue_one": "{{count}} minute",
+    "focusValue_other": "{{count}} minutes",
+    "rolledLabel": "Came along from yesterday",
+    "rolledValue_one": "{{count}} task",
+    "rolledValue_other": "{{count}} tasks",
+    "habitsHeading": "Habits",
+    "habitValue": "{{done}} of {{target}} this week",
+    "projectsHeading": "Projects",
+    "projectValue_one": "{{count}} task done",
+    "projectValue_other": "{{count}} tasks done",
+    "continue": "Continue"
+  },
+  "stuck": {
+    "question": "What happens to these?",
+    "pushed": "pushed {{count}}×",
+    "older": "older than 14 days",
+    "empty": "Nothing is waiting for a decision.",
+    "date": "Give it a date",
+    "dateLabel": "New day for this task",
+    "split": "Break it into steps",
+    "skip": "Not today",
+    "delete": "Delete",
+    "deleteQuestion": "Delete this task?",
+    "deleteText": "It goes away for good. Everything else stays.",
+    "deleteConfirm": "Delete",
+    "waiting": "One task is still waiting for a decision.",
+    "continue": "Continue"
+  },
+  "outlook": {
+    "question": "What is ahead",
+    "deadline": "Deadline",
+    "empty": "Nothing is planned for the next seven days.",
+    "finish": "Finish the week"
+  },
+  "done": {
+    "title": "This week is closed",
+    "empty": "No answers were written this week.",
+    "history": "Earlier weeks"
+  },
+  "history": {
+    "title": "Earlier weeks",
+    "loading": "One moment.",
+    "loadError": "The weeks did not load. Check the connection and try again.",
+    "empty": "No week is closed yet.",
+    "done": "Done",
+    "open": "Not finished"
+  }
+}

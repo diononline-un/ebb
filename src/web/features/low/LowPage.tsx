@@ -8,6 +8,7 @@ import { Input } from '../../ui/Input.tsx'
 import { Sheet } from '../../ui/Sheet.tsx'
 import { Textarea } from '../../ui/Textarea.tsx'
 import { TideLine } from '../../ui/TideLine.tsx'
+import { CurrentFocusTimer } from '../focus/FocusTimer.tsx'
 import { StartFocusButton } from '../focus/StartFocusButton.tsx'
 import { usePatchTask, useToday } from '../tasks/api.ts'
 import { lowCandidates, pickLowTask } from './pickLowTask.ts'
@@ -60,6 +61,9 @@ export function LowMode({ view, onPatch, onGoToToday }: LowModeProps) {
         <h1 className="text-title">{t('title')}</h1>
         <p className="text-meta text-ink-3">{dateLabel}</p>
       </header>
+
+      {/* Above the one task, as Today shows it above the anchor; "Start 10 min" needs something to answer. */}
+      <CurrentFocusTimer />
 
       {justDone ? (
         <div className="flex flex-col gap-3">

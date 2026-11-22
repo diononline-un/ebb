@@ -6,12 +6,11 @@ import { ArrowRight } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Task, TaskPatch, TodayView } from '../../../shared/schemas/task.ts'
-import { ApiError, apiFetch } from '../../lib/api.ts'
+import { ApiError } from '../../lib/api.ts'
 import { Button } from '../../ui/Button.tsx'
 import { TideLine } from '../../ui/TideLine.tsx'
-import { useCurrentFocus, useStopFocus } from '../focus/api.ts'
-import { FocusTimer } from '../focus/FocusTimer.tsx'
-import { ritualSkipped } from '../ritual/api.ts'
+import { CurrentFocusTimer } from '../focus/FocusTimer.tsx'
+import { ritualSkipped, useSetEnergy } from '../ritual/api.ts'
 import { deleteTask, usePatchTask, useToday } from '../tasks/api.ts'
 import { TaskSheet } from '../tasks/TaskSheet.tsx'
 import { AnchorBlock } from './AnchorBlock.tsx'
@@ -67,8 +66,7 @@ export function TodayPage() {
   const router = useRouter()
   const redirected = useRef(false)
   const query = useToday()
-  const focus = useCurrentFocus()
-  const stopFocus = useStopFocus()
+  const setEnergy = useSetEnergy()
   const patchTask = usePatchTask()
   const queryClient = useQueryClient()
   const [selectedId, setSelectedId] = useState<string | null>(null)
@@ -190,9 +188,7 @@ export function TodayPage() {
   // The energy answer lands in the cache right away; the refetch settles it with the server's word.
   const chooseEnergy = (energy: 'low' | 'good') => {
     queryClient.setQueryData<TodayView>(['today'], (previous) => (previous ? { ...previous, energy } : previous))
-    void apiFetch('/api/day/energy', { method: 'PUT', body: JSON.stringify({ energy }) })
-      .catch(() => undefined)
-      .finally(() => queryClient.invalidateQueries({ queryKey: ['today'] }))
+    setEnergy.mutate(energy)
   }
 
   const remove = async (id: string) => {
@@ -248,7 +244,7 @@ export function TodayPage() {
 
       <RolloverNote count={view.rolledCount} date={view.date} />
 
-      {focus.data ? <FocusTimer session={focus.data} onStop={(id) => stopFocus.mutate(id)} /> : null}
+      <CurrentFocusTimer />
 
       <AnchorBlock
         anchor={anchor}

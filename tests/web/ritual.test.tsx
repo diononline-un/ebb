@@ -7,8 +7,15 @@ import { Ritual } from '../../src/web/features/ritual/RitualPage.tsx'
 import { i18nReady } from '../../src/web/lib/i18n.ts'
 
 // The dump box and the start button have their own callers; here they only have to render.
+const dump = vi.hoisted(() => ({
+  lines: [] as { id: string; text: string; taskId: string | null }[],
+  toTask: vi.fn(async (_id: string) => {}),
+}))
+
 vi.mock('../../src/web/features/dump/api.ts', () => ({
   useDumpSubmit: () => ({ submit: async () => true, busy: false, error: null }),
+  useDumpLines: () => ({ data: dump.lines }),
+  useDumpActions: () => ({ toTask: dump.toTask, archive: async () => {} }),
 }))
 
 vi.mock('../../src/web/features/focus/api.ts', () => ({
@@ -23,6 +30,8 @@ beforeAll(async () => {
 afterEach(() => {
   cleanup()
   localStorage.clear()
+  dump.lines = []
+  dump.toTask.mockClear()
 })
 
 function view(patch: Partial<TodayView> = {}): TodayView {
@@ -115,5 +124,35 @@ describe('Ritual', () => {
     await waitFor(() => expect(props.onFinish).toHaveBeenCalled())
     expect(props.onGoToday).toHaveBeenCalled()
     expect(props.onGoLow).not.toHaveBeenCalled()
+  })
+
+  it('turns a dumped thought into a task for the sorting, and leaves the done ones out', async () => {
+    dump.lines = [
+      { id: 'line-open', text: 'call the bank', taskId: null },
+      { id: 'line-done', text: 'buy stamps', taskId: 'task-1' },
+    ]
+    const props = ritualProps()
+    const { getByRole, getByText, queryByText } = render(<Ritual {...props} />)
+
+    fireEvent.click(getByRole('button', { name: 'Good' }))
+    await waitFor(() => expect(getByText('call the bank')).toBeTruthy())
+    expect(queryByText('buy stamps')).toBeNull()
+
+    fireEvent.click(getByRole('button', { name: '→ Task' }))
+    await waitFor(() => expect(dump.toTask).toHaveBeenCalledWith('line-open'))
+  })
+
+  it('stays on the question and says so when the answer does not save', async () => {
+    const props = ritualProps()
+    props.onEnergy.mockRejectedValueOnce(new Error('offline'))
+    const { getByRole, getByText } = render(<Ritual {...props} />)
+
+    fireEvent.click(getByRole('button', { name: 'Low' }))
+
+    await waitFor(() => expect(getByRole('alert').textContent).toContain('That did not save'))
+    expect(getByText('How much battery do you have today?')).toBeTruthy()
+
+    fireEvent.click(getByRole('button', { name: 'Low' }))
+    await waitFor(() => expect(getByText('What is on your mind?')).toBeTruthy())
   })
 })

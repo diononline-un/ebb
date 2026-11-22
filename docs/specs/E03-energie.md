@@ -30,17 +30,16 @@ Der Tag beginnt mit einer Frage statt mit einem Board. An Low-Energy-Tagen bleib
 
 ### Getroffen
 - **Kein `GET /api/day`.** `TodayView` bekommt `ritualDoneAt` (ISO-Zeitstempel oder `null`); Energie und `rolledCount` stehen schon drin. Ritual und Low-Modus lesen nur `GET /api/today`.
-- **Ritual-Ablauf** (`/ritual`): 1 Energie → 2 Rollover-Hinweis (nur wenn `rolledCount > 0`) → 3 Dump-Kurzeingabe (überspringbar) → 4+5 `TriageFlow` (Sortieren + Anker) → 6 Start. Bei `low` führt Schritt 6 in den Low-Modus (`/low`), bei `good` bietet er „Start Block 1“ (Timer) oder „Not now“ an. Schritt 6 schickt `POST /api/day/ritual-done`.
+- **Ritual-Ablauf** (`/ritual`): 1 Energie → 2 Rollover-Hinweis (nur wenn `rolledCount > 0`) → 3 Dump-Kurzeingabe (überspringbar) → 4+5 `TriageFlow` (Sortieren + Anker) → 6 Start. Bei `low` führt Schritt 6 in den Low-Modus (`/low`), bei `good` bietet er „Start Block 1“ (Timer) oder „Not now“ an. Schritt 6 schickt `POST /api/day/ritual-done`. Im Dump-Schritt stehen die offenen Gedanken mit „→ Task“ (`DumpList`); erst als Aufgabe erreichen sie die Sortierung im selben Durchgang (nachgetragen bei der Prüfung).
 - **Automatischer Start:** Beim Öffnen von Today leitet die Seite einmal pro Tag auf `/ritual` um, solange `ritualDoneAt === null`. Wer das Ritual abbricht, kommt nicht nochmal dorthin (Merker in `localStorage` `ebb.ritual.skipped.<YYYY-MM-DD>`). Auf Today bleibt dann die Zeile „Start your day“.
 - **Low-Vorschlag:** erste Muss-Aufgabe vor dem Anker vor der ersten Inbox-Aufgabe vor der ersten Block-Aufgabe (Block 1–4). „Choose another“ öffnet die Auswahl aus denselben Aufgaben.
 - **Timer läuft im Client** über `startedAt` und `plannedMinutes` der Sitzung (`Date.now()`-Differenz, kein Zählen von Intervallen). Höchstens eine offene Sitzung pro Person; eine neue beendet die alte. Nach einem Reload holt `GET /api/focus/current` die laufende Sitzung zurück.
-- **Kein Push in E3.** Läuft die Zeit bei offener Seite ab, zeigt der Timer eine `Notification` (Erlaubnis nur auf Klick) und schickt `stop`. Push bei geschlossener Seite kommt mit E9.
+- **Kein Push in E3.** Läuft die Zeit bei offener Seite ab, zeigt der Timer eine `Notification` (Erlaubnis nur auf Klick) und schickt `stop`. Die ruhige Zeile „Time for a break“ bleibt stehen, bis sie geschlossen wird; eine Sitzung, die bei geschlossener Seite abgelaufen ist, endet still. Der Timer steht auf Today und im Low-Modus (`CurrentFocusTimer`). Push bei geschlossener Seite kommt mit E9.
 - **Dauer:** 25, 50, 90 oder frei (5–180 Minuten). Low-Modus: 10 Minuten.
+- **Wochenende (D1):** Das Ritual startet auch am Wochenende, ohne Einstellung. Nach Vorschlag umgesetzt in P2.
 
 ### Offen
-| # | Frage | Wer | Vorschlag | Betrifft |
-|---|---|---|---|---|
-| D1 | Soll das Ritual an Wochenenden auch automatisch starten? | Dion | Ja, gleich wie unter der Woche. Eine Einstellung dafür erst bei Bedarf. | E3-P2 |
+Keine.
 
 ## Datenmodell
 

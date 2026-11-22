@@ -41,7 +41,8 @@ export function useDumpActions() {
     },
     toTask: async (id: string) => {
       await apiFetch(`/api/dump/${id}/to-task`, { method: 'POST' })
-      await refresh()
+      // The new task waits in today's inbox, so the day (and the ritual's sorting) has to see it too.
+      await Promise.all([refresh(), queryClient.invalidateQueries({ queryKey: ['today'] })])
     },
     archive: async (id: string) => {
       await apiFetch(`/api/dump/${id}/archive`, { method: 'POST' })

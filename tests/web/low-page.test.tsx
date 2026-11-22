@@ -5,10 +5,12 @@ import type { Task, TodayView } from '../../src/shared/schemas/task.ts'
 import { LowMode } from '../../src/web/features/low/LowPage.tsx'
 import { i18nReady } from '../../src/web/lib/i18n.ts'
 
-// The start button has its own tests; here it only has to exist without a query client.
+// The start button and the timer have their own tests; here they only have to exist without a query client.
 vi.mock('../../src/web/features/focus/api.ts', () => ({
   useStartFocus: () => ({ mutate: () => {}, isPending: false }),
   useTimerDefault: () => 25,
+  useCurrentFocus: () => ({ data: null }),
+  useStopFocus: () => ({ mutate: () => {} }),
 }))
 
 beforeAll(async () => {

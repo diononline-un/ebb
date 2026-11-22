@@ -33,21 +33,22 @@ async function register(page: Page, email: string): Promise<void> {
 test('the first day runs through the ritual, and only once', async ({ page }) => {
   await register(page, uniqueEmail('ritual'))
 
-  // Two thoughts for the inbox, kept as tasks so the ritual has something to sort.
-  for (const title of ['write the invoice', 'buy stamps']) {
-    const created = await page.request.post('/api/tasks', { data: { title } })
-    expect(created.status()).toBe(201)
-  }
+  // One task from yesterday's inbox; the second one comes out of the ritual's own dump.
+  const created = await page.request.post('/api/tasks', { data: { title: 'write the invoice' } })
+  expect(created.status()).toBe(201)
 
-  // Eight clicks in all, plus the Enter that keeps the thought: Good, Done, four answers,
-  // Choose anchor, the task, Not now.
+  // Eight clicks for two inbox tasks (Good, Done, four answers, Choose anchor, the task, Not now),
+  // plus the Enter that keeps the thought and the one tap that makes it a task.
   await page.getByRole('button', { name: 'Good', exact: true }).click()
 
   const composer = page.getByRole('textbox', { name: 'Add a thought' })
-  await composer.fill('call the bank')
+  await composer.fill('buy stamps')
   await composer.press('Enter')
   // The composer empties only after the thought was kept.
   await expect(composer).toHaveValue('')
+  // What was just dumped has to reach the sorting in the same ritual, not wait on /dump.
+  await page.getByRole('button', { name: '→ Task', exact: true }).click()
+  await expect(page.getByText('buy stamps')).toHaveCount(0)
   await page.getByRole('button', { name: 'Done', exact: true }).click()
 
   // Sorting works exactly as on /triage.

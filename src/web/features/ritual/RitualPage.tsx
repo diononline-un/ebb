@@ -38,6 +38,7 @@ export function Ritual({ view, usualMinutes, onEnergy, onFinish, onTriage, onCho
   const { t } = useTranslation('ritual')
   const [step, setStep] = useState<Step>('energy')
   const [energy, setEnergy] = useState<Energy | null>(view.energy)
+  const [failed, setFailed] = useState(false)
 
   const steps: Step[] = view.rolledCount > 0
     ? ['energy', 'rollover', 'dump', 'triage', 'start']
@@ -65,19 +66,26 @@ export function Ritual({ view, usualMinutes, onEnergy, onFinish, onTriage, onCho
     setStep(view.rolledCount > 0 ? 'rollover' : 'dump')
   }
 
+  const finish = async () => {
+    await onFinish()
+    if (energy === 'low') onGoLow()
+    else onGoToday()
+  }
+
   // A low day goes straight into the low-energy mode; a good one offers the first block.
   const afterTriage = async () => {
-    if (energy === 'low') {
-      await onFinish()
-      onGoLow()
-      return
-    }
+    if (energy === 'low') return finish()
     setStep('start')
   }
 
-  const finish = async () => {
-    await onFinish()
-    onGoToday()
+  // Offline or a server hiccup: say so on the ritual's own screen instead of hanging without a word.
+  // The sorting screen covers that screen, so a failure there lands on the start step to retry.
+  const run = (action: () => Promise<void>) => {
+    setFailed(false)
+    action().catch(() => {
+      setFailed(true)
+      if (step === 'triage') setStep('start')
+    })
   }
 
   if (step === 'triage') {
@@ -86,7 +94,7 @@ export function Ritual({ view, usualMinutes, onEnergy, onFinish, onTriage, onCho
         view={view}
         onTriage={onTriage}
         onChooseAnchor={onChooseAnchor}
-        onDone={() => void afterTriage()}
+        onDone={() => run(afterTriage)}
       />
     )
   }
@@ -101,7 +109,13 @@ export function Ritual({ view, usualMinutes, onEnergy, onFinish, onTriage, onCho
           </Button>
         </div>
 
-        {step === 'energy' ? <EnergyStep onAnswer={(answer) => void answerEnergy(answer)} /> : null}
+        {failed ? (
+          <p role="alert" className="text-small text-danger">
+            {t('saveError')}
+          </p>
+        ) : null}
+
+        {step === 'energy' ? <EnergyStep onAnswer={(answer) => run(() => answerEnergy(answer))} /> : null}
 
         {step === 'rollover' ? (
           <div className="flex flex-1 flex-col gap-8">
@@ -115,7 +129,7 @@ export function Ritual({ view, usualMinutes, onEnergy, onFinish, onTriage, onCho
         {step === 'dump' ? <DumpStep onNext={() => setStep('triage')} /> : null}
 
         {step === 'start' ? (
-          <StartStep minutes={usualMinutes} onStart={() => void finish()} onNotNow={() => void finish()} />
+          <StartStep minutes={usualMinutes} onStart={() => run(finish)} onNotNow={() => run(finish)} />
         ) : null}
       </div>
     </div>

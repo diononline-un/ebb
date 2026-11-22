@@ -1,6 +1,7 @@
 {
   "timer": {
     "stop": "Stop",
+    "close": "Close",
     "finished": "Time for a break"
   },
   "start": {

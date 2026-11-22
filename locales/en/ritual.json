@@ -4,6 +4,7 @@
   "startYourDay": "Start your day",
   "loading": "One moment.",
   "loadError": "The day did not load. Check the connection and try again.",
+  "saveError": "That did not save. Check the connection and try again.",
   "energy": {
     "question": "How much battery do you have today?",
     "low": "Low",

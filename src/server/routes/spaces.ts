@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { InviteCreate, InviteJoin, SpaceCreate, SpacePatch } from '../../shared/schemas/spaces.ts'
 import type { AppContext, AppEnv } from '../app-env.ts'
 import { withUser } from '../db.ts'
+import { listSpaceTasks } from '../domain/spaces/tasks.ts'
 import {
   acceptInvite,
   createInvite,
@@ -75,6 +76,17 @@ export const spaceRoutes = new Hono<AppEnv>()
     try {
       await withUser(userOf(c).id, (tx) => deleteSpace(tx, id, parsed.data.name))
       return c.body(null, 204)
+    } catch (error) {
+      return failure(c, error)
+    }
+  })
+  .get('/:id/tasks', requireUser, async (c) => {
+    const id = idOrNull(c.req.param('id'))
+    if (!id) return notFound(c)
+    const filter = c.req.query('filter') === 'all' ? 'all' : 'unassigned'
+
+    try {
+      return c.json(await withUser(userOf(c).id, (tx) => listSpaceTasks(tx, id, filter)))
     } catch (error) {
       return failure(c, error)
     }

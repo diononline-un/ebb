@@ -7,11 +7,11 @@ type TaskWarning = z.infer<typeof TaskWarningSchema>
 
 /** A task rule said no. Routes translate it into the HTTP answer, so the rule stays here. */
 export class TaskError extends Error {
-  readonly status: 404 | 409 | 422
+  readonly status: 403 | 404 | 409 | 422
   readonly code: string
   readonly details: Record<string, string> | undefined
 
-  constructor(status: 404 | 409 | 422, code: string, details?: Record<string, string>) {
+  constructor(status: 403 | 404 | 409 | 422, code: string, details?: Record<string, string>) {
     super(code)
     this.name = 'TaskError'
     this.status = status
@@ -46,6 +46,27 @@ export type RuleOutcome = {
   /** The task holding today's anchor that gives it up because of replaceAnchor. */
   clearAnchorId: string | null
   completedChange: 'set' | 'clear' | null
+}
+
+/**
+ * The planning fields of a shared task belong to the person responsible for it (PRD F13): someone
+ * else in the space may rename it or write notes, but not move it into a block, make it a must or
+ * plan its day. A task nobody owns is open to everyone in the space.
+ */
+export async function assertOwnPlan(
+  tx: Tx,
+  taskId: string,
+  assigneeId: string | null,
+  patch: TaskPatch,
+): Promise<void> {
+  const touchesPlan =
+    patch.slot !== undefined || patch.must !== undefined || patch.anchor !== undefined || patch.doDate !== undefined
+  if (!touchesPlan || assigneeId === null) return
+
+  const [row] = await tx<{ kind: string; me: string | null }[]>`
+    select s.kind, app.uid() as me from task t join space s on s.id = t.space_id where t.id = ${taskId}`
+  if (row?.kind !== 'shared' || row.me === assigneeId) return
+  throw new TaskError(403, 'not_your_plan')
 }
 
 /** The parent of a subtask: one level deep, in the same space, and visible to this user. */

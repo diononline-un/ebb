@@ -13,6 +13,17 @@ import { TASK_COLUMNS, toTask, type TaskRow } from './tasks.ts'
 
 type ListView = z.infer<typeof ListViewSchema>
 
+/** The spaces behind the given tasks, so a row can name the shared space it comes from (E7). */
+async function spacesOf(tx: Tx, tasks: { spaceId: string }[]): Promise<{ id: string; name: string }[]> {
+  const ids = [...new Set(tasks.map((task) => task.spaceId))]
+  if (ids.length === 0) return []
+  const rows = await tx.unsafe<{ id: string; name: string }[]>(
+    'select id, name from space where id = any($1::uuid[]) order by kind, created_at',
+    [ids],
+  )
+  return rows.map((row) => ({ id: row.id, name: row.name }))
+}
+
 type GroupedRow = TaskRow & { groupDate?: string | null }
 
 function singleGroup(rows: TaskRow[]): TaskListView['groups'] {
@@ -73,6 +84,7 @@ export async function loadTodayView(tx: Tx, today: string): Promise<TodayView> {
     errandsOpen: errands?.count ?? 0,
     doneToday,
     ritualDoneAt: entry?.ritualDoneAt ? entry.ritualDoneAt.toISOString() : null,
+    spaces: await spacesOf(tx, tasks),
   })
 }
 

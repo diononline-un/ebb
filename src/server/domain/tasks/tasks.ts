@@ -7,7 +7,25 @@ import {
 } from '../../../shared/schemas/task.ts'
 import { triagePatch, type TriageAnswer } from '../../../shared/triage.ts'
 import type { Tx } from '../../db.ts'
-import { applyRules, assertParent, assertProject, TaskError, type RuleContext } from './rules.ts'
+import { applyRules, assertOwnPlan, assertParent, assertProject, TaskError, type RuleContext } from './rules.ts'
+
+/** The database triggers of 0020/0050 refuse a few rows; the route needs them as rule codes. */
+const TRIGGER_CHECKS: Record<string, string> = {
+  assignee_not_member: 'assignee_not_member',
+  subtask_other_space: 'subtask_other_space',
+  subtask_too_deep: 'subtask_too_deep',
+}
+
+async function guarded<T>(run: () => Promise<T>): Promise<T> {
+  try {
+    return await run()
+  } catch (error) {
+    const message = error instanceof Error ? error.message : ''
+    const code = Object.keys(TRIGGER_CHECKS).find((key) => message.includes(key))
+    if (!code) throw error
+    throw new TaskError(422, code)
+  }
+}
 
 /** Calendar days are cast to text: postgres.js would hand back a Date at local midnight. */
 export const TASK_COLUMNS = `id, space_id, created_by, assignee_id, title, notes, next_step, status,
@@ -62,6 +80,31 @@ export async function personalSpaceId(tx: Tx): Promise<string> {
 export async function loadTaskRow(tx: Tx, id: string): Promise<TaskRow | null> {
   const [row] = await tx.unsafe<TaskRow[]>(`select ${TASK_COLUMNS} from task where id = $1`, [id])
   return row ?? null
+}
+
+/**
+ * Takes an unassigned task for myself. A task that already has a responsible person answers 409,
+ * so two people tapping at once cannot silently overwrite each other.
+ */
+export async function claimTask(tx: Tx, id: string): Promise<Task> {
+  const current = await loadTaskRow(tx, id)
+  if (!current) throw new TaskError(404, 'not_found')
+  if (current.assigneeId !== null) {
+    if (current.assigneeId === (await currentUserId(tx))) return toTask(current)
+    throw new TaskError(409, 'already_assigned')
+  }
+  const [row] = await tx.unsafe<TaskRow[]>(
+    `update task set assignee_id = app.uid() where id = $1 returning ${TASK_COLUMNS}`,
+    [id],
+  )
+  if (!row) throw new TaskError(404, 'not_found')
+  return toTask(row)
+}
+
+async function currentUserId(tx: Tx): Promise<string> {
+  const [row] = await tx<{ uid: string }[]>`select app.uid() as uid`
+  if (!row?.uid) throw new Error('missing app.uid()')
+  return row.uid
 }
 
 /** One task with its subtasks: the x/y the parent row shows (E5-P5). */
@@ -131,12 +174,12 @@ export async function createTask(tx: Tx, input: TaskCreate, ctx: RuleContext): P
 
   const slot = outcome.write.slot ?? 'inbox'
   const doDate = outcome.write.doDate ?? null
-  const [row] = await tx.unsafe<TaskRow[]>(
-    `insert into task (space_id, title, notes, do_date, deadline, slot, position, project_id, parent_id)
+  const [row] = await guarded(() => tx.unsafe<TaskRow[]>(
+    `insert into task (space_id, title, notes, do_date, deadline, slot, position, project_id, parent_id, assignee_id)
      values ($1, $2, $3, $4, $5, $6,
              (select coalesce(max(position) + 1, 0) from task
                where assignee_id = app.uid() and do_date is not distinct from $4::date and slot = $6),
-             $7, $8)
+             $7, $8, $9)
      returning ${TASK_COLUMNS}`,
     [
       spaceId,
@@ -147,8 +190,9 @@ export async function createTask(tx: Tx, input: TaskCreate, ctx: RuleContext): P
       slot,
       input.projectId ?? null,
       input.parentId ?? null,
+      input.assigneeId ?? null,
     ],
-  )
+  ))
   if (!row) throw new Error('task insert returned nothing')
   return { task: toTask(row), warnings: outcome.warnings }
 }
@@ -158,6 +202,7 @@ export async function patchTask(tx: Tx, id: string, patch: TaskPatch, ctx: RuleC
   if (!current) throw new TaskError(404, 'not_found')
   await assertParent(tx, patch.parentId, current.spaceId)
   await assertProject(tx, patch.projectId, current.spaceId)
+  await assertOwnPlan(tx, id, current.assigneeId, patch)
   const outcome = await applyRules(tx, current, patch, ctx)
 
   if (outcome.clearAnchorId) {
@@ -184,6 +229,7 @@ export async function patchTask(tx: Tx, id: string, patch: TaskPatch, ctx: RuleC
   if (write.position !== undefined) set('position', write.position)
   if (write.anchor !== undefined) set('anchor', write.anchor)
   if (write.projectId !== undefined) set('project_id', write.projectId)
+  if (write.assigneeId !== undefined) set('assignee_id', write.assigneeId)
   if (write.parentId !== undefined) set('parent_id', write.parentId)
   if (outcome.completedChange === 'set') assignments.push('completed_at = now()')
   if (outcome.completedChange === 'clear') assignments.push('completed_at = null')
@@ -209,10 +255,10 @@ export async function patchTask(tx: Tx, id: string, patch: TaskPatch, ctx: RuleC
   if (assignments.length === 0) return { task: toTask(current), warnings: outcome.warnings }
 
   values.push(id)
-  const [updated] = await tx.unsafe<TaskRow[]>(
+  const [updated] = await guarded(() => tx.unsafe<TaskRow[]>(
     `update task set ${assignments.join(', ')} where id = $${values.length} returning ${TASK_COLUMNS}`,
     values,
-  )
+  ))
   if (!updated) throw new TaskError(404, 'not_found')
 
   if (slotMoved || dateMoved || write.position !== undefined) {

@@ -49,6 +49,8 @@ export const TaskCreate = z.object({
   projectId: z.uuid().optional(),
   /** One level deep, same space as the parent. */
   parentId: z.uuid().optional(),
+  /** Only in shared spaces; a personal task always belongs to the owner. */
+  assigneeId: z.string().nullable().optional(),
 })
 export type TaskCreate = z.infer<typeof TaskCreate>
 
@@ -65,6 +67,8 @@ export const TaskPatch = z.object({
   anchor: z.boolean().optional(),
   projectId: z.uuid().nullable().optional(),
   parentId: z.uuid().nullable().optional(),
+  /** Only a member of the space can be made responsible (E7). */
+  assigneeId: z.string().nullable().optional(),
   /** With anchor: true, replaces today's current anchor instead of answering 409 anchor_exists. */
   replaceAnchor: z.boolean().optional(),
 })
@@ -85,6 +89,9 @@ void triageInSync
 export const TaskWarning = z.enum(['must_many', 'deadline_before_do_date'])
 export const TaskResult = z.object({ task: Task, warnings: z.array(TaskWarning) })
 
+/** A space a task of the day belongs to, for the quiet meta line (E7). */
+export const SpaceRef = z.object({ id: z.uuid(), name: z.string() })
+
 export const TodayView = z.object({
   date: CalendarDate,
   energy: z.enum(['low', 'good']).nullable(),
@@ -102,6 +109,8 @@ export const TodayView = z.object({
   doneToday: z.array(Task),
   /** When today's morning ritual was finished; null until then (E3). */
   ritualDoneAt: z.iso.datetime({ offset: true }).nullable(),
+  /** The spaces of this day's tasks, so a row can name the shared space it comes from. */
+  spaces: z.array(SpaceRef).optional(),
 })
 export type TodayView = z.infer<typeof TodayView>
 
@@ -111,5 +120,6 @@ export const TaskListView = z.object({
   view: ListView,
   /** One group per calendar day where the view is dated (week, done, skipped), otherwise one group with date null. */
   groups: z.array(z.object({ date: CalendarDate.nullable(), tasks: z.array(Task) })),
+  spaces: z.array(SpaceRef).optional(),
 })
 export type TaskListView = z.infer<typeof TaskListView>

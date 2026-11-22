@@ -3,7 +3,7 @@ import { ListView, TaskCreate, TaskPatch, TriageAnswer } from '../../shared/sche
 import type { AppContext, AppEnv } from '../app-env.ts'
 import { withUser, type Tx } from '../db.ts'
 import { TaskError, type RuleContext } from '../domain/tasks/rules.ts'
-import { createTask, deleteTask, loadTaskDetail, patchTask, triageTask } from '../domain/tasks/tasks.ts'
+import { claimTask, createTask, deleteTask, loadTaskDetail, patchTask, triageTask } from '../domain/tasks/tasks.ts'
 import { loadTaskList, loadTodayView } from '../domain/tasks/views.ts'
 import { todayOf } from '../middleware/day-start.ts'
 import { requireUser, userOf } from '../middleware/session.ts'
@@ -96,6 +96,16 @@ export const taskRoutes = new Hono<AppEnv>()
         triageTask(tx, id, answer.data, await ruleContext(tx, c)),
       )
       return c.json(triaged)
+    } catch (error) {
+      return failure(c, error)
+    }
+  })
+  .post('/tasks/:id/claim', requireUser, async (c) => {
+    const id = idOrNull(c.req.param('id'))
+    if (!id) return c.json({ code: 'not_found' }, 404)
+
+    try {
+      return c.json(await withUser(userOf(c).id, (tx) => claimTask(tx, id)))
     } catch (error) {
       return failure(c, error)
     }

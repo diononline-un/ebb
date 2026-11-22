@@ -16,6 +16,7 @@ import { onboardingRoutes } from './routes/onboarding.ts'
 import { projectRoutes } from './routes/projects.ts'
 import { recurrenceRoutes } from './routes/recurrences.ts'
 import { resetRoutes } from './routes/reset.ts'
+import { spaceRoutes } from './routes/spaces.ts'
 import { settingsRoutes } from './routes/settings.ts'
 import { taskRoutes } from './routes/tasks.ts'
 
@@ -51,6 +52,7 @@ export function createApp(): Hono<AppEnv> {
   app.route('/api/projects', projectRoutes)
   app.route('/api/recurrences', recurrenceRoutes)
   app.route('/api/reset', resetRoutes)
+  app.route('/api/spaces', spaceRoutes)
 
   if (env.APP_MODE === 'development') app.route('/api/dev', devRoutes)
 

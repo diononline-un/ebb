@@ -1,0 +1,32 @@
+{
+  "title": "Today",
+  "loading": "One moment.",
+  "loadError": "The day did not load. Check the connection and try again.",
+  "energy": {
+    "low": "Low energy today. One thing is enough.",
+    "good": "Good energy today."
+  },
+  "anchorEmpty": "Nothing chosen yet. What would make today worth it?",
+  "anchorAction": "Choose anchor",
+  "anchorPickTitle": "What is today's one thing?",
+  "anchorPickEmpty": "No open tasks for today yet.",
+  "anchorReplaceQuestion": "Another task is today's anchor. Replace it?",
+  "anchorReplaceAction": "Replace",
+  "anchorKeep": "Keep the current one",
+  "rollover_one": "{{count}} task came along from yesterday. It is waiting in your inbox.",
+  "rollover_other": "{{count}} tasks came along from yesterday. They are waiting in your inbox.",
+  "rolloverDismiss": "Hide this note",
+  "mustHeading": "Must today",
+  "block1": "Block 1",
+  "block2": "Block 2",
+  "block3": "Block 3",
+  "block4": "Block 4",
+  "errands_one": "{{count}} errand",
+  "errands_other": "{{count}} errands",
+  "errandsLink": "Open errands",
+  "doneHeading_one": "Done today ({{count}})",
+  "doneHeading_other": "Done today ({{count}})",
+  "undoMessage": "Marked as done.",
+  "undoAction": "Undo",
+  "undoClose": "Hide this"
+}

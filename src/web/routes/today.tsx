@@ -1,18 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useTranslation } from 'react-i18next'
-import { EmptyState } from '../ui/EmptyState.tsx'
+import { TodayPage } from '../features/today/TodayPage.tsx'
 
 export const Route = createFileRoute('/today')({
   component: TodayPage,
 })
-
-function TodayPage() {
-  const { t } = useTranslation('shell')
-
-  return (
-    <section className="flex flex-col gap-8 lg:gap-12">
-      <h1 className="text-title">{t('today.title')}</h1>
-      <EmptyState title={t('today.empty')} />
-    </section>
-  )
-}

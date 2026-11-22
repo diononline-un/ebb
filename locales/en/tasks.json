@@ -1,0 +1,41 @@
+{
+  "title": "Today",
+  "must": "Must",
+  "markDone": "Mark {{title}} as done",
+  "markOpen": "Mark {{title}} as open again",
+  "deadlineSoon": "Due on {{date}}",
+  "pushed": "Moved {{count}}×",
+  "sheet": {
+    "title": "Task",
+    "titleLabel": "Title",
+    "notesLabel": "Notes",
+    "doDateLabel": "Do date",
+    "deadlineLabel": "Deadline",
+    "mustLabel": "Must today",
+    "anchorLabel": "Anchor",
+    "statusLabel": "Status",
+    "delete": "Delete task",
+    "deleteQuestion": "Delete this task?",
+    "deleteText": "It disappears for good. There is no undo.",
+    "deleteConfirm": "Delete",
+    "cancel": "Keep it",
+    "replaceQuestion": "Replace the current anchor?",
+    "replaceAction": "Replace",
+    "keepAnchor": "Keep the current one"
+  },
+  "status": {
+    "todo": "To do",
+    "doing": "Doing",
+    "waiting": "Waiting",
+    "done": "Done",
+    "skipped": "Not today"
+  },
+  "warnings": {
+    "must_many": "That is a lot of musts for one day. Maybe one of them can wait.",
+    "deadline_before_do_date": "The deadline is before the day you plan to work on it."
+  },
+  "errors": {
+    "must_limit": "Five musts are enough for one day. Turn one of the others back into a normal task first.",
+    "generic": "That did not work. Try again in a moment."
+  }
+}

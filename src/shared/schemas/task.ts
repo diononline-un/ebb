@@ -91,6 +91,8 @@ export const TodayView = z.object({
   }),
   errandsOpen: z.number().int(),
   doneToday: z.array(Task),
+  /** When today's morning ritual was finished; null until then (E3). */
+  ritualDoneAt: z.iso.datetime({ offset: true }).nullable(),
 })
 export type TodayView = z.infer<typeof TodayView>
 

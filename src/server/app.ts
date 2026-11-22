@@ -6,8 +6,10 @@ import { loadMe } from './domain/users/me.ts'
 import { env } from './env.ts'
 import { dayStartMiddleware } from './middleware/day-start.ts'
 import { requireUser, sessionMiddleware, userOf } from './middleware/session.ts'
+import { dayRoutes } from './routes/day.ts'
 import { devRoutes } from './routes/dev.ts'
 import { dumpRoutes } from './routes/dump.ts'
+import { focusRoutes } from './routes/focus.ts'
 import { settingsRoutes } from './routes/settings.ts'
 import { taskRoutes } from './routes/tasks.ts'
 
@@ -35,6 +37,8 @@ export function createApp(): Hono<AppEnv> {
   app.route('/api/settings', settingsRoutes)
   app.route('/api/dump', dumpRoutes)
   app.route('/api', taskRoutes)
+  app.route('/api/day', dayRoutes)
+  app.route('/api/focus', focusRoutes)
 
   if (env.APP_MODE === 'development') app.route('/api/dev', devRoutes)
 

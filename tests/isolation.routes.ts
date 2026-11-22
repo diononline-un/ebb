@@ -21,6 +21,11 @@ async function seedTask(owner: TestUser): Promise<string> {
   return result.task.id
 }
 
+async function seedFocus(owner: TestUser): Promise<string> {
+  const response = await as(owner).post('/api/focus', { plannedMinutes: 25 })
+  return ((await response.json()) as { id: string }).id
+}
+
 /**
  * Every route with a path parameter. A second user must get 404 for the owner's id (never 403,
  * never data). tests/isolation.test.ts fails when a parameterised route is missing here.
@@ -33,6 +38,7 @@ export const isolationRoutes: IsolationRoute[] = [
   { method: 'PATCH', path: '/api/tasks/:id', seed: seedTask, body: { title: 'stolen' } },
   { method: 'DELETE', path: '/api/tasks/:id', seed: seedTask },
   { method: 'POST', path: '/api/tasks/:id/triage', seed: seedTask, body: { kind: 'errand' } },
+  { method: 'POST', path: '/api/focus/:id/stop', seed: seedFocus },
 ]
 
 /** Parameterised paths that carry no user data of their own. */

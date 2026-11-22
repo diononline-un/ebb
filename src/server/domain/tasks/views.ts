@@ -42,8 +42,8 @@ export async function loadTodayView(tx: Tx, today: string): Promise<TodayView> {
       order by slot, position, created_at, id`,
     [today],
   )
-  const [entry] = await tx<{ energy: 'low' | 'good' | null; rolledCount: number }[]>`
-    select energy, rolled_count from day_entry where user_id = app.uid() and date = ${today}`
+  const [entry] = await tx<{ energy: 'low' | 'good' | null; rolledCount: number; ritualDoneAt: Date | null }[]>`
+    select energy, rolled_count, ritual_done_at from day_entry where user_id = app.uid() and date = ${today}`
   const [errands] = await tx<{ count: number }[]>`
     select count(*)::int as count from task
      where assignee_id = app.uid() and slot = 'errands' and status in ('todo', 'doing')`
@@ -72,6 +72,7 @@ export async function loadTodayView(tx: Tx, today: string): Promise<TodayView> {
     },
     errandsOpen: errands?.count ?? 0,
     doneToday,
+    ritualDoneAt: entry?.ritualDoneAt ? entry.ritualDoneAt.toISOString() : null,
   })
 }
 

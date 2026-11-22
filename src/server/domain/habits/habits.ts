@@ -88,9 +88,16 @@ export async function listHabits(tx: Tx, today: string): Promise<HabitWithWeek[]
     `select ${COLUMNS} from habit order by (archived_at is not null), position, created_at`,
   )
   const byHabit = await logsOfWeek(tx, weekStartDate)
+  const yesterday = addDays(today, -1)
   return rows.map((row) => {
     const habit = toHabit(row)
-    return { ...habit, week: habitWeek(habit, byHabit.get(habit.id) ?? [], weekStartDate) }
+    const dates = byHabit.get(habit.id) ?? []
+    return {
+      ...habit,
+      week: habitWeek(habit, dates, weekStartDate),
+      doneToday: dates.includes(today),
+      doneYesterday: dates.includes(yesterday),
+    }
   })
 }
 

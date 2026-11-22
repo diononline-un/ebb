@@ -1,0 +1,46 @@
+{
+  "todayHeading": "Habits today",
+  "markDone": "Mark {{name}} as done today",
+  "markOpen": "Take the tick back for {{name}}",
+  "weekLine": "{{done}} of {{target}} this week",
+  "rhythm": {
+    "daily": "Every day",
+    "weekdays": "On chosen days",
+    "weekly": "{{count}}× a week"
+  },
+  "title": "Habits",
+  "loading": "One moment.",
+  "loadError": "The habits did not load. Check the connection and try again.",
+  "empty": "No habits yet. One is enough to start.",
+  "add": "New habit",
+  "edit": "Edit {{name}}",
+  "sheet": {
+    "createTitle": "New habit",
+    "editTitle": "Edit habit",
+    "nameLabel": "Name",
+    "goalLabel": "Goal",
+    "goalNone": "No goal",
+    "cadenceLabel": "Rhythm",
+    "cadenceDaily": "Every day",
+    "cadenceWeekly": "A few times a week",
+    "targetLabel": "How often",
+    "weekdaysLabel": "On which days",
+    "reminderLabel": "Reminder",
+    "save": "Save",
+    "archive": "Archive habit",
+    "restore": "Bring it back",
+    "archivedLine": "Archived",
+    "cancel": "Cancel",
+    "weeklyTarget": "{{count}}×",
+    "yesterdayDone": "Yesterday done",
+    "yesterdayOpen": "Catch up yesterday",
+    "todayDone": "Today done",
+    "todayOpen": "Mark today done"
+  },
+  "errors": {
+    "weekly_target_required": "A weekly habit needs a number of days.",
+    "unknown_goal": "That goal is not there any more.",
+    "day_locked": "Only today and yesterday can be ticked.",
+    "generic": "That did not save. Check the connection and try again."
+  }
+}

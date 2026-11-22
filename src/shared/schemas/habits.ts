@@ -62,7 +62,12 @@ export type HabitDay = z.infer<typeof HabitDay>
 export const HabitWeek = z.object({ done: z.number().int(), target: z.number().int() })
 export type HabitWeek = z.infer<typeof HabitWeek>
 
-export const HabitWithWeek = Habit.extend({ week: HabitWeek })
+export const HabitWithWeek = Habit.extend({
+  week: HabitWeek,
+  doneToday: z.boolean(),
+  /** Yesterday can still be caught up; older days are closed (PRD F9). */
+  doneYesterday: z.boolean(),
+})
 export type HabitWithWeek = z.infer<typeof HabitWithWeek>
 
 export const HabitToday = Habit.extend({ doneToday: z.boolean(), week: HabitWeek })

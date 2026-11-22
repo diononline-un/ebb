@@ -10,6 +10,7 @@ import { ApiError } from '../../lib/api.ts'
 import { Button } from '../../ui/Button.tsx'
 import { TideLine } from '../../ui/TideLine.tsx'
 import { CurrentFocusTimer } from '../focus/FocusTimer.tsx'
+import { HabitsSection } from '../habits/HabitsToday.tsx'
 import { ritualSkipped, useSetEnergy } from '../ritual/api.ts'
 import { deleteTask, usePatchTask, useToday } from '../tasks/api.ts'
 import { TaskSheet } from '../tasks/TaskSheet.tsx'
@@ -291,6 +292,8 @@ export function TodayPage() {
       </DndContext>
 
       <ErrandsLine count={view.errandsOpen} />
+
+      <HabitsSection />
 
       <DoneToday tasks={view.doneToday} today={view.date} onToggle={toggle} onOpen={open} />
 

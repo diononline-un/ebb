@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DumpRouteImport } from './routes/dump'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as GoalsRouteImport } from './routes/goals'
+import { Route as HabitsRouteImport } from './routes/habits'
 import { Route as LowRouteImport } from './routes/low'
 import { Route as MoreRouteImport } from './routes/more'
 import { Route as PlanRouteImport } from './routes/plan'
@@ -22,6 +24,7 @@ import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as TodayRouteImport } from './routes/today'
 import { Route as TriageRouteImport } from './routes/triage'
 import { Route as VerifyEmailRouteImport } from './routes/verify-email'
+import { Route as GoalsGoalIdRouteImport } from './routes/goals_.$goalId'
 import { Route as SettingsSecurityRouteImport } from './routes/settings.security'
 
 const IndexRoute = IndexRouteImport.update({
@@ -37,6 +40,16 @@ const DumpRoute = DumpRouteImport.update({
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   id: '/forgot-password',
   path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GoalsRoute = GoalsRouteImport.update({
+  id: '/goals',
+  path: '/goals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HabitsRoute = HabitsRouteImport.update({
+  id: '/habits',
+  path: '/habits',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LowRoute = LowRouteImport.update({
@@ -89,6 +102,11 @@ const VerifyEmailRoute = VerifyEmailRouteImport.update({
   path: '/verify-email',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GoalsGoalIdRoute = GoalsGoalIdRouteImport.update({
+  id: '/goals_/$goalId',
+  path: '/goals/$goalId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsSecurityRoute = SettingsSecurityRouteImport.update({
   id: '/settings/security',
   path: '/settings/security',
@@ -99,6 +117,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dump': typeof DumpRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/goals': typeof GoalsRoute
+  '/habits': typeof HabitsRoute
   '/low': typeof LowRoute
   '/more': typeof MoreRoute
   '/plan': typeof PlanRoute
@@ -109,12 +129,15 @@ export interface FileRoutesByFullPath {
   '/today': typeof TodayRoute
   '/triage': typeof TriageRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/goals/$goalId': typeof GoalsGoalIdRoute
   '/settings/security': typeof SettingsSecurityRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dump': typeof DumpRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/goals': typeof GoalsRoute
+  '/habits': typeof HabitsRoute
   '/low': typeof LowRoute
   '/more': typeof MoreRoute
   '/plan': typeof PlanRoute
@@ -125,6 +148,7 @@ export interface FileRoutesByTo {
   '/today': typeof TodayRoute
   '/triage': typeof TriageRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/goals/$goalId': typeof GoalsGoalIdRoute
   '/settings/security': typeof SettingsSecurityRoute
 }
 export interface FileRoutesById {
@@ -132,6 +156,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/dump': typeof DumpRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/goals': typeof GoalsRoute
+  '/habits': typeof HabitsRoute
   '/low': typeof LowRoute
   '/more': typeof MoreRoute
   '/plan': typeof PlanRoute
@@ -142,6 +168,7 @@ export interface FileRoutesById {
   '/today': typeof TodayRoute
   '/triage': typeof TriageRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/goals_/$goalId': typeof GoalsGoalIdRoute
   '/settings/security': typeof SettingsSecurityRoute
 }
 export interface FileRouteTypes {
@@ -150,6 +177,8 @@ export interface FileRouteTypes {
     | '/'
     | '/dump'
     | '/forgot-password'
+    | '/goals'
+    | '/habits'
     | '/low'
     | '/more'
     | '/plan'
@@ -160,12 +189,15 @@ export interface FileRouteTypes {
     | '/today'
     | '/triage'
     | '/verify-email'
+    | '/goals/$goalId'
     | '/settings/security'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/dump'
     | '/forgot-password'
+    | '/goals'
+    | '/habits'
     | '/low'
     | '/more'
     | '/plan'
@@ -176,12 +208,15 @@ export interface FileRouteTypes {
     | '/today'
     | '/triage'
     | '/verify-email'
+    | '/goals/$goalId'
     | '/settings/security'
   id:
     | '__root__'
     | '/'
     | '/dump'
     | '/forgot-password'
+    | '/goals'
+    | '/habits'
     | '/low'
     | '/more'
     | '/plan'
@@ -192,6 +227,7 @@ export interface FileRouteTypes {
     | '/today'
     | '/triage'
     | '/verify-email'
+    | '/goals_/$goalId'
     | '/settings/security'
   fileRoutesById: FileRoutesById
 }
@@ -199,6 +235,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DumpRoute: typeof DumpRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
+  GoalsRoute: typeof GoalsRoute
+  HabitsRoute: typeof HabitsRoute
   LowRoute: typeof LowRoute
   MoreRoute: typeof MoreRoute
   PlanRoute: typeof PlanRoute
@@ -209,6 +247,7 @@ export interface RootRouteChildren {
   TodayRoute: typeof TodayRoute
   TriageRoute: typeof TriageRoute
   VerifyEmailRoute: typeof VerifyEmailRoute
+  GoalsGoalIdRoute: typeof GoalsGoalIdRoute
   SettingsSecurityRoute: typeof SettingsSecurityRoute
 }
 
@@ -233,6 +272,20 @@ declare module '@tanstack/react-router' {
       path: '/forgot-password'
       fullPath: '/forgot-password'
       preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/goals': {
+      id: '/goals'
+      path: '/goals'
+      fullPath: '/goals'
+      preLoaderRoute: typeof GoalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/habits': {
+      id: '/habits'
+      path: '/habits'
+      fullPath: '/habits'
+      preLoaderRoute: typeof HabitsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/low': {
@@ -305,6 +358,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VerifyEmailRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/goals_/$goalId': {
+      id: '/goals_/$goalId'
+      path: '/goals/$goalId'
+      fullPath: '/goals/$goalId'
+      preLoaderRoute: typeof GoalsGoalIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings/security': {
       id: '/settings/security'
       path: '/settings/security'
@@ -319,6 +379,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DumpRoute: DumpRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
+  GoalsRoute: GoalsRoute,
+  HabitsRoute: HabitsRoute,
   LowRoute: LowRoute,
   MoreRoute: MoreRoute,
   PlanRoute: PlanRoute,
@@ -329,6 +391,7 @@ const rootRouteChildren: RootRouteChildren = {
   TodayRoute: TodayRoute,
   TriageRoute: TriageRoute,
   VerifyEmailRoute: VerifyEmailRoute,
+  GoalsGoalIdRoute: GoalsGoalIdRoute,
   SettingsSecurityRoute: SettingsSecurityRoute,
 }
 export const routeTree = rootRouteImport

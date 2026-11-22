@@ -1,0 +1,36 @@
+{
+  "title": "Goals",
+  "loading": "One moment.",
+  "loadError": "The goals did not load. Check the connection and try again.",
+  "empty": "No goals yet. One is enough to start.",
+  "add": "New goal",
+  "open": "Open {{title}}",
+  "whyHeading": "Why this matters",
+  "noWhy": "No reason written down yet. One line is enough.",
+  "habitsHeading": "Habits this week",
+  "noHabits": "No habit hangs on this goal yet.",
+  "weekLine": "{{done}} of {{target}} this week",
+  "backToGoals": "All goals",
+  "status": {
+    "active": "Active",
+    "paused": "Paused",
+    "done": "Done"
+  },
+  "sheet": {
+    "createTitle": "New goal",
+    "editTitle": "Edit goal",
+    "titleLabel": "Goal",
+    "whyLabel": "Why is this important to you?",
+    "statusLabel": "Status",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete goal",
+    "deleteQuestion": "Delete this goal?",
+    "deleteText": "Its habits stay, they just no longer point at a goal.",
+    "deleteConfirm": "Delete"
+  },
+  "errors": {
+    "too_many_goals": "Five goals are enough for now. One of them can pause.",
+    "generic": "That did not save. Check the connection and try again."
+  }
+}

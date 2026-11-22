@@ -1,0 +1,45 @@
+{
+  "nav": "Projects",
+  "title": "Projects",
+  "loading": "One moment.",
+  "loadError": "The projects did not load. Check the connection and try again.",
+  "empty": "No projects yet. One is enough to start.",
+  "add": "New project",
+  "open": "Open {{name}}",
+  "progress": "{{done}} of {{total}} done",
+  "allDone": "All done",
+  "noTasks": "No tasks yet",
+  "warnings": {
+    "deadline_soon": "Deadline soon",
+    "no_next_step": "No next step planned"
+  },
+  "status": {
+    "active": "Active",
+    "paused": "Paused",
+    "done": "Done"
+  },
+  "backToProjects": "All projects",
+  "tasksHeading": "Tasks",
+  "noProjectTasks": "No task hangs on this project yet.",
+  "sheet": {
+    "createTitle": "New project",
+    "editTitle": "Edit project",
+    "nameLabel": "Project",
+    "goalLabel": "Goal",
+    "goalNone": "No goal",
+    "startLabel": "Start",
+    "deadlineLabel": "Deadline",
+    "statusLabel": "Status",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete project",
+    "deleteQuestion": "Delete this project?",
+    "deleteText": "Its tasks stay, they just no longer point at a project.",
+    "deleteConfirm": "Delete"
+  },
+  "errors": {
+    "unknown_goal": "That goal is not there any more.",
+    "unknown_project": "That project is not there any more.",
+    "generic": "That did not save. Check the connection and try again."
+  }
+}

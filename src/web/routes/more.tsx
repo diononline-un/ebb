@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { ChevronRight, Repeat, ShieldCheck, Target } from 'lucide-react'
+import { ChevronRight, FolderKanban, Repeat, ShieldCheck, Target } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { EmptyState } from '../ui/EmptyState.tsx'
 
@@ -9,6 +9,8 @@ export const Route = createFileRoute('/more')({
 
 function MorePage() {
   const { t } = useTranslation('shell')
+  // The label lives in the projects namespace: shell.json belongs to the shell package.
+  const { t: tProjects } = useTranslation('projects')
 
   return (
     <section className="flex flex-col gap-8 lg:gap-12">
@@ -25,6 +27,13 @@ function MorePage() {
           <Link to="/habits" className="flex min-h-13 items-center gap-3 text-body motion-quick hover:text-ink-2">
             <Repeat size={20} aria-hidden="true" />
             <span className="flex-1">{t('more.habits')}</span>
+            <ChevronRight size={20} aria-hidden="true" className="text-ink-3" />
+          </Link>
+        </li>
+        <li className="border-b border-line">
+          <Link to="/projects" className="flex min-h-13 items-center gap-3 text-body motion-quick hover:text-ink-2">
+            <FolderKanban size={20} aria-hidden="true" />
+            <span className="flex-1">{tProjects('nav')}</span>
             <ChevronRight size={20} aria-hidden="true" className="text-ink-3" />
           </Link>
         </li>

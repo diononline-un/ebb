@@ -22,7 +22,11 @@ P3: `assigneeId` in Aufgabe anlegen/ändern (422 `assignee_not_member`), `POST /
 
 **E8** (P1–P3): `src/shared/entitlement.ts` mit `hasAccess` — selfhost immer, laufender Trial, eigenes Abo oder Sitz; `past_due` und `canceled` bis Periodenende, `paused` nicht (16 Tabellenfälle). `0080_billing.sql` (`billing_event`, `subscription`, `subscription_seat`), `billing/signature.ts` (Paddle-Signatur, 5-Minuten-Fenster, timingSafeEqual), `POST /api/billing/webhook` (413 über 1 MB, 401 bei falscher/alter Signatur, speichert einmal, 503 ohne Secret), `billing/apply.ts` schreibt Abo und Sitze. Billing-Variablen in `env.ts` und `.env.example`.
 
-**E9-P4 Export** (siehe oben) ist fertig.
+**E9-P4 Export** ist fertig. **E9-P5 Konto löschen und Aufbewahrung** ist fertig: `0090_account_retention.sql` (zweite Warnmarke, enge GRANTs für `ebb_system` auf `session`/`user`), `DELETE /api/account` mit E-Mail-Bestätigung und sofortiger, vollständiger Löschung (geteilte Bereiche gehen an das älteste andere Mitglied über, dessen Aufgaben fallen auf „niemand"), `src/server/jobs/retention.ts` mit 12-Monats-Frist und Warnmails 30/7 Tage vorher.
+
+**E10-P6 Produkt-Events** ist fertig: `POST /api/events` (Namensmuster, kleine Props, 204), `src/web/lib/events.ts`, `docs/metriken.md`. `/api/events` ist von der 402-Sperre ausgenommen, damit die Metriken eines read-only Kontos nicht leerlaufen.
+
+Offen aus diesen beiden Paketen: Paddle-Kündigung vor dem Löschen (es gibt keinen Paddle-API-Client im Repo), hartes Löschen ohne 30-Tage-Gnadenfrist, `last_seen_at` wird von niemandem fortgeschrieben (der Job nutzt den neuesten Session-Zeitpunkt).
 
 ## Offen, in dieser Reihenfolge
 

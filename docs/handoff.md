@@ -54,3 +54,24 @@ Offen aus diesen beiden Paketen: Paddle-Kündigung vor dem Löschen (es gibt kei
   - `src/server/auth.ts`: Anmelde-Limit im Dev-Modus auf 50, weil der Dev-Server ohne Proxy alle Anmeldungen in einen Bucket legt und die E2E-Suite sonst kippt (Produktion/Selfhost bleiben bei 5).
   - `POST /api/onboarding/done` setzt `ritual_done_at` für den Tag; `/today` schickt nach dem Onboarding nicht ins Ritual.
   - Die älteren E2E-Specs markieren das Onboarding per In-Page-Fetch (`page.request` kann die Sitzung unter einer harten Navigation drehen).
+
+## Für den Abschlussaudit (an Claude)
+
+**Branch:** alles liegt auf `ds/e5` (gepusht, HEAD siehe `git log -1`). Der Branch enthält E4 mit, weil E5 auf E4 aufsetzt; ein Merge nach `main` nimmt alles mit. Diese Branch-Namen sind **bereits vollständig in `ds/e5` gepickt** und müssen nicht separat gemerged werden: `ds/e5-recurrence` (E5-P2), `ds/e5-web` (E5-P6/P7/P8), `ds/e6-web` (E6-P3/P4), `ds/e7-web` (E7-P4/P5), `ds/e9-ops` (E9-P5, E10-P6). Die Worktrees dazu liegen unter `/tmp/ebb-e5web`, `/tmp/ebb-e6web`, `/tmp/ebb-e7web`, `/tmp/ebb-e9ops` und können mit `git worktree remove` weg.
+
+**Prüfbefehle:**
+```
+npm run check && npx vitest run && npx playwright test && python3 scripts/check-design.py
+```
+Stand beim Übergeben: Check 0 Fehler, 541 Vitest-Tests grün (56 Dateien), Design-Drift 0 (208 Dateien). Playwright zuletzt 8/8 grün (nach E5-Web; danach kamen nur Server- und Seitenarbeit ohne E2E-Bezug). Für E2E muss `docker compose up -d postgres` laufen und `npm run dev`; das Anmelde-Limit im Dev-Modus steht auf 50, sonst kippt die Suite am gemeinsamen Bucket.
+
+**Was die Prüfung wissen muss (Deltas gegenüber den Specs):**
+- Die Specs `E05`–`E10` sind **nicht** am Code nachgeschärft (nur `E04` ist es). Prüfen also gegen den gebauten Code, den Issue-Text und diese Datei, nicht gegen einen nachgezogenen Spec-Text.
+- `GET /api/tasks/:id` liefert seit E5 `{ task, subtasks, progress }`; zwei E2-Tests lesen `.task`.
+- `src/server/auth.ts`: Sign-up-Limit im Dev-Modus 50 (Produktion/Selfhost bleiben 5).
+- `POST /api/onboarding/done` setzt zusätzlich `ritual_done_at` für den Tag.
+- Middleware-Ausnahmen der 402-Sperre: `/api/auth`, `/api/billing`, `/api/export`, `/api/settings`, `/api/account`, `/api/events`.
+- Billing-Kette fertig ohne Live-Zugang: Signatur → `billing_event` → Job (`src/server/jobs/billing.ts`, 30 s, nicht im Selfhost) → `subscription`/`subscription_seat` → `hasAccess` → 402. Ohne `PADDLE_WEBHOOK_SECRET` antwortet der Webhook 503.
+- Offene Risiken aus den Paketen: keine Paddle-Kündigung vor der Kontolöschung (kein Paddle-API-Client im Repo), Kontolöschung sofort statt mit Gnadenfrist, `last_seen_at` wird von niemandem fortgeschrieben (der Job nutzt den neuesten Session-Zeitpunkt), Plan-Seite zeigt noch keine Bereichsnamen, `PATCH /api/tasks` kennt kein `spaceId`.
+
+**Issues:** GitHub-Issues sind von mir **nicht** angefasst — sie stehen weiter auf `needs-refinement` (E4–E10) bzw. `ready` (E3). Das Schließen und das Setzen der Labels gehört zur Prüfung.

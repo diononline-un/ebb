@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import type { TodayView } from '../../../shared/schemas/task.ts'
 import type { TriageAnswer } from '../../../shared/triage.ts'
 import { ApiError } from '../../lib/api.ts'
+import { trackEvent } from '../../lib/events.ts'
 import { Button } from '../../ui/Button.tsx'
 import { DumpComposer } from '../dump/DumpComposer.tsx'
 import { DumpList } from '../dump/DumpList.tsx'
@@ -78,6 +79,8 @@ export function OnboardingPage() {
     setError(null)
     try {
       await finish.mutateAsync()
+      // E10-P6: step 9 reached is the onboarding metric of PRD §10.
+      trackEvent('onboarding.completed')
       await router.navigate({ to: '/today' })
     } catch {
       setError(t('errors.generic'))

@@ -11,6 +11,7 @@ import {
 } from '../../../shared/schemas/task.ts'
 import type { TriageAnswer } from '../../../shared/triage.ts'
 import { apiFetch } from '../../lib/api.ts'
+import { trackEvent } from '../../lib/events.ts'
 
 // Type aliases live here because the .tsx files must stay free of generic brackets: the
 // no-hardcoded-text test reads ">" … "<" as JSX text and `Promise<X>` looks exactly like that.
@@ -42,7 +43,12 @@ export function useToday() {
 }
 
 export async function patchTask(id: string, patch: TaskPatch): Promise<TaskResult> {
-  return apiFetch<TaskResult>(`/api/tasks/${id}`, { method: 'PATCH', body: JSON.stringify(patch) })
+  const result = await apiFetch<TaskResult>(`/api/tasks/${id}`, { method: 'PATCH', body: JSON.stringify(patch) })
+  // E10-P6: activation counts an anchor that was set and one that was finished (PRD §10). This is the
+  // one place every anchor change goes through, from the ritual as well as from today.
+  if (patch.anchor === true) trackEvent('anchor.set')
+  if (patch.status === 'done' && result.task.anchor) trackEvent('anchor.done')
+  return result
 }
 
 export async function createTask(input: TaskCreate): Promise<TaskResult> {

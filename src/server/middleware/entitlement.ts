@@ -16,6 +16,9 @@ const EXEMPT = [
   // switch the interface to a language they read.
   /^\/api\/settings\b/,
   /^\/api\/account\b/,
+  // Product events measure what a read-only account still does; blocking them would cut the launch
+  // metrics exactly where they matter (Trial → Abo, D7 retention after the trial).
+  /^\/api\/events\b/,
 ]
 
 const SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS'])

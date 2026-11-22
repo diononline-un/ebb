@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import type { Energy } from '../../../shared/schemas/day.ts'
 import type { TodayView } from '../../../shared/schemas/task.ts'
 import { ApiError } from '../../lib/api.ts'
+import { trackEvent } from '../../lib/events.ts'
 import { Button } from '../../ui/Button.tsx'
 import { useTimerDefault } from '../focus/api.ts'
 import { triageTask, usePatchTask, useToday } from '../tasks/api.ts'
@@ -165,6 +166,11 @@ export function RitualPage() {
   const setEnergy = useSetEnergy()
   const finishRitual = useFinishRitual()
   const usualMinutes = useTimerDefault()
+
+  // E10-P6: D7 retention counts the days the morning ritual was opened (PRD §10).
+  useEffect(() => {
+    trackEvent('ritual.opened')
+  }, [])
 
   if (query.isPending) {
     return <p className="text-body text-ink-2">{t('loading')}</p>

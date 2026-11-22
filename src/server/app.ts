@@ -13,6 +13,7 @@ import { billingRoutes } from './routes/billing.ts'
 import { dayRoutes } from './routes/day.ts'
 import { devRoutes } from './routes/dev.ts'
 import { dumpRoutes } from './routes/dump.ts'
+import { eventRoutes } from './routes/events.ts'
 import { exportRoutes } from './routes/export.ts'
 import { focusRoutes } from './routes/focus.ts'
 import { goalRoutes } from './routes/goals.ts'
@@ -61,6 +62,7 @@ export function createApp(): Hono<AppEnv> {
   app.route('/api/account', accountRoutes)
   app.route('/api/billing', billingRoutes)
   app.route('/api/dump', dumpRoutes)
+  app.route('/api/events', eventRoutes)
   app.route('/api/export', exportRoutes)
   app.route('/api', taskRoutes)
   app.route('/api/day', dayRoutes)

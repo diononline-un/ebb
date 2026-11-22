@@ -37,6 +37,12 @@ async function seedSpace(owner: TestUser): Promise<string> {
   return ((await response.json()) as { id: string }).id
 }
 
+async function seedInvite(owner: TestUser): Promise<string> {
+  const space = (await (await as(owner).post('/api/spaces', { name: 'isolation seed' })).json()) as { id: string }
+  const invite = await as(owner).post(`/api/spaces/${space.id}/invites`, {})
+  return ((await invite.json()) as { id: string }).id
+}
+
 async function seedStuck(owner: TestUser): Promise<string> {
   // A task that slid three times is a Dauerschieber and thus reachable through /api/reset/stuck/:id.
   const response = await as(owner).post('/api/tasks', { title: 'isolation seed' })
@@ -96,6 +102,7 @@ export const isolationRoutes: IsolationRoute[] = [
   { method: 'PATCH', path: '/api/spaces/:id', seed: seedSpace, body: { name: 'stolen' } },
   { method: 'DELETE', path: '/api/spaces/:id', seed: seedSpace, body: { name: 'isolation seed' } },
   { method: 'DELETE', path: '/api/spaces/:id/members/:userId', seed: seedSpace },
+  { method: 'DELETE', path: '/api/spaces/invites/:inviteId', seed: seedInvite },
 ]
 
 /** Parameterised paths that carry no user data of their own. */

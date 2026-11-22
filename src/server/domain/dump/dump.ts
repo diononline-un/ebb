@@ -1,14 +1,9 @@
 import { DumpLine, type DumpCreate } from '../../../shared/schemas/dump.ts'
-import { Task } from '../../../shared/schemas/task.ts'
+import type { Task } from '../../../shared/schemas/task.ts'
 import type { Tx } from '../../db.ts'
+import { TASK_COLUMNS, toTask, type TaskRow } from '../tasks/tasks.ts'
 
 const DUMP_COLUMNS = 'id, client_id, text, task_id, archived_at, created_at'
-
-// Calendar days are cast to text: postgres.js would hand back a Date at local midnight, and the
-// API speaks 'YYYY-MM-DD'. Timestamps stay timestamps and are serialised to ISO strings.
-const TASK_COLUMNS = `id, space_id, created_by, assignee_id, title, notes, next_step, status,
-  do_date::text as do_date, deadline::text as deadline, must, slot, position, anchor, push_count,
-  completed_at, created_at, updated_at`
 
 type DumpRow = {
   id: string
@@ -19,41 +14,11 @@ type DumpRow = {
   createdAt: Date
 }
 
-type TaskRow = {
-  id: string
-  spaceId: string
-  createdBy: string
-  assigneeId: string | null
-  title: string
-  notes: string
-  nextStep: string
-  status: string
-  doDate: string | null
-  deadline: string | null
-  must: boolean
-  slot: string
-  position: number
-  anchor: boolean
-  pushCount: number
-  completedAt: Date | null
-  createdAt: Date
-  updatedAt: Date
-}
-
 function toDumpLine(row: DumpRow): DumpLine {
   return DumpLine.parse({
     ...row,
     archivedAt: row.archivedAt ? row.archivedAt.toISOString() : null,
     createdAt: row.createdAt.toISOString(),
-  })
-}
-
-function toTask(row: TaskRow): Task {
-  return Task.parse({
-    ...row,
-    completedAt: row.completedAt ? row.completedAt.toISOString() : null,
-    createdAt: row.createdAt.toISOString(),
-    updatedAt: row.updatedAt.toISOString(),
   })
 }
 

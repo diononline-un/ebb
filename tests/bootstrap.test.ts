@@ -99,8 +99,14 @@ describe('row level security', () => {
     expect(renamed).toHaveLength(1)
   })
 
-  it('invites are closed to the request role until E7', async () => {
-    const user = await createUser()
-    await expect(withUser(user.id, (tx) => tx`select * from space_invite`)).rejects.toThrow(/permission denied/)
+  it('lets only the creator read invitations (E7)', async () => {
+    const a = await createUser()
+    const b = await createUser()
+    const space = (await (await as(a).post('/api/spaces', { name: 'Home' })).json()) as { id: string }
+    expect((await as(a).post(`/api/spaces/${space.id}/invites`, {})).status).toBe(201)
+
+    // The creator reads her own invite; everyone else sees nothing at all.
+    expect(await withUser(a.id, (tx) => tx`select id from space_invite`)).toHaveLength(1)
+    expect(await withUser(b.id, (tx) => tx`select id from space_invite`)).toHaveLength(0)
   })
 })

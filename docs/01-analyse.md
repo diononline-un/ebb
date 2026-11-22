@@ -96,6 +96,27 @@ Nur über Suchergebnisse und READMEs geprüft, nicht im Code.
 
 Einen Fork rate ich nicht: tictic und my-focus-log sind bewusst ohne Backend gebaut, Super Productivity ist ein riesiges Angular-Projekt ohne Multi-Tenant-Unterbau. Besser neu bauen und Ideen übernehmen.
 
+### Nachtrag 2026-11-22 (nach E3)
+
+Erneut geprüft, als Ritual, Low-Modus und Timer fertig waren. Wieder nur über Suchergebnisse und Store-Texte, keine App ausprobiert. „Was fehlt“ heißt hier: im Store- oder Produkttext nicht erwähnt.
+
+| Projekt | Art | Überschneidung | Was fehlt |
+|---|---|---|---|
+| [Dune Seven](https://apps.apple.com/app/id6755029930) | kommerziell, nur iOS, ~40 $/Jahr | Tagesstart mit Energie-Modus (Flow, Focus, Low, Rest) und einer Tagesabsicht, Habits | Konsequenz-Frage, Low-Tag mit genau einer Aufgabe, Self-Hosting |
+| [Sunsama for ADHD](https://sunsama.com/for-adhd) | kommerziell, ~16–25 $/Monat | geführtes Tagesritual, Shutdown, Weekly Review, wirbt jetzt gezielt mit ADHS | Energie-Modus; teuer, kalenderzentriert |
+| [Tiimo](https://tiimoapp.com/features) | kommerziell, iPhone-App des Jahres 2025 | KI-Co-Planer, energiebewusste Planung, Stimmungs-Check, Fokus-Timer | Morgen-Ritual mit Sortierfrage, Self-Hosting |
+| [Structured](https://help.structured.app/en/articles/1747650) | kommerziell | Energie-Monitor: Energie-Budget pro Tag (experimentell) | Ritual; reiner Timeline-Planer |
+| [Amazing Marvin](https://amazingmarvin.com/features/day-planning) | kommerziell | Energie-Tags, kurze Today-Liste, „Procrastination Wizard“ | eine Frage nach der anderen; viele Einstellungen statt weniger Entscheidungen |
+| [DopaFlow](https://awesome.ecosyste.ms/projects/github.com%2Fkazandthecompiler%2Fdopaflow) | OSS, self-host | Docker, offline-first, Markdown-Tagesnotizen | ein Nutzer (SQLite), kein Ritual |
+
+**Was sich am Fazit ändert:**
+- Der Energie-Check am Morgen ist kein Alleinstellungsmerkmal mehr (Dune Seven, Tiimo, Structured).
+- Die Abgrenzung zu Sunsama in PRD §4 („für Overwhelm gemacht“) trägt weniger, seit Sunsama mit ADHS wirbt. Es bleiben Preis, Self-Hosting und Energie-Modi.
+- Bei niemandem gefunden: Sortieren über die Konsequenz-Frage, ein Low-Tag mit genau einer Aufgabe, schuldfreier Ton als Regel, geteilte Bereiche, AGPL-Self-Hosting zusammen mit einem günstigen EU-Abo.
+- Die Technik (Konten, Mandantentrennung, Timer, Dump) ist Standard. Abheben kann sich das Projekt nur über die Methode als Ganzes, also Ritual, Konsequenz-Frage und Ton, nicht über einzelne Funktionen.
+
+**Empfehlung:** Vor E4–E10 eine kleine Beta mit 5–10 Leuten aus der Zielgruppe. Die eine Frage dabei: Nutzen sie das Ritual in der zweiten Woche noch? Ziele, Habits und Projekte decken TickTick, Tiimo und Marvin schon gut ab; dort lohnt sich Aufwand erst, wenn das Ritual trägt.
+
 ## 6. Rechtliches: muss vor dem Launch geklärt sein
 
 Ideen und Methoden sind nicht urheberrechtlich geschützt. **Geschützt sind Texte, Lektionen, Beispielinhalte, Screenshots, das Design und der Produktname.** Eine App, die das Kaizen Life System eins zu eins nachbaut und ähnlich heißt, verkauft Ruri Ohamas Produkt unter eigenem Namen. Der Name „Kaizen“ würde außerdem mit ihrem Produkt und mehreren bestehenden Apps kollidieren.

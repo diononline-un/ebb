@@ -1,0 +1,24 @@
+{
+  "title": "Plan",
+  "tabsLabel": "Planned tasks",
+  "tabs": {
+    "inbox": "Inbox",
+    "tomorrow": "Tomorrow",
+    "week": "Week",
+    "errands": "Errands",
+    "waiting": "Waiting",
+    "done": "Done",
+    "skipped": "Not today"
+  },
+  "loading": "One moment.",
+  "loadError": "The list did not load. Check the connection and try again.",
+  "empty": {
+    "inbox": "The inbox is empty. Everything has a place.",
+    "tomorrow": "Nothing planned for tomorrow yet.",
+    "week": "Nothing planned beyond tomorrow.",
+    "errands": "No errands waiting.",
+    "waiting": "Nothing is waiting for someone else.",
+    "done": "Nothing finished in the last 30 days.",
+    "skipped": "Nothing was set aside in the last 30 days."
+  }
+}

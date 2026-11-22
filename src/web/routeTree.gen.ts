@@ -18,6 +18,7 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as TodayRouteImport } from './routes/today'
+import { Route as TriageRouteImport } from './routes/triage'
 import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as SettingsSecurityRouteImport } from './routes/settings.security'
 
@@ -66,6 +67,11 @@ const TodayRoute = TodayRouteImport.update({
   path: '/today',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TriageRoute = TriageRouteImport.update({
+  id: '/triage',
+  path: '/triage',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VerifyEmailRoute = VerifyEmailRouteImport.update({
   id: '/verify-email',
   path: '/verify-email',
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/today': typeof TodayRoute
+  '/triage': typeof TriageRoute
   '/verify-email': typeof VerifyEmailRoute
   '/settings/security': typeof SettingsSecurityRoute
 }
@@ -100,6 +107,7 @@ export interface FileRoutesByTo {
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/today': typeof TodayRoute
+  '/triage': typeof TriageRoute
   '/verify-email': typeof VerifyEmailRoute
   '/settings/security': typeof SettingsSecurityRoute
 }
@@ -114,6 +122,7 @@ export interface FileRoutesById {
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/today': typeof TodayRoute
+  '/triage': typeof TriageRoute
   '/verify-email': typeof VerifyEmailRoute
   '/settings/security': typeof SettingsSecurityRoute
 }
@@ -129,6 +138,7 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/sign-up'
     | '/today'
+    | '/triage'
     | '/verify-email'
     | '/settings/security'
   fileRoutesByTo: FileRoutesByTo
@@ -142,6 +152,7 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/sign-up'
     | '/today'
+    | '/triage'
     | '/verify-email'
     | '/settings/security'
   id:
@@ -155,6 +166,7 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/sign-up'
     | '/today'
+    | '/triage'
     | '/verify-email'
     | '/settings/security'
   fileRoutesById: FileRoutesById
@@ -169,6 +181,7 @@ export interface RootRouteChildren {
   SignInRoute: typeof SignInRoute
   SignUpRoute: typeof SignUpRoute
   TodayRoute: typeof TodayRoute
+  TriageRoute: typeof TriageRoute
   VerifyEmailRoute: typeof VerifyEmailRoute
   SettingsSecurityRoute: typeof SettingsSecurityRoute
 }
@@ -238,6 +251,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TodayRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/triage': {
+      id: '/triage'
+      path: '/triage'
+      fullPath: '/triage'
+      preLoaderRoute: typeof TriageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/verify-email': {
       id: '/verify-email'
       path: '/verify-email'
@@ -265,6 +285,7 @@ const rootRouteChildren: RootRouteChildren = {
   SignInRoute: SignInRoute,
   SignUpRoute: SignUpRoute,
   TodayRoute: TodayRoute,
+  TriageRoute: TriageRoute,
   VerifyEmailRoute: VerifyEmailRoute,
   SettingsSecurityRoute: SettingsSecurityRoute,
 }

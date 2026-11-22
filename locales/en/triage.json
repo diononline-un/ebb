@@ -1,0 +1,27 @@
+{
+  "question": "What breaks if this waits until tomorrow?",
+  "progressLabel": "Sorting progress",
+  "progress": "{{done}} of {{total}}",
+  "answers": {
+    "must": "Something real, it's a must today",
+    "later": "Nothing much, pick a day",
+    "errand": "It's a small errand",
+    "today": "I want to do it today"
+  },
+  "blockQuestion": "Which block?",
+  "block1": "Block 1",
+  "block2": "Block 2",
+  "block3": "Block 3",
+  "block4": "Block 4",
+  "laterQuestion": "Which day suits it?",
+  "tomorrow": "Tomorrow",
+  "dayAfter": "The day after tomorrow",
+  "nextMonday": "Next Monday",
+  "pickDate": "Pick a date",
+  "laterConfirm": "Use this day",
+  "anchorTitle": "Choose your anchor",
+  "anchorSkip": "Skip",
+  "close": "Leave sorting",
+  "loading": "One moment.",
+  "loadError": "Sorting could not load. Check the connection and try again."
+}

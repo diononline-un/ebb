@@ -1,0 +1,15 @@
+{
+  "timer": {
+    "stop": "Stop",
+    "finished": "Time for a break"
+  },
+  "start": {
+    "label": "Start",
+    "fixed": "Start {{minutes}} min",
+    "minutes": "{{minutes}} min",
+    "usual": "usual",
+    "custom": "Custom length…",
+    "customLabel": "Minutes",
+    "customConfirm": "Start"
+  }
+}

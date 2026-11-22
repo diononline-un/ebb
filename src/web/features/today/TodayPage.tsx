@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next'
 import type { Task, TaskPatch, TodayView } from '../../../shared/schemas/task.ts'
 import { ApiError } from '../../lib/api.ts'
 import { TideLine } from '../../ui/TideLine.tsx'
+import { useCurrentFocus, useStopFocus } from '../focus/api.ts'
+import { FocusTimer } from '../focus/FocusTimer.tsx'
 import { deleteTask, usePatchTask, useToday } from '../tasks/api.ts'
 import { TaskSheet } from '../tasks/TaskSheet.tsx'
 import { AnchorBlock } from './AnchorBlock.tsx'
@@ -59,6 +61,8 @@ function findTask(view: TodayView, id: string | null): Task | null {
 export function TodayPage() {
   const { t, i18n } = useTranslation('today')
   const query = useToday()
+  const focus = useCurrentFocus()
+  const stopFocus = useStopFocus()
   const patchTask = usePatchTask()
   const queryClient = useQueryClient()
   const [selectedId, setSelectedId] = useState<string | null>(null)
@@ -184,6 +188,8 @@ export function TodayPage() {
 
       <RolloverNote count={view.rolledCount} date={view.date} />
 
+      {focus.data ? <FocusTimer session={focus.data} onStop={(id) => stopFocus.mutate(id)} /> : null}
+
       <AnchorBlock
         anchor={anchor}
         candidates={candidates}
@@ -222,10 +228,10 @@ export function TodayPage() {
       >
         <TaskList heading={t('inboxHeading')} tasks={view.slots.inbox} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
         <TaskList heading={t('mustHeading')} tasks={view.must} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
-        <TaskList heading={t('block1')} tasks={view.slots.block1} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
-        <TaskList heading={t('block2')} tasks={view.slots.block2} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
-        <TaskList heading={t('block3')} tasks={view.slots.block3} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
-        <TaskList heading={t('block4')} tasks={view.slots.block4} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
+        <TaskList heading={t('block1')} slot="block1" tasks={view.slots.block1} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
+        <TaskList heading={t('block2')} slot="block2" tasks={view.slots.block2} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
+        <TaskList heading={t('block3')} slot="block3" tasks={view.slots.block3} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
+        <TaskList heading={t('block4')} slot="block4" tasks={view.slots.block4} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
       </DndContext>
 
       <ErrandsLine count={view.errandsOpen} />

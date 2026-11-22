@@ -26,6 +26,16 @@ async function seedFocus(owner: TestUser): Promise<string> {
   return ((await response.json()) as { id: string }).id
 }
 
+async function seedGoal(owner: TestUser): Promise<string> {
+  const response = await as(owner).post('/api/goals', { title: 'isolation seed' })
+  return ((await response.json()) as { id: string }).id
+}
+
+async function seedHabit(owner: TestUser): Promise<string> {
+  const response = await as(owner).post('/api/habits', { name: 'isolation seed' })
+  return ((await response.json()) as { id: string }).id
+}
+
 /**
  * Every route with a path parameter. A second user must get 404 for the owner's id (never 403,
  * never data). tests/isolation.test.ts fails when a parameterised route is missing here.
@@ -39,6 +49,12 @@ export const isolationRoutes: IsolationRoute[] = [
   { method: 'DELETE', path: '/api/tasks/:id', seed: seedTask },
   { method: 'POST', path: '/api/tasks/:id/triage', seed: seedTask, body: { kind: 'errand' } },
   { method: 'POST', path: '/api/focus/:id/stop', seed: seedFocus },
+  { method: 'PATCH', path: '/api/goals/:id', seed: seedGoal, body: { title: 'stolen' } },
+  { method: 'DELETE', path: '/api/goals/:id', seed: seedGoal },
+  { method: 'PATCH', path: '/api/habits/:id', seed: seedHabit, body: { name: 'stolen' } },
+  // Both segments get the habit id; a day that reads like no day names nothing either.
+  { method: 'PUT', path: '/api/habits/:id/log/:date', seed: seedHabit },
+  { method: 'DELETE', path: '/api/habits/:id/log/:date', seed: seedHabit },
 ]
 
 /** Parameterised paths that carry no user data of their own. */

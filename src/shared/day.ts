@@ -47,7 +47,7 @@ export function addDays(date: string, n: number): string {
 }
 
 /** 0 = Sunday … 6 = Saturday, same numbering as user_settings.weekly_reset_dow. */
-function dayOfWeek(date: string): number {
+export function dayOfWeek(date: string): number {
   return asUtc(date).getUTCDay()
 }
 

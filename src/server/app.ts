@@ -10,6 +10,9 @@ import { dayRoutes } from './routes/day.ts'
 import { devRoutes } from './routes/dev.ts'
 import { dumpRoutes } from './routes/dump.ts'
 import { focusRoutes } from './routes/focus.ts'
+import { goalRoutes } from './routes/goals.ts'
+import { habitRoutes } from './routes/habits.ts'
+import { onboardingRoutes } from './routes/onboarding.ts'
 import { settingsRoutes } from './routes/settings.ts'
 import { taskRoutes } from './routes/tasks.ts'
 
@@ -39,6 +42,9 @@ export function createApp(): Hono<AppEnv> {
   app.route('/api', taskRoutes)
   app.route('/api/day', dayRoutes)
   app.route('/api/focus', focusRoutes)
+  app.route('/api/goals', goalRoutes)
+  app.route('/api/habits', habitRoutes)
+  app.route('/api/onboarding', onboardingRoutes)
 
   if (env.APP_MODE === 'development') app.route('/api/dev', devRoutes)
 

@@ -31,6 +31,20 @@ async function seedGoal(owner: TestUser): Promise<string> {
   return ((await response.json()) as { id: string }).id
 }
 
+async function seedProject(owner: TestUser): Promise<string> {
+  const response = await as(owner).post('/api/projects', { name: 'isolation seed' })
+  return ((await response.json()) as { project: { id: string } }).project.id
+}
+
+async function seedRecurrence(owner: TestUser): Promise<string> {
+  const response = await as(owner).post('/api/recurrences', {
+    title: 'isolation seed',
+    rule: { freq: 'daily' },
+    startsOn: '2026-11-22',
+  })
+  return ((await response.json()) as { id: string }).id
+}
+
 async function seedHabit(owner: TestUser): Promise<string> {
   const response = await as(owner).post('/api/habits', { name: 'isolation seed' })
   return ((await response.json()) as { id: string }).id
@@ -55,6 +69,11 @@ export const isolationRoutes: IsolationRoute[] = [
   // Both segments get the habit id; a day that reads like no day names nothing either.
   { method: 'PUT', path: '/api/habits/:id/log/:date', seed: seedHabit },
   { method: 'DELETE', path: '/api/habits/:id/log/:date', seed: seedHabit },
+  { method: 'GET', path: '/api/projects/:id', seed: seedProject },
+  { method: 'PATCH', path: '/api/projects/:id', seed: seedProject, body: { name: 'stolen' } },
+  { method: 'DELETE', path: '/api/projects/:id', seed: seedProject },
+  { method: 'PATCH', path: '/api/recurrences/:id', seed: seedRecurrence, body: { title: 'stolen' } },
+  { method: 'DELETE', path: '/api/recurrences/:id', seed: seedRecurrence },
 ]
 
 /** Parameterised paths that carry no user data of their own. */

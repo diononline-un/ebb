@@ -114,7 +114,11 @@ describe('GET /api/tasks/:id', () => {
 
     const found = await as(user).get(`/api/tasks/${created.task.id}`)
     expect(found.status).toBe(200)
-    expect((await found.json()).title).toBe('visible')
+    // Since E5 the answer carries the task with its subtasks and their progress.
+    const detail = (await found.json()) as { task: { title: string }; subtasks: unknown[]; progress: unknown }
+    expect(detail.task.title).toBe('visible')
+    expect(detail.subtasks).toEqual([])
+    expect(detail.progress).toBeNull()
 
     expect((await as(user).get(`/api/tasks/${newUuid()}`)).status).toBe(404)
     expect((await as(user).get('/api/tasks/not-a-uuid')).status).toBe(404)
@@ -181,8 +185,8 @@ describe('PATCH /api/tasks/:id', () => {
     expect(replaced.status).toBe(200)
     expect((await replaced.json()).task.anchor).toBe(true)
 
-    const old = await (await as(user).get(`/api/tasks/${first.task.id}`)).json()
-    expect(old.anchor).toBe(false)
+    const old = (await (await as(user).get(`/api/tasks/${first.task.id}`)).json()) as { task: { anchor: boolean } }
+    expect(old.task.anchor).toBe(false)
 
     const view = await (await as(user).get('/api/today')).json()
     expect(view.anchor.id).toBe(second.task.id)

@@ -7,12 +7,12 @@ import {
 } from '../../../shared/schemas/task.ts'
 import { triagePatch, type TriageAnswer } from '../../../shared/triage.ts'
 import type { Tx } from '../../db.ts'
-import { applyRules, TaskError, type RuleContext } from './rules.ts'
+import { applyRules, assertParent, assertProject, TaskError, type RuleContext } from './rules.ts'
 
 /** Calendar days are cast to text: postgres.js would hand back a Date at local midnight. */
 export const TASK_COLUMNS = `id, space_id, created_by, assignee_id, title, notes, next_step, status,
   do_date::text as do_date, deadline::text as deadline, must, slot, position, anchor, push_count,
-  completed_at, created_at, updated_at`
+  project_id, parent_id, recurrence_id, completed_at, created_at, updated_at`
 
 export type TaskRow = {
   id: string
@@ -30,6 +30,9 @@ export type TaskRow = {
   position: number
   anchor: boolean
   pushCount: number
+  projectId: string | null
+  parentId: string | null
+  recurrenceId: string | null
   completedAt: Date | null
   createdAt: Date
   updatedAt: Date
@@ -59,6 +62,23 @@ export async function personalSpaceId(tx: Tx): Promise<string> {
 export async function loadTaskRow(tx: Tx, id: string): Promise<TaskRow | null> {
   const [row] = await tx.unsafe<TaskRow[]>(`select ${TASK_COLUMNS} from task where id = $1`, [id])
   return row ?? null
+}
+
+/** One task with its subtasks: the x/y the parent row shows (E5-P5). */
+export async function loadTaskDetail(tx: Tx, id: string) {
+  const row = await loadTaskRow(tx, id)
+  if (!row) return null
+  const subtasks = await tx.unsafe<TaskRow[]>(
+    `select ${TASK_COLUMNS} from task where parent_id = $1 order by position, created_at`,
+    [id],
+  )
+  const tasks = subtasks.map(toTask)
+  const counted = tasks.filter((task) => task.status !== 'skipped')
+  return {
+    task: toTask(row),
+    subtasks: tasks,
+    progress: counted.length === 0 ? null : { done: counted.filter((task) => task.status === 'done').length, total: counted.length },
+  }
 }
 
 /** The task that was just placed at an explicit position, and whether it goes before a tied neighbour. */
@@ -98,6 +118,8 @@ async function renumberSlot(
 
 export async function createTask(tx: Tx, input: TaskCreate, ctx: RuleContext): Promise<TaskData> {
   const spaceId = input.spaceId ?? (await personalSpaceId(tx))
+  await assertParent(tx, input.parentId, spaceId)
+  await assertProject(tx, input.projectId, spaceId)
   const requested: TaskPatch = {
     title: input.title,
     ...(input.notes === undefined ? {} : { notes: input.notes }),
@@ -110,12 +132,22 @@ export async function createTask(tx: Tx, input: TaskCreate, ctx: RuleContext): P
   const slot = outcome.write.slot ?? 'inbox'
   const doDate = outcome.write.doDate ?? null
   const [row] = await tx.unsafe<TaskRow[]>(
-    `insert into task (space_id, title, notes, do_date, deadline, slot, position)
+    `insert into task (space_id, title, notes, do_date, deadline, slot, position, project_id, parent_id)
      values ($1, $2, $3, $4, $5, $6,
              (select coalesce(max(position) + 1, 0) from task
-               where assignee_id = app.uid() and do_date is not distinct from $4::date and slot = $6))
+               where assignee_id = app.uid() and do_date is not distinct from $4::date and slot = $6),
+             $7, $8)
      returning ${TASK_COLUMNS}`,
-    [spaceId, outcome.write.title ?? input.title, outcome.write.notes ?? '', doDate, outcome.write.deadline ?? null, slot],
+    [
+      spaceId,
+      outcome.write.title ?? input.title,
+      outcome.write.notes ?? '',
+      doDate,
+      outcome.write.deadline ?? null,
+      slot,
+      input.projectId ?? null,
+      input.parentId ?? null,
+    ],
   )
   if (!row) throw new Error('task insert returned nothing')
   return { task: toTask(row), warnings: outcome.warnings }
@@ -124,6 +156,8 @@ export async function createTask(tx: Tx, input: TaskCreate, ctx: RuleContext): P
 export async function patchTask(tx: Tx, id: string, patch: TaskPatch, ctx: RuleContext): Promise<TaskData> {
   const current = await loadTaskRow(tx, id)
   if (!current) throw new TaskError(404, 'not_found')
+  await assertParent(tx, patch.parentId, current.spaceId)
+  await assertProject(tx, patch.projectId, current.spaceId)
   const outcome = await applyRules(tx, current, patch, ctx)
 
   if (outcome.clearAnchorId) {
@@ -149,6 +183,8 @@ export async function patchTask(tx: Tx, id: string, patch: TaskPatch, ctx: RuleC
   if (write.slot !== undefined) set('slot', write.slot)
   if (write.position !== undefined) set('position', write.position)
   if (write.anchor !== undefined) set('anchor', write.anchor)
+  if (write.projectId !== undefined) set('project_id', write.projectId)
+  if (write.parentId !== undefined) set('parent_id', write.parentId)
   if (outcome.completedChange === 'set') assignments.push('completed_at = now()')
   if (outcome.completedChange === 'clear') assignments.push('completed_at = null')
 

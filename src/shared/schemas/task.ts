@@ -25,6 +25,10 @@ export const Task = z.object({
   position: z.number().int(),
   anchor: z.boolean(),
   pushCount: z.number().int(),
+  /** E5: the project it belongs to, the task above it (one level) and the rule that made it. */
+  projectId: z.uuid().nullable(),
+  parentId: z.uuid().nullable(),
+  recurrenceId: z.uuid().nullable(),
   completedAt: z.iso.datetime({ offset: true }).nullable(),
   createdAt: z.iso.datetime({ offset: true }),
   updatedAt: z.iso.datetime({ offset: true }),
@@ -42,6 +46,9 @@ export const TaskCreate = z.object({
   slot: Slot.optional(),
   /** Defaults to the personal space. */
   spaceId: z.uuid().optional(),
+  projectId: z.uuid().optional(),
+  /** One level deep, same space as the parent. */
+  parentId: z.uuid().optional(),
 })
 export type TaskCreate = z.infer<typeof TaskCreate>
 
@@ -56,6 +63,8 @@ export const TaskPatch = z.object({
   slot: Slot.optional(),
   position: z.number().int().min(0).optional(),
   anchor: z.boolean().optional(),
+  projectId: z.uuid().nullable().optional(),
+  parentId: z.uuid().nullable().optional(),
   /** With anchor: true, replaces today's current anchor instead of answering 409 anchor_exists. */
   replaceAnchor: z.boolean().optional(),
 })

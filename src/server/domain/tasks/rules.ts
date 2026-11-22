@@ -48,6 +48,23 @@ export type RuleOutcome = {
   completedChange: 'set' | 'clear' | null
 }
 
+/** The parent of a subtask: one level deep, in the same space, and visible to this user. */
+export async function assertParent(tx: Tx, parentId: string | null | undefined, spaceId: string): Promise<void> {
+  if (!parentId) return
+  const [parent] = await tx<{ parentId: string | null; spaceId: string }[]>`
+    select parent_id, space_id from task where id = ${parentId}`
+  if (!parent) throw new TaskError(422, 'unknown_parent')
+  if (parent.spaceId !== spaceId) throw new TaskError(422, 'subtask_other_space')
+  if (parent.parentId !== null) throw new TaskError(422, 'subtask_too_deep')
+}
+
+/** A project of another space would put the task in two places at once. */
+export async function assertProject(tx: Tx, projectId: string | null | undefined, spaceId: string): Promise<void> {
+  if (projectId === undefined || projectId === null) return
+  const [project] = await tx<{ spaceId: string }[]>`select space_id from project where id = ${projectId}`
+  if (!project || project.spaceId !== spaceId) throw new TaskError(422, 'unknown_project')
+}
+
 async function anchorHolder(tx: Tx, assigneeId: string | null, today: string, excludeId: string | null) {
   const [row] = await tx<{ id: string }[]>`
     select id from task

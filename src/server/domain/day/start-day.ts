@@ -1,5 +1,6 @@
 import { localDate } from '../../../shared/day.ts'
 import type { Tx } from '../../db.ts'
+import { generateInstances } from '../recurrences/recurrences.ts'
 
 export type DayStart = {
   /** The user's calendar day, 'YYYY-MM-DD' (day starts at day_start_minute, default 04:00). */
@@ -34,6 +35,9 @@ export async function startDayIfNeeded(tx: Tx, now: Date): Promise<DayStart> {
        set do_date = ${today}, slot = 'inbox', must = false, anchor = false, push_count = push_count + 1
      where assignee_id = app.uid() and status in ('todo', 'doing') and do_date < ${today}
      returning id`
+
+  // Recurring work for today comes after the rollover, so its instances are not rolled again.
+  await generateInstances(tx, today)
 
   await tx`
     insert into day_entry (date, rolled_count) values (${today}, ${rolled.length})

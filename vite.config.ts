@@ -10,6 +10,8 @@ export default defineConfig({
       target: 'react',
       routesDirectory: './src/web/routes',
       generatedRouteTree: './src/web/routeTree.gen.ts',
+      // One chunk per route: the first load ships only the shell and the page that opens (PRD §8 budget).
+      autoCodeSplitting: true,
     }),
     react(),
     tailwindcss(),

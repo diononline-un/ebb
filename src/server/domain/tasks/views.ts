@@ -81,11 +81,14 @@ export async function loadTaskList(tx: Tx, view: ListView, today: string): Promi
 
   switch (view) {
     case 'inbox': {
-      // The unsorted pile: anything still in the inbox slot, whatever day it is parked on.
+      // The unsorted pile of today. Tasks parked on a later day (triage "later") also sit in the inbox
+      // slot, but they were sorted already; they show up under Tomorrow/Week and come back on their day.
       const rows = await tx.unsafe<TaskRow[]>(
         `select ${TASK_COLUMNS} from task
           where assignee_id = app.uid() and slot = 'inbox' and status in ('todo', 'doing')
+            and (do_date is null or do_date <= $1)
           order by do_date nulls last, position, created_at, id`,
+        [today],
       )
       return TaskListViewSchema.parse({ view, groups: singleGroup(rows) })
     }

@@ -45,5 +45,6 @@
     "failed": "That did not work. The task stayed where it was.",
     "pickDayLabel": "Date"
   },
-  "inboxHeading": "Inbox"
+  "inboxHeading": "Inbox",
+  "sortInbox": "Sort inbox ({{count}})"
 }

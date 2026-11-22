@@ -13,7 +13,7 @@
     "dev": "npm run dev:api & npm run dev:web",
     "build": "vite build",
     "start": "node src/server/index.ts",
-    "check": "tsc -p tsconfig.server.json --noEmit && tsc -p tsconfig.web.json --noEmit",
+    "check": "tsc -p tsconfig.server.json --noEmit && tsc -p tsconfig.web.json --noEmit && tsc -p tsconfig.tests-web.json --noEmit",
     "test": "vitest run",
     "e2e": "playwright test",
     "db:migrate": "node --env-file-if-exists=.env scripts/migrate.ts",

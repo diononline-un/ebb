@@ -141,7 +141,8 @@ describe('GET /api/tasks?view=…', () => {
 
     const shown = result.groups[0]?.tasks.map((task) => task.id) ?? []
     expect(shown).toContain(ids.inboxToday)
-    expect(shown).toContain(ids.farAway)
+    // Review decision: a task parked on a later day is sorted already; it comes back on its day.
+    expect(shown).not.toContain(ids.farAway)
     expect(shown).not.toContain(ids.blocked)
     expect(shown).not.toContain(ids.errand)
   })

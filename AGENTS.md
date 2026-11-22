@@ -31,6 +31,8 @@ python3 scripts/check-design.py   # Design-Drift gegen DESIGN.md
 - **Jeder neue Endpunkt** kommt in `tests/isolation.routes.ts`. Der Isolationstest prüft dann automatisch, dass fremde IDs `404` liefern.
 - **Migrationen** nur vorwärts: `migrations/NNNN_name.sql` mit der nächsten freien Nummer **aus dem Block des eigenen Epics** (`docs/architektur.md` → Migrationsblöcke).
 - **Fachlogik** in `src/server/domain/<bereich>/`. Routen bleiben dünn (validieren, Domain aufrufen, Fehler übersetzen). Reine Logik ohne IO in `src/shared/`, immer mit Unit-Test.
+- **Routen-Helfer** aus `src/server/routes/http.ts` (`readJson`, `fieldErrors`, `invalidBody`, `idOrNull`, `notFound`), keine eigenen Kopien. 400 heißt immer `{ code: 'invalid_body', fields }`.
+- **Web-Tests** als `tests/web/*.test.tsx` mit JSX, typgeprüft über `tsconfig.tests-web.json` (Vorbild `tests/web/tide-line.test.tsx`). Kein `createElement`-Umweg, kein `@ts-nocheck`. Typen und Generics dürfen in `.tsx` stehen: Der Text-Test parst echtes TSX.
 - **Oberfläche:** nur Bausteine aus `src/web/ui/` und nur Tokens aus `DESIGN.md`. **Kein UI-Text im Code.** Jeder Text ist ein Schlüssel in `locales/en/<bereich>.json` des eigenen Bereichs. `common.json` ändert nur die Prüfung.
 - **Namen** genau wie im Glossar (`anchor`, `must`, `slot`, `doDate` …). Keine Synonyme.
 - **Sprache:** Bezeichner und Kommentare englisch, UI-Quelltexte englisch, Doku deutsch. Kommentare erklären das Warum, nicht das Was.
@@ -66,7 +68,7 @@ nie withUser umgehen, nie Tests löschen oder abschwächen, damit sie grün werd
 
 | Aufgabe | Einstieg |
 |---|---|
-| Tagesbeginn, Rollover | `src/shared/day.ts`, `src/shared/rollover.ts`, `src/server/middleware/day-start.ts` |
+| Tagesbeginn, Rollover | `src/shared/day.ts`, `src/server/domain/day/start-day.ts`, `src/server/middleware/day-start.ts` |
 | Aufgaben, Sortieren, Anker, Muss | `src/server/domain/tasks/`, `src/web/features/today/`, `src/web/features/triage/` |
 | Brain Dump, Offline | `src/server/domain/dump/`, `src/web/features/dump/`, `src/web/lib/offline-queue.ts` |
 | Bereiche, Einladungen | `src/server/domain/spaces/` |

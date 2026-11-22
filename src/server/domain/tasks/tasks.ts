@@ -61,14 +61,31 @@ export async function loadTaskRow(tx: Tx, id: string): Promise<TaskRow | null> {
   return row ?? null
 }
 
+/** The task that was just placed at an explicit position, and whether it goes before a tied neighbour. */
+type Placed = { id: string; first: boolean }
+
 /**
  * Gives every task of one (assignee, day, slot) a gap-free position 0..n-1, keeping the order.
- * Only rows whose number actually changes are written, so a move touches as few rows as possible.
+ * A task just placed at position p shares p with a neighbour; `placed` decides the tie by the
+ * direction of the move (dropped into a new group or moved up: before it, moved down: after it),
+ * so the task ends exactly at the index it was dropped on. Only changed rows are written.
  */
-async function renumberSlot(tx: Tx, assigneeId: string | null, doDate: string | null, slot: string): Promise<void> {
+async function renumberSlot(
+  tx: Tx,
+  assigneeId: string | null,
+  doDate: string | null,
+  slot: string,
+  placed: Placed | null = null,
+): Promise<void> {
+  const placedId = placed?.id ?? null
+  const placedRank = placed?.first ? 0 : 2
   await tx`
     with numbered as (
-      select id, row_number() over (order by position, created_at, id) - 1 as new_position
+      select id, row_number() over (
+               order by position,
+                        case when id = ${placedId}::uuid then ${placedRank}::int else 1 end,
+                        created_at, id
+             ) - 1 as new_position
         from task
        where assignee_id = coalesce(${assigneeId}::text, app.uid())
          and do_date is not distinct from ${doDate}::date
@@ -163,7 +180,11 @@ export async function patchTask(tx: Tx, id: string, patch: TaskPatch, ctx: RuleC
   if (!updated) throw new TaskError(404, 'not_found')
 
   if (slotMoved || dateMoved || write.position !== undefined) {
-    await renumberSlot(tx, updated.assigneeId, updated.doDate, updated.slot)
+    const placed =
+      write.position === undefined
+        ? null
+        : { id: updated.id, first: slotMoved || dateMoved || write.position < current.position }
+    await renumberSlot(tx, updated.assigneeId, updated.doDate, updated.slot, placed)
     if (slotMoved || dateMoved) await renumberSlot(tx, current.assigneeId, current.doDate, current.slot)
   }
 

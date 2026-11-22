@@ -1,6 +1,8 @@
 import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core'
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { useQueryClient } from '@tanstack/react-query'
+import { Link } from '@tanstack/react-router'
+import { ArrowRight } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Task, TaskPatch, TodayView } from '../../../shared/schemas/task.ts'
@@ -193,6 +195,16 @@ export function TodayPage() {
 
       <TideLine animateIn={anchor !== null} />
 
+      {view.slots.inbox.length > 0 && (
+        <Link
+          to="/triage"
+          className="flex min-h-11 items-center justify-between gap-3 rounded-control border border-line px-4 text-body motion-quick hover:bg-surface-2"
+        >
+          <span>{t('sortInbox', { count: view.slots.inbox.length })}</span>
+          <ArrowRight size={20} aria-hidden="true" />
+        </Link>
+      )}
+
       <DndContext
         sensors={sensors}
         onDragEnd={dragEnd}
@@ -209,7 +221,7 @@ export function TodayPage() {
         }}
       >
         <TaskList heading={t('inboxHeading')} tasks={view.slots.inbox} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
-          <TaskList heading={t('mustHeading')} tasks={view.must} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
+        <TaskList heading={t('mustHeading')} tasks={view.must} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
         <TaskList heading={t('block1')} tasks={view.slots.block1} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
         <TaskList heading={t('block2')} tasks={view.slots.block2} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />
         <TaskList heading={t('block3')} tasks={view.slots.block3} today={view.date} onToggle={toggle} onOpen={open} onMove={move} />

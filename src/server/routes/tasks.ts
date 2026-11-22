@@ -1,5 +1,4 @@
 import { Hono } from 'hono'
-import type { ZodError } from 'zod'
 import { ListView, TaskCreate, TaskPatch, TriageAnswer } from '../../shared/schemas/task.ts'
 import type { AppContext, AppEnv } from '../app-env.ts'
 import { withUser, type Tx } from '../db.ts'
@@ -8,34 +7,7 @@ import { createTask, deleteTask, loadTaskRow, patchTask, toTask, triageTask } fr
 import { loadTaskList, loadTodayView } from '../domain/tasks/views.ts'
 import { todayOf } from '../middleware/day-start.ts'
 import { requireUser, userOf } from '../middleware/session.ts'
-
-const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
-
-/** A path id that is not a uuid names nothing; answering 404 keeps it out of the database. */
-function idOrNull(value: string): string | null {
-  return UUID.test(value) ? value : null
-}
-
-function fieldErrors(error: ZodError): Record<string, string[]> {
-  const fields: Record<string, string[]> = {}
-  for (const issue of error.issues) {
-    const name = issue.path.map(String).join('.') || '_'
-    fields[name] = [...(fields[name] ?? []), issue.message]
-  }
-  return fields
-}
-
-function invalidBody(c: AppContext, fields: Record<string, string[]>): Response {
-  return c.json({ code: 'invalid_body', fields }, 400)
-}
-
-async function bodyOf(c: AppContext): Promise<{ body: unknown } | { response: Response }> {
-  try {
-    return { body: await c.req.json() }
-  } catch {
-    return { response: invalidBody(c, { _: ['invalid_json'] }) }
-  }
-}
+import { fieldErrors, idOrNull, invalidBody, readJson as bodyOf } from './http.ts'
 
 /** A broken rule becomes its HTTP answer here; nothing else is caught. */
 function failure(c: AppContext, error: unknown): Response {

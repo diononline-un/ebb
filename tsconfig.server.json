@@ -5,5 +5,7 @@
     "moduleResolution": "nodenext",
     "types": ["node"]
   },
-  "include": ["src/server", "src/shared", "scripts", "tests"]
+  "include": ["src/server", "src/shared", "scripts", "tests"],
+  // Web tests need DOM and JSX; tsconfig.tests-web.json checks them.
+  "exclude": ["tests/web"]
 }

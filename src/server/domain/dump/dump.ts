@@ -111,8 +111,9 @@ export async function archiveDumpLine(tx: Tx, id: string): Promise<DumpLine | nu
  * due today, waiting in the inbox. A line that already has a task answers that task, never a second.
  */
 export async function dumpLineToTask(tx: Tx, id: string, today: string): Promise<Task | null> {
+  // FOR UPDATE: a double tap sends two requests; the second waits here and then sees task_id set.
   const [line] = await tx.unsafe<{ id: string; text: string; taskId: string | null }[]>(
-    'select id, text, task_id from dump_line where id = $1',
+    'select id, text, task_id from dump_line where id = $1 for update',
     [id],
   )
   if (!line) return null

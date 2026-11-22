@@ -1,0 +1,9 @@
+{
+  // Web tests (tests/web/*.test.ts|tsx): the browser setup of tsconfig.web.json plus Node types,
+  // because the tests run in Vitest (fs, process). New component tests are .test.tsx and type-checked.
+  "extends": "./tsconfig.web.json",
+  "compilerOptions": {
+    "types": ["node", "vite/client"]
+  },
+  "include": ["tests/web", "src/web", "src/shared"]
+}

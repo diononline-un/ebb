@@ -94,7 +94,14 @@ export async function applyRules(
     write.doDate = null
   }
 
-  const anchor = patch.anchor ?? current?.anchor ?? false
+  // Anchor and must mean "today". A task that leaves today (another day, errands) drops both,
+  // unless the caller sets them explicitly; an explicit anchor elsewhere still fails below.
+  if (current && current.doDate === ctx.today && doDate !== ctx.today) {
+    if (patch.anchor === undefined && current.anchor) write.anchor = false
+    if (patch.must === undefined && current.must) write.must = false
+  }
+
+  const anchor = write.anchor ?? current?.anchor ?? false
   if (anchor) {
     if (doDate !== ctx.today) throw new TaskError(422, 'anchor_not_today')
 
@@ -105,7 +112,7 @@ export async function applyRules(
     }
   }
 
-  const must = patch.must ?? current?.must ?? false
+  const must = write.must ?? current?.must ?? false
   if (must && doDate === ctx.today) {
     const wasMustToday = Boolean(current?.must) && current?.doDate === ctx.today
     // The count without this task, plus one for the state it ends up in.

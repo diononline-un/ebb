@@ -17,6 +17,8 @@ export type OnboardingSettings = {
 export type Me = {
   user: { id: string; email: string; name: string }
   settings: OnboardingSettings
+  /** Whether writing is open right now, and why (E8-P4). */
+  access: { access: boolean; reason: 'selfhost' | 'trial' | 'own' | 'seat' | 'none'; trialEndsAt: string | null; selfhost: boolean }
 }
 
 const ME_KEY = ['me'] as const

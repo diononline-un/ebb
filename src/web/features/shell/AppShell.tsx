@@ -3,6 +3,7 @@ import { CalendarDays, Menu as MenuIcon, NotebookPen, Plus, Sun, type LucideIcon
 import { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { cn } from '../../lib/cn.ts'
+import { ReadOnlyBanner } from '../billing/ReadOnlyBanner.tsx'
 import { QuickCapture } from '../dump/QuickCapture.tsx'
 import { InstallHint } from './InstallHint.tsx'
 
@@ -57,6 +58,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </aside>
 
       <main className="mx-auto w-full max-w-content px-4 pt-6 pb-24 lg:pt-12 lg:pb-12">
+        <ReadOnlyBanner />
         {children}
         <InstallHint />
       </main>

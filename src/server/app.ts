@@ -2,9 +2,11 @@ import { Hono } from 'hono'
 import type { AppEnv } from './app-env.ts'
 import { auth } from './auth.ts'
 import { withUser } from './db.ts'
+import { loadAccess } from './domain/users/access.ts'
 import { loadMe } from './domain/users/me.ts'
 import { env } from './env.ts'
 import { dayStartMiddleware } from './middleware/day-start.ts'
+import { entitlementMiddleware } from './middleware/entitlement.ts'
 import { requireUser, sessionMiddleware, userOf } from './middleware/session.ts'
 import { billingRoutes } from './routes/billing.ts'
 import { dayRoutes } from './routes/day.ts'
@@ -38,9 +40,20 @@ export function createApp(): Hono<AppEnv> {
   // After the session: the first request of a user's day rolls unfinished work over (E2-P3).
   app.use('/api/*', dayStartMiddleware)
 
+  // After the day start and only on writes: reading and exporting stay open without a subscription.
+  app.use('/api/*', async (c, next) => {
+    if (!c.var.user) return next()
+    return entitlementMiddleware(c, next)
+  })
+
   app.get('/api/me', requireUser, async (c) => {
     const user = userOf(c)
-    return c.json(await withUser(user.id, (tx) => loadMe(tx, user)))
+    return c.json(
+      await withUser(user.id, async (tx) => ({
+        ...(await loadMe(tx, user)),
+        access: await loadAccess(tx, new Date()),
+      })),
+    )
   })
 
   app.route('/api/settings', settingsRoutes)

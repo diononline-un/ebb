@@ -6,6 +6,7 @@ import { loadMe } from './domain/users/me.ts'
 import { env } from './env.ts'
 import { dayStartMiddleware } from './middleware/day-start.ts'
 import { requireUser, sessionMiddleware, userOf } from './middleware/session.ts'
+import { billingRoutes } from './routes/billing.ts'
 import { dayRoutes } from './routes/day.ts'
 import { devRoutes } from './routes/dev.ts'
 import { dumpRoutes } from './routes/dump.ts'
@@ -43,6 +44,7 @@ export function createApp(): Hono<AppEnv> {
   })
 
   app.route('/api/settings', settingsRoutes)
+  app.route('/api/billing', billingRoutes)
   app.route('/api/dump', dumpRoutes)
   app.route('/api/export', exportRoutes)
   app.route('/api', taskRoutes)

@@ -26,6 +26,15 @@ const schema = z.object({
   // Without SMTP: development captures mails (GET /api/dev/mails), selfhost skips verification.
   SMTP_URL: z.string().optional(),
   MAIL_FROM: z.string().default('Ebb <no-reply@localhost>'),
+  // Billing (E8): without a webhook secret the route answers 503, so development needs no Paddle.
+  PADDLE_WEBHOOK_SECRET: z.string().optional(),
+  PADDLE_API_KEY: z.string().optional(),
+  PADDLE_PRICE_FOUNDER: z.string().optional(),
+  PADDLE_PRICE_STANDARD: z.string().optional(),
+  PADDLE_PRICE_SEAT: z.string().optional(),
+  PRICE_BASE_ACTIVE: z.enum(['founder', 'standard']).default('founder'),
+  TRIAL_REQUIRES_CARD: z.enum(['true', 'false']).default('false'),
+  MAX_EXTRA_SEATS: z.coerce.number().int().min(0).max(20).default(5),
 })
 
 const parsed = schema

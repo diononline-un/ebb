@@ -9,6 +9,7 @@ import { requireUser, sessionMiddleware, userOf } from './middleware/session.ts'
 import { devRoutes } from './routes/dev.ts'
 import { dumpRoutes } from './routes/dump.ts'
 import { settingsRoutes } from './routes/settings.ts'
+import { taskRoutes } from './routes/tasks.ts'
 
 export function createApp(): Hono<AppEnv> {
   const app = new Hono<AppEnv>()
@@ -33,6 +34,7 @@ export function createApp(): Hono<AppEnv> {
 
   app.route('/api/settings', settingsRoutes)
   app.route('/api/dump', dumpRoutes)
+  app.route('/api', taskRoutes)
 
   if (env.APP_MODE === 'development') app.route('/api/dev', devRoutes)
 

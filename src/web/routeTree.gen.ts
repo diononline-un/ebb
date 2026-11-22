@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DumpRouteImport } from './routes/dump'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as LowRouteImport } from './routes/low'
 import { Route as MoreRouteImport } from './routes/more'
 import { Route as PlanRouteImport } from './routes/plan'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
@@ -35,6 +36,11 @@ const DumpRoute = DumpRouteImport.update({
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   id: '/forgot-password',
   path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LowRoute = LowRouteImport.update({
+  id: '/low',
+  path: '/low',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MoreRoute = MoreRouteImport.update({
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dump': typeof DumpRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/low': typeof LowRoute
   '/more': typeof MoreRoute
   '/plan': typeof PlanRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dump': typeof DumpRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/low': typeof LowRoute
   '/more': typeof MoreRoute
   '/plan': typeof PlanRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -116,6 +124,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/dump': typeof DumpRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/low': typeof LowRoute
   '/more': typeof MoreRoute
   '/plan': typeof PlanRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -132,6 +141,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dump'
     | '/forgot-password'
+    | '/low'
     | '/more'
     | '/plan'
     | '/reset-password'
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dump'
     | '/forgot-password'
+    | '/low'
     | '/more'
     | '/plan'
     | '/reset-password'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dump'
     | '/forgot-password'
+    | '/low'
     | '/more'
     | '/plan'
     | '/reset-password'
@@ -175,6 +187,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DumpRoute: typeof DumpRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
+  LowRoute: typeof LowRoute
   MoreRoute: typeof MoreRoute
   PlanRoute: typeof PlanRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
@@ -207,6 +220,13 @@ declare module '@tanstack/react-router' {
       path: '/forgot-password'
       fullPath: '/forgot-password'
       preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/low': {
+      id: '/low'
+      path: '/low'
+      fullPath: '/low'
+      preLoaderRoute: typeof LowRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/more': {
@@ -279,6 +299,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DumpRoute: DumpRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
+  LowRoute: LowRoute,
   MoreRoute: MoreRoute,
   PlanRoute: PlanRoute,
   ResetPasswordRoute: ResetPasswordRoute,

@@ -1,0 +1,36 @@
+{
+  "title": "Today",
+  "loading": "One moment.",
+  "loadError": "The day did not load. Check the connection and try again.",
+  "empty": "Nothing is left for today. That is enough.",
+  "emptyAction": "Back to today",
+  "step": {
+    "label": "First 10-minute step",
+    "placeholder": "The smallest next move"
+  },
+  "actions": {
+    "done": "Done",
+    "chooseAnother": "Choose another",
+    "stop": "Stop for today"
+  },
+  "after": {
+    "line": "Done. One more, or call it a day?",
+    "oneMore": "One more",
+    "callItADay": "Call it a day"
+  },
+  "stop": {
+    "question": "Where did you stop?",
+    "placeholder": "So tomorrow starts where today ended",
+    "save": "Save and stop",
+    "cancel": "Cancel"
+  },
+  "choose": {
+    "title": "Which one?"
+  },
+  "toggle": {
+    "label": "Energy today",
+    "low": "Low",
+    "good": "Good"
+  },
+  "link": "Show one thing"
+}

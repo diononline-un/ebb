@@ -6,7 +6,8 @@ import { ArrowRight } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Task, TaskPatch, TodayView } from '../../../shared/schemas/task.ts'
-import { ApiError } from '../../lib/api.ts'
+import { ApiError, apiFetch } from '../../lib/api.ts'
+import { Button } from '../../ui/Button.tsx'
 import { TideLine } from '../../ui/TideLine.tsx'
 import { useCurrentFocus, useStopFocus } from '../focus/api.ts'
 import { FocusTimer } from '../focus/FocusTimer.tsx'
@@ -60,6 +61,7 @@ function findTask(view: TodayView, id: string | null): Task | null {
 /** The day, in the order of DESIGN.md §5: title, energy, anchor, tide line, musts, blocks, errands, done. */
 export function TodayPage() {
   const { t, i18n } = useTranslation('today')
+  const { t: tLow } = useTranslation('low')
   const query = useToday()
   const focus = useCurrentFocus()
   const stopFocus = useStopFocus()
@@ -172,6 +174,14 @@ export function TodayPage() {
     if (active.slot === over.slot && active.index === over.index) return
     move(String(event.active.id), { slot: over.slot, position: over.index })
   }
+  // The energy answer lands in the cache right away; the refetch settles it with the server's word.
+  const chooseEnergy = (energy: 'low' | 'good') => {
+    queryClient.setQueryData<TodayView>(['today'], (previous) => (previous ? { ...previous, energy } : previous))
+    void apiFetch('/api/day/energy', { method: 'PUT', body: JSON.stringify({ energy }) })
+      .catch(() => undefined)
+      .finally(() => queryClient.invalidateQueries({ queryKey: ['today'] }))
+  }
+
   const remove = async (id: string) => {
     await deleteTask(id)
     await queryClient.invalidateQueries({ queryKey: ['today'] })
@@ -184,7 +194,32 @@ export function TodayPage() {
         <p className="text-meta text-ink-3">{dateLabel}</p>
       </header>
 
-      {view.energy ? <p className="text-small text-ink-2">{t(`energy.${view.energy}`)}</p> : null}
+      <div className="flex flex-col gap-2">
+        {view.energy ? <p className="text-small text-ink-2">{t(`energy.${view.energy}`)}</p> : null}
+        <div role="group" aria-label={tLow('toggle.label')} className="flex gap-2">
+          <Button
+            type="button"
+            variant={view.energy === 'low' ? 'secondary' : 'ghost'}
+            aria-pressed={view.energy === 'low'}
+            onClick={() => chooseEnergy('low')}
+          >
+            {tLow('toggle.low')}
+          </Button>
+          <Button
+            type="button"
+            variant={view.energy === 'good' ? 'secondary' : 'ghost'}
+            aria-pressed={view.energy === 'good'}
+            onClick={() => chooseEnergy('good')}
+          >
+            {tLow('toggle.good')}
+          </Button>
+        </div>
+        {view.energy === 'low' ? (
+          <Link to="/low" className="text-small text-ink-2 underline hover:text-ink">
+            {tLow('link')}
+          </Link>
+        ) : null}
+      </div>
 
       <RolloverNote count={view.rolledCount} date={view.date} />
 

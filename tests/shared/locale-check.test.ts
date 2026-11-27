@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { compareLocale, placeholdersOf, pluralBase } from '../../src/shared/locale-check.ts'
+import { compareLocale, placeholdersOf, pluralBase, staleKeys } from '../../src/shared/locale-check.ts'
 
 describe('placeholdersOf', () => {
   it('lists the placeholders sorted, so a swapped order is no finding', () => {
@@ -71,5 +71,37 @@ describe('compareLocale', () => {
     const en = { 'tasks:count_one': '{{count}} task', 'tasks:count_other': '{{count}} tasks' }
     const de = { 'tasks:count_one': '{{count}} Aufgabe', 'tasks:count_other': 'Aufgaben' }
     expect(compareLocale(en, de).placeholderMismatch).toEqual(['tasks:count_other'])
+  })
+})
+
+describe('staleKeys', () => {
+  // Same contract as the SHA-256 in scripts/check-locales.ts, only readable.
+  const hash = (text: string) => `h:${text}`
+
+  it('returns no key when every stored hash still matches the English text', () => {
+    const en = { 'common:save': 'Save', 'common:cancel': 'Cancel' }
+    const stored = { 'common:save': 'h:Save', 'common:cancel': 'h:Cancel' }
+    expect(staleKeys(en, stored, hash)).toEqual([])
+  })
+
+  it('returns the key whose English text changed', () => {
+    expect(staleKeys({ 'common:save': 'Save as' }, { 'common:save': 'h:Save' }, hash)).toEqual(['common:save'])
+  })
+
+  it('returns the key that has no stored hash yet', () => {
+    const en = { 'common:save': 'Save', 'common:cancel': 'Cancel' }
+    expect(staleKeys(en, { 'common:save': 'h:Save' }, hash)).toEqual(['common:cancel'])
+  })
+
+  it('returns a stored key that English dropped', () => {
+    const stored = { 'common:save': 'h:Save', 'common:old': 'h:Old' }
+    expect(staleKeys({ 'common:save': 'Save' }, stored, hash)).toEqual(['common:old'])
+  })
+
+  it('sorts the keys it returns', () => {
+    expect(staleKeys({ 'today:last': 'Last', 'anchor:first': 'First' }, {}, hash)).toEqual([
+      'anchor:first',
+      'today:last',
+    ])
   })
 })

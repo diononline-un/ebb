@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto'
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { compareLocale } from '../src/shared/locale-check.ts'
+import { compareLocale, staleKeys } from '../src/shared/locale-check.ts'
 
 // Gate for the translations E10-P2 produces (E10-P1): every language besides English must cover the
 // English keys, keep their placeholders, and still match the English text its hashes were taken
@@ -94,10 +94,12 @@ for (const language of languages) {
   for (const key of comparison.extra) report(language, key, 'extra, not in en')
   for (const key of comparison.placeholderMismatch) report(language, key, 'placeholders differ from en')
   // A changed English text invalidates the translation made from the old one, a vanished key too.
-  for (const [key, hash] of Object.entries(meta[language]?.source ?? {})) {
-    const current = en[key]
-    if (current === undefined) report(language, key, 'outdated, gone from en')
-    else if (sha256(current) !== hash) report(language, key, 'outdated, en text changed')
+  // A key without a recorded hash is no hash finding: `--write-meta` records them in one go, and
+  // compareLocale already calls such a key missing in every language that lacks it.
+  const source = meta[language]?.source ?? {}
+  for (const key of staleKeys(en, source, sha256)) {
+    if (en[key] === undefined) report(language, key, 'outdated, gone from en')
+    else if (Object.hasOwn(source, key)) report(language, key, 'outdated, en text changed')
   }
 }
 

@@ -1,5 +1,6 @@
 // Checks whether a translation still covers its English source (E10-P1). Pure: the caller hands in
-// flattened maps ("ns:a.b" → text), so the CLI check and the unit test run the same code.
+// flattened maps ("ns:a.b" → text), so the CLI check and the unit test run the same code. The hash
+// of the English text arrives as a function too, which keeps `node:crypto` out of `src/shared`.
 
 export type LocaleComparison = {
   /** Keys of the English source that the translation lacks. */
@@ -72,4 +73,22 @@ export function compareLocale(en: Record<string, string>, other: Record<string, 
   }
 
   return { missing: missing.sort(), extra: extra.sort(), placeholderMismatch: placeholderMismatch.sort() }
+}
+
+/**
+ * Keys whose recorded English hash no longer describes the English text: the text changed after the
+ * hash was taken, the key is newer than the last meta write (no hash at all), or English dropped the
+ * key, so the hash belongs to a text that no longer exists. Sorted, so the report is stable.
+ */
+export function staleKeys(
+  en: Record<string, string>,
+  stored: Record<string, string>,
+  hash: (text: string) => string,
+): string[] {
+  const stale: string[] = []
+  for (const key of new Set([...Object.keys(en), ...Object.keys(stored)])) {
+    const text = en[key]
+    if (text === undefined || stored[key] !== hash(text)) stale.push(key)
+  }
+  return stale.sort()
 }

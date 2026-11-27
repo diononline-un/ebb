@@ -1,0 +1,60 @@
+{
+  "header": {
+    "signIn": "Se connecter"
+  },
+  "hero": {
+    "title": "Planifie ta journée, une question à la fois",
+    "line": "Pour les matins où ta tête est pleine et où la liste n'a pas encore d'ordre.",
+    "cta": "Commencer 7 jours gratuits",
+    "note": "Sans carte bancaire"
+  },
+  "morning": {
+    "title": "Comment se passe un matin",
+    "steps": {
+      "energy": "Dis combien d'énergie tu as. Un mot suffit.",
+      "yesterday": "Regarde ce qui est revenu d'hier, sans jugement.",
+      "thoughts": "Pose les pensées en vrac là où elles peuvent attendre.",
+      "questions": "Réponds à une question par tâche jusqu'à ce que l'ancre soit claire : « Qu'est-ce qui casse si ça attend demain ? »"
+    }
+  },
+  "low": {
+    "title": "Un jour à basse énergie",
+    "body": "Le mode basse énergie garde une tâche à l'écran, plus le premier pas de 10 minutes. Le reste reflue jusqu'à ce que tu y reviennes."
+  },
+  "notHere": {
+    "title": "Ce que tu ne trouveras pas ici",
+    "body": "Pas de chaînes de bons jours, pas de points, pas de marques rouges pour ce qui a bougé, pas de compteur sur l'icône de l'app. Un jour à basse énergie est une information, pas une dette."
+  },
+  "together": {
+    "title": "Ensemble, si tu veux",
+    "body": "Des espaces partagés pour un foyer, une famille ou une petite équipe. Tu vois qui prend quoi, et personne ne se fait relancer."
+  },
+  "price": {
+    "title": "Prix",
+    "body": "7 jours gratuits. Ensuite 30 € par an au tarif fondateur, bloqué tant que tu restes. Chaque membre supplémentaire coûte 5 € par an.",
+    "selfHost": "Tu peux aussi héberger ebbe toi-même, et exporter tes données quand tu veux."
+  },
+  "faq": {
+    "title": "Questions fréquentes",
+    "app": {
+      "question": "Y a-t-il une app ?",
+      "answer": "Oui. ebbe est une PWA installable qui se pose sur ton écran d'accueil comme n'importe quelle app."
+    },
+    "data": {
+      "question": "Où vivent mes données ?",
+      "answer": "Sur le serveur qui fait tourner ton compte. Si tu héberges ebbe toi-même, elles restent sur ta propre machine."
+    },
+    "export": {
+      "question": "Puis-je exporter et supprimer mes données ?",
+      "answer": "Oui. L'export te donne un fichier avec tout, et la suppression retire le compte et ses données."
+    },
+    "trial": {
+      "question": "Que se passe-t-il après l'essai ?",
+      "answer": "Tes journées restent lisibles et tu peux encore tout exporter. Un abonnement ramène la planification."
+    },
+    "adhd": {
+      "question": "Est-ce pensé pour le TDAH ?",
+      "answer": "C'est pensé pour les têtes pleines et les matins qui ressemblent à trop. Ce n'est pas un produit médical et cela ne fait aucune promesse médicale."
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "header": {
+    "signIn": "Anmelden"
+  },
+  "hero": {
+    "title": "Plane deinen Tag, eine Frage nach der anderen",
+    "line": "Für Morgen, an denen der Kopf voll ist und die Liste noch keine Ordnung hat.",
+    "cta": "7 Tage kostenlos starten",
+    "note": "Keine Karte nötig"
+  },
+  "morning": {
+    "title": "So läuft ein Morgen",
+    "steps": {
+      "energy": "Sag, wie viel Energie du hast. Ein Wort reicht.",
+      "yesterday": "Sieh, was von gestern mitgekommen ist, ohne Urteil.",
+      "thoughts": "Leg die losen Gedanken dorthin, wo sie warten können.",
+      "questions": "Beantworte eine Frage pro Aufgabe, bis der Anker klar ist: „Was bricht, wenn das bis morgen wartet?“"
+    }
+  },
+  "low": {
+    "title": "An einem Tag mit wenig Energie",
+    "body": "Der Low-Energy-Modus zeigt eine Aufgabe und den ersten 10-Minuten-Schritt. Alles andere ebbt weg, bis du so weit bist."
+  },
+  "notHere": {
+    "title": "Was du hier nicht findest",
+    "body": "Keine Ketten guter Tage, keine Punkte, keine roten Markierungen für Verschobenes, kein Zähler am App-Symbol. Ein Tag mit wenig Energie ist eine Information, keine Schuld."
+  },
+  "together": {
+    "title": "Zusammen, wenn du willst",
+    "body": "Geteilte Bereiche für einen Haushalt, eine Familie oder ein kleines Team. Du siehst, wer was übernimmt, und niemand wird angestupst."
+  },
+  "price": {
+    "title": "Preis",
+    "body": "7 Tage kostenlos. Danach 30 € im Jahr zum Founder-Preis, festgeschrieben, solange du bleibst. Jedes weitere Mitglied kostet 5 € im Jahr.",
+    "selfHost": "Du kannst ebbe auch selbst hosten und deine Daten jederzeit exportieren."
+  },
+  "faq": {
+    "title": "Häufige Fragen",
+    "app": {
+      "question": "Gibt es eine App?",
+      "answer": "Ja. ebbe ist eine installierbare PWA und liegt wie jede andere App auf deinem Home-Bildschirm."
+    },
+    "data": {
+      "question": "Wo liegen meine Daten?",
+      "answer": "Auf dem Server, auf dem dein Konto läuft. Wenn du ebbe selbst hostest, bleiben sie auf deiner eigenen Maschine."
+    },
+    "export": {
+      "question": "Kann ich meine Daten exportieren und löschen?",
+      "answer": "Ja. Der Export gibt dir eine Datei mit allem, und Löschen entfernt das Konto samt Daten."
+    },
+    "trial": {
+      "question": "Was passiert nach der Testphase?",
+      "answer": "Deine Tage bleiben lesbar, und du kannst weiterhin alles exportieren. Ein Abo bringt die Planung zurück."
+    },
+    "adhd": {
+      "question": "Ist das für ADHS gemacht?",
+      "answer": "Es ist für volle Köpfe und Morgen gemacht, die sich nach zu viel anfühlen. Es ist kein medizinisches Produkt und macht kein medizinisches Versprechen."
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "header": {
+    "signIn": "Entrar"
+  },
+  "hero": {
+    "title": "Planifica tu día, una pregunta a la vez",
+    "line": "Para mañanas en las que la cabeza está llena y la lista todavía no tiene orden.",
+    "cta": "Empieza 7 días gratis",
+    "note": "No hace falta tarjeta"
+  },
+  "morning": {
+    "title": "Cómo va una mañana",
+    "steps": {
+      "energy": "Di cuánta energía tienes. Una palabra basta.",
+      "yesterday": "Mira qué vino de ayer, sin ningún juicio.",
+      "thoughts": "Pon los pensamientos sueltos donde puedan esperar.",
+      "questions": "Responde una pregunta por tarea hasta que el ancla esté clara: «¿Qué se rompe si esto espera hasta mañana?»"
+    }
+  },
+  "low": {
+    "title": "En un día de poca energía",
+    "body": "El modo de poca energía deja una tarea en pantalla y el primer paso de 10 minutos. Lo demás se retira como la marea hasta que te apetezca."
+  },
+  "notHere": {
+    "title": "Lo que no vas a encontrar aquí",
+    "body": "Nada de cadenas de días buenos, ni puntos, ni marcas rojas por lo que se pasó a otro día, ni un contador en el icono de la app. Un día de poca energía es información, no una deuda."
+  },
+  "together": {
+    "title": "En compañía, si quieres",
+    "body": "Espacios compartidos para una casa, una familia o un equipo pequeño. Ves quién asume qué, y nadie recibe empujones."
+  },
+  "price": {
+    "title": "Precio",
+    "body": "7 días gratis. Después, 30 € al año con precio de fundador, fijado mientras sigas. Cada miembro extra cuesta 5 € al año.",
+    "selfHost": "También puedes alojar ebbe tú mismo, y puedes exportar tus datos cuando quieras."
+  },
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "app": {
+      "question": "¿Hay una app?",
+      "answer": "Sí. ebbe es una PWA instalable que se queda en tu pantalla de inicio como cualquier otra app."
+    },
+    "data": {
+      "question": "¿Dónde están mis datos?",
+      "answer": "En el servidor donde corre tu cuenta. Si alojas ebbe tú mismo, se quedan en tu propia máquina."
+    },
+    "export": {
+      "question": "¿Puedo exportar y borrar mis datos?",
+      "answer": "Sí. La exportación te da un archivo con todo, y borrar quita la cuenta y sus datos."
+    },
+    "trial": {
+      "question": "¿Qué pasa cuando termina la prueba?",
+      "answer": "Tus días siguen legibles y puedes seguir exportándolo todo. Una suscripción devuelve la planificación."
+    },
+    "adhd": {
+      "question": "¿Está pensado para el TDAH?",
+      "answer": "Está pensado para cabezas llenas y mañanas que se sienten como demasiado. No es un producto médico y no hace ninguna promesa médica."
+    }
+  }
+}

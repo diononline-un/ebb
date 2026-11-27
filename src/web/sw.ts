@@ -1,5 +1,6 @@
 import { createHandlerBoundToURL, precacheAndRoute, type PrecacheEntry } from 'workbox-precaching'
 import { NavigationRoute, registerRoute } from 'workbox-routing'
+import { safeAppPath } from '../shared/push-endpoint.ts'
 
 // The web build carries the DOM lib, not the worker lib, so the few service worker globals used here
 // are declared by shape. __WB_MANIFEST is injected by vite-plugin-pwa at build time (injectManifest).
@@ -44,15 +45,10 @@ self.addEventListener('push', (event) => {
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close()
-  // Only a path of this app is opened; anything else lands on today.
-  const url = targetUrl(event.notification.data)
+  // Only a path of this app is opened; anything else lands on today (src/shared/push-endpoint.ts).
+  const url = safeAppPath((event.notification.data as { url?: unknown } | null)?.url)
   event.waitUntil(focusOrOpen(url))
 })
-
-function targetUrl(data: unknown): string {
-  const url = (data as { url?: unknown } | null)?.url
-  return typeof url === 'string' && url.startsWith('/') && !url.startsWith('//') ? url : '/today'
-}
 
 /** An open window of the app is focused and navigated; without one the URL opens in a new tab. */
 async function focusOrOpen(url: string): Promise<void> {

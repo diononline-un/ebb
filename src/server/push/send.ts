@@ -1,4 +1,5 @@
 import { sendNotification, WebPushError } from 'web-push'
+import { isPushEndpoint } from '../../shared/push-endpoint.ts'
 import { env } from '../env.ts'
 
 export type PushResult = 'ok' | 'gone' | 'error'
@@ -21,6 +22,12 @@ const vapid =
  * failure is 'error' and leaves the subscription in place for the next try.
  */
 export async function sendPush(target: PushTarget, payload: PushPayload): Promise<PushResult> {
+  // A row stored before the host allowlist, or one written by another path, never gets a request.
+  if (!isPushEndpoint(target.endpoint)) {
+    console.warn('push failed: endpoint not allowed')
+    return 'error'
+  }
+
   if (!vapid) {
     if (env.APP_MODE === 'development') {
       captured.push({ endpoint: target.endpoint, ...payload })

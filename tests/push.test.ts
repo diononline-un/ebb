@@ -10,7 +10,7 @@ afterAll(async () => {
   await ownerSql.end()
 })
 
-const ENDPOINT = 'https://push.example.test/anna'
+const ENDPOINT = 'https://fcm.googleapis.com/anna'
 
 function subscription(endpoint = ENDPOINT) {
   return { endpoint, keys: { p256dh: 'BNcKp1zP-encryption-key', auth: 'auth-secret' } }
@@ -60,23 +60,28 @@ describe('POST /api/push/subscriptions', () => {
     expect(await stored()).toEqual([{ userId: ben.id, endpoint: ENDPOINT, lastSuccessAt: null }])
   })
 
-  it('answers 400 for a body that is not an https subscription', async () => {
+  it('answers 400 for a body that is not an accepted push subscription', async () => {
     const user = await createUser()
 
     const insecure = await as(user).post('/api/push/subscriptions', {
-      ...subscription('http://push.example.test/anna'),
+      ...subscription('http://fcm.googleapis.com/anna'),
     })
     expect(insecure.status).toBe(400)
     const insecureBody = (await insecure.json()) as { code: string; fields: Record<string, string[]> }
     expect(insecureBody.code).toBe('invalid_body')
     expect(Object.keys(insecureBody.fields)).toEqual(['endpoint'])
 
+    // A push to an internal address would be an SSRF, so it never reaches the table.
+    const internal = await as(user).post('/api/push/subscriptions', subscription('https://10.0.0.5/x'))
+    expect(internal.status).toBe(400)
+    expect(Object.keys((await internal.json()).fields)).toEqual(['endpoint'])
+
     const noKeys = await as(user).post('/api/push/subscriptions', { endpoint: ENDPOINT })
     expect(noKeys.status).toBe(400)
     expect(Object.keys((await noKeys.json()).fields)).toEqual(['keys'])
 
     const tooLong = await as(user).post('/api/push/subscriptions', {
-      endpoint: `https://push.example.test/${'x'.repeat(2048)}`,
+      endpoint: `https://fcm.googleapis.com/${'x'.repeat(2048)}`,
     })
     expect(tooLong.status).toBe(400)
 
@@ -150,8 +155,8 @@ describe('deliverToUser', () => {
   it('sends only to the subscriptions of that person', async () => {
     const anna = await createUser('anna@example.test')
     const ben = await createUser('ben@example.test')
-    await store(anna, 'https://push.example.test/anna')
-    await store(ben, 'https://push.example.test/ben')
+    await store(anna, 'https://fcm.googleapis.com/anna')
+    await store(ben, 'https://fcm.googleapis.com/ben')
     const reached: string[] = []
 
     const result = await withSystem((tx) =>
@@ -162,7 +167,7 @@ describe('deliverToUser', () => {
     )
 
     expect(result).toEqual({ sent: 1, removed: 0 })
-    expect(reached).toEqual(['https://push.example.test/anna'])
+    expect(reached).toEqual(['https://fcm.googleapis.com/anna'])
   })
 })
 

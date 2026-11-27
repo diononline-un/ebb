@@ -1,0 +1,130 @@
+# Production stack: Caddy terminates TLS, only Caddy publishes ports, the backup service dumps
+# daily. The app image is built by CI for a v* tag; its tag comes from EBB_VERSION in .env.
+name: ebb
+
+services:
+  app:
+    image: ghcr.io/diononline-un/ebb:${EBB_VERSION:?set EBB_VERSION to a release tag}
+    restart: unless-stopped
+    env_file:
+      # The runbook copies .env.prod.example to .env. required: false keeps `config -q` usable in
+      # a fresh checkout before that copy exists; `up` then fails on the missing secrets anyway.
+      - path: .env
+        required: false
+    environment:
+      # Inside the compose network the database answers on its service name and default port.
+      PGHOST: postgres
+      PGPORT: 5432
+      APP_MODE: production
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      # The image has no curl, so the health check uses the fetch that ships with Node.
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:2040/api/health').then((r) => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "5"
+    deploy:
+      resources:
+        limits:
+          cpus: 1
+          memory: 768M
+
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      EBB_OWNER_PASSWORD: ${EBB_OWNER_PASSWORD:?set EBB_OWNER_PASSWORD}
+      EBB_APP_PASSWORD: ${EBB_APP_PASSWORD:?set EBB_APP_PASSWORD}
+      EBB_SYSTEM_PASSWORD: ${EBB_SYSTEM_PASSWORD:?set EBB_SYSTEM_PASSWORD}
+      EBB_AUTH_PASSWORD: ${EBB_AUTH_PASSWORD:?set EBB_AUTH_PASSWORD}
+      EBB_DB_NAME: ${EBB_DB_NAME:-ebb}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "5"
+    deploy:
+      resources:
+        limits:
+          cpus: 1
+          memory: 1G
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      EBB_DOMAIN: ${EBB_DOMAIN:?set EBB_DOMAIN to the public hostname}
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile:ro
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "5"
+    deploy:
+      resources:
+        limits:
+          cpus: 0.5
+          memory: 128M
+
+  backup:
+    image: postgres:17
+    restart: unless-stopped
+    entrypoint: ["sh", "/backup/backup.sh"]
+    environment:
+      PGHOST: postgres
+      EBB_DB_NAME: ${EBB_DB_NAME:-ebb}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      BACKUP_HOUR: ${BACKUP_HOUR:-3}
+      BACKUP_KEEP_DAYS: ${BACKUP_KEEP_DAYS:-14}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./docker/backup:/backup:ro
+      - backups:/backups
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "5"
+    deploy:
+      resources:
+        limits:
+          cpus: 0.5
+          memory: 256M
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:
+  backups:

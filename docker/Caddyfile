@@ -1,0 +1,17 @@
+# Caddy is the only service with published ports. It terminates TLS for the domain from .env and
+# forwards everything to the app container.
+#
+# No trusted_proxies on purpose: Caddy then replaces a client-sent X-Forwarded-For with the real
+# peer address, and src/server/auth.ts reads the first entry as the client IP for rate limiting.
+# Adding a proxy in front later means adding trusted_proxies here, or every client shares one bucket.
+{$EBB_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy app:2040
+
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		-Server
+	}
+}

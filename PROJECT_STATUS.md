@@ -33,5 +33,5 @@
 
 **Bekannte Risiken:** keine Paddle-Kündigung vor der Kontolöschung (kein API-Client), Löschung sofort ohne Gnadenfrist, `last_seen_at` schreibt niemand fort, `PATCH /api/tasks` kennt kein `spaceId`, Webhook prüft nur den ersten `h1`-Wert (Secret-Rotation).
 
-**Offen (PRD §13):** Markenprüfung für „Ebbe“, Betreiberangaben für die Rechtstexte, E-Mail-Provider (beim Deploy), Paddle live, Ende der Founder-Phase.
+**Offen (PRD §13):** Markenprüfung für „ebbe“, Betreiberangaben für die Rechtstexte, E-Mail-Provider (beim Deploy), Paddle live, Ende der Founder-Phase.
 **Später:** Build-Audit `vite-plugin-pwa` (nur Build-Zeit), erster GHCR-Push mit Tag `v*`, leere Blöcke als Drag-Ziel.

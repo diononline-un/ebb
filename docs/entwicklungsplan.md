@@ -24,7 +24,7 @@ Je Paket ein Issue mit `ready` + `exec:deepseek`, nachgeschärft am echten Code 
 
 | Paket | Inhalt | Quelle |
 |---|---|---|
-| R-1 | Produktname „Ebbe“ an allen sichtbaren Stellen | Entscheidung 2026-11-27 |
+| R-1 | Produktname „ebbe“ an allen sichtbaren Stellen | Entscheidung 2026-11-27 |
 | E7-P5b | Plan-Seite zeigt Bereichsnamen | Handoff, offen aus P5 |
 | T-1 | Vier ältere Web-Tests von `createElement`/`@ts-nocheck` auf `.test.tsx` | Status „Später“ |
 | T-2 | „Done“ im Low-Modus beendet den laufenden Timer | Status „Später“ (Bug) |
@@ -54,13 +54,13 @@ Je Paket ein Issue mit `ready` + `exec:deepseek`, nachgeschärft am echten Code 
 
 ## Entscheidungen von Dion (2026-11-27)
 
-- **Name:** Produkt heißt „Ebbe“. Nur sichtbare Stellen wechseln (Paket R-1). `ebb_*`-Rollen, CSS-Klassen `ebb-*`, Speicherschlüssel `ebb.*`, IndexedDB `ebb-offline`, npm-/Compose-Name und Repo bleiben, sonst gehen Offline-Daten und Sitzungen verloren. Markenprüfung vor dem Launch.
+- **Name:** Produkt heißt „ebbe“. Nur sichtbare Stellen wechseln (Paket R-1). `ebb_*`-Rollen, CSS-Klassen `ebb-*`, Speicherschlüssel `ebb.*`, IndexedDB `ebb-offline`, npm-/Compose-Name und Repo bleiben, sonst gehen Offline-Daten und Sitzungen verloren. Markenprüfung vor dem Launch.
 - **VAPID (E9-P1):** Dev-Schlüssel lokal erzeugt, nur in `.env.example`; Produktion je Deployment per Secret.
 - **E8-P5 Checkout:** erst Attrappe mit Platzhalter-Preis-IDs und Fake, echtes Paddle später.
 - **E8-P7 Self-Host:** minimal. Keine Lizenz, keine Sitzgrenze, Billing-UI aus, Update per Image-Tag mit Anleitung.
 - **E10-P2 Übersetzungen:** maschinell aus `locales/en`, vor Launch Muttersprachler-Review; bis dahin hinter Schalter.
 - **E10-P3 Rechtsseiten:** Gerüst mit Platzhaltern `[…]`, Build-Check schlägt fehl, solange einer übrig ist.
-- **E10-P4 Landingpage:** mit „Ebbe“, Texte als Schlüssel in `locales`.
+- **E10-P4 Landingpage:** mit „ebbe“, Texte als Schlüssel in `locales`.
 - **Mail:** Anbieter offen, Code spricht nur `SMTP_URL`; Wahl beim Deploy (E9-P7).
 
 Damit ist nichts mehr blockiert. Offen bleiben nur Paddle live und die Betreiberangaben, beide nach dem Bau.

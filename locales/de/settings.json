@@ -1,0 +1,46 @@
+{
+  "title": "Erinnerungen",
+  "nav": "Erinnerungen",
+  "loading": "Deine Einstellungen werden geladen",
+  "loadError": "Deine Einstellungen konnten nicht geladen werden. Prüf die Verbindung und versuch es noch einmal.",
+  "push": {
+    "unsupported": "Dieser Browser kann keine Erinnerungen anzeigen.",
+    "iosHint": "Auf dem iPhone kommen Erinnerungen erst an, wenn ebbe auf dem Home-Bildschirm liegt. Die Schritte stehen im Installationshinweis unter Heute.",
+    "turnOn": "Erinnerungen auf diesem Gerät einschalten",
+    "turnOff": "Ausschalten",
+    "on": "Auf diesem Gerät an",
+    "missing": "Auf diesem Server sind keine Erinnerungen eingerichtet."
+  },
+  "types": {
+    "title": "Arten von Erinnerungen",
+    "morning": "Morgenritual",
+    "morningHint": "Eine Erinnerung, um dein Morgenritual zu beginnen.",
+    "morningTime": "Morgenzeit",
+    "weeklyReset": "Weekly Reset",
+    "weeklyResetHint": "Eine Erinnerung, wenn die Woche ihren Reset bekommt.",
+    "weeklyResetDay": "Tag des Weekly Reset",
+    "weeklyResetTime": "Uhrzeit des Weekly Reset",
+    "errands": "Erledigungen",
+    "errandsHint": "Eine Erinnerung an deinem Erledigungstag.",
+    "errandsDay": "Erledigungstag",
+    "habits": "Habits",
+    "habitsHint": "Die Uhrzeit steht an jedem Habit selbst.",
+    "habitsLink": "Habits öffnen",
+    "timer": "Fokus-Timer",
+    "timerHint": "Eine Erinnerung, wenn eine Fokus-Sitzung endet.",
+    "trial": "Ende der Testphase",
+    "trialHint": "Eine ruhige Zeile, bevor deine Testphase endet."
+  },
+  "weekdays": {
+    "none": "Keine"
+  },
+  "quiet": {
+    "title": "Ruhezeiten",
+    "start": "Von",
+    "end": "Bis",
+    "hint": "Nur der Fokus-Timer sendet in dieser Zeit."
+  },
+  "errors": {
+    "generic": "Das wurde nicht gespeichert. Prüf die Verbindung und versuch es noch einmal."
+  }
+}

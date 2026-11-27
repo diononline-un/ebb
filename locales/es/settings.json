@@ -1,0 +1,46 @@
+{
+  "title": "Recordatorios",
+  "nav": "Recordatorios",
+  "loading": "Cargando tus ajustes",
+  "loadError": "Tus ajustes no se pudieron cargar. Revisa la conexión e inténtalo de nuevo.",
+  "push": {
+    "unsupported": "Este navegador no puede mostrar recordatorios.",
+    "iosHint": "En el iPhone, los recordatorios solo llegan cuando ebbe está en la pantalla de inicio. Los pasos están en el aviso de instalación en Hoy.",
+    "turnOn": "Activar los recordatorios en este dispositivo",
+    "turnOff": "Desactivar",
+    "on": "Activados en este dispositivo",
+    "missing": "Los recordatorios no están configurados en este servidor."
+  },
+  "types": {
+    "title": "Tipos de recordatorio",
+    "morning": "Ritual de la mañana",
+    "morningHint": "Un recordatorio para empezar tu ritual de la mañana.",
+    "morningTime": "Hora de la mañana",
+    "weeklyReset": "Revisión semanal",
+    "weeklyResetHint": "Un recordatorio cuando la semana tiene su revisión.",
+    "weeklyResetDay": "Día de la revisión semanal",
+    "weeklyResetTime": "Hora de la revisión semanal",
+    "errands": "Recados",
+    "errandsHint": "Un recordatorio en tu día de recados.",
+    "errandsDay": "Día de recados",
+    "habits": "Hábitos",
+    "habitsHint": "La hora se ajusta en cada hábito.",
+    "habitsLink": "Abrir hábitos",
+    "timer": "Temporizador de enfoque",
+    "timerHint": "Un recordatorio cuando termina una sesión de enfoque.",
+    "trial": "Fin de la prueba",
+    "trialHint": "Una línea tranquila antes de que termine tu prueba."
+  },
+  "weekdays": {
+    "none": "Ninguno"
+  },
+  "quiet": {
+    "title": "Horas de silencio",
+    "start": "Desde",
+    "end": "Hasta",
+    "hint": "Solo el temporizador de enfoque envía en estas horas."
+  },
+  "errors": {
+    "generic": "No se ha guardado. Revisa la conexión e inténtalo de nuevo."
+  }
+}

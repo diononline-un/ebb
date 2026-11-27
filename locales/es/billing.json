@@ -1,4 +1,36 @@
 {
+  "nav": "Suscripción",
+  "title": "Suscripción",
+  "backToMore": "Volver a Más",
+  "status": {
+    "trial": "Tu prueba va hasta el {{date}}. Antes de eso no hay nada que pagar.",
+    "own": "Tu suscripción está activa.",
+    "canceled": "Tu suscripción está cancelada. Sigue abierta hasta el final del periodo pagado.",
+    "seat": "Una suscripción en un espacio compartido te cubre. Aquí no hay nada que pagar."
+  },
+  "founder": "Este es el plan de fundador. El precio aparece en el pago.",
+  "paymentsNotSetUp": "Los pagos aún no están configurados.",
+  "checkoutError": "El pago no se abrió. Inténtalo de nuevo en un momento.",
+  "manage": "Gestionar suscripción",
+  "portalError": "El portal de cliente no se abrió. Inténtalo de nuevo en un momento.",
+  "seats": {
+    "heading": "Plazas",
+    "limit": "Puedes cubrir hasta {{max}} personas además de ti.",
+    "candidatesHeading": "Personas con las que compartes un espacio",
+    "pending": "Pendiente",
+    "cover": "Cubrir",
+    "release": "Liberar",
+    "empty": "Ahora mismo no queda nadie a quien cubrir.",
+    "errors": {
+      "not_your_subscription": "Las plazas son de tu propia suscripción, y esta no es tuya.",
+      "already_covered": "Esa persona ya tiene una plaza.",
+      "not_a_co_member": "Esa persona no está en ningún espacio compartido contigo.",
+      "seat_limit": "Eso pasaría de tu límite de plazas.",
+      "billing_not_configured": "Los pagos aún no están configurados, así que las plazas no pueden cambiar.",
+      "billing_failed": "Paddle no respondió. No cambió nada, inténtalo de nuevo en un momento.",
+      "generic": "No ha funcionado. Inténtalo de nuevo en un momento."
+    }
+  },
   "readOnly": {
     "line": "Tu prueba ha terminado. Todo sigue aquí y puedes exportarlo cuando quieras.",
     "action": "Suscribirse"

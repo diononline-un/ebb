@@ -1,4 +1,36 @@
 {
+  "nav": "订阅",
+  "title": "订阅",
+  "backToMore": "返回更多",
+  "status": {
+    "trial": "试用到 {{date}} 为止。在那之前不用付任何费用。",
+    "own": "你的订阅已生效。",
+    "canceled": "你的订阅已取消。在已付周期结束前仍可使用。",
+    "seat": "共享空间里的订阅已经覆盖了你。这里不用付费。"
+  },
+  "founder": "这是创始方案。价格在结账时显示。",
+  "paymentsNotSetUp": "支付还没有设置好。",
+  "checkoutError": "结账没有打开。稍后再试一次。",
+  "manage": "管理订阅",
+  "portalError": "客户门户没有打开。稍后再试一次。",
+  "seats": {
+    "heading": "席位",
+    "limit": "除了你自己，你可以为最多 {{max}} 人提供席位。",
+    "candidatesHeading": "和你共享空间的人",
+    "pending": "等待中",
+    "cover": "提供席位",
+    "release": "释放",
+    "empty": "现在没有可以安排席位的人了。",
+    "errors": {
+      "not_your_subscription": "席位属于你自己的订阅，而这个不是你的。",
+      "already_covered": "那个人已经有席位了。",
+      "not_a_co_member": "那个人没有和你共享空间。",
+      "seat_limit": "那会超过你的席位数上限。",
+      "billing_not_configured": "支付还没有设置好，所以席位不能更改。",
+      "billing_failed": "Paddle 没有回应。什么都没变，稍后再试一次。",
+      "generic": "没有成功。稍后再试一次。"
+    }
+  },
   "readOnly": {
     "line": "试用已经结束。东西都还在，你随时可以导出。",
     "action": "订阅"

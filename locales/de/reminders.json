@@ -1,0 +1,26 @@
+{
+  "morning": {
+    "title": "Dein Morgen, wenn du so weit bist",
+    "body": "Ein paar ruhige Minuten, um den Tag zu wählen."
+  },
+  "habit": {
+    "title": "Zeit für {{name}}",
+    "body": "Ein kleiner Schritt reicht heute."
+  },
+  "weeklyReset": {
+    "title": "Weekly Reset",
+    "body": "Blick auf die Woche und wähle eine kleine Änderung."
+  },
+  "errands": {
+    "title": "Erledigungstag",
+    "body": "Die Erledigungen warten. Nimm, was heute passt."
+  },
+  "timer": {
+    "title": "Zeit für eine Pause",
+    "body": "Deine Fokus-Sitzung ist vorbei. Steh auf und atme."
+  },
+  "trial": {
+    "title": "Deine Testphase endet bald",
+    "body": "Alles bleibt, wie es ist. Wähl ein Abo, wenn du so weit bist."
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "title": "Rappels",
+  "nav": "Rappels",
+  "loading": "Chargement de tes réglages",
+  "loadError": "Tes réglages ne se sont pas chargés. Vérifie la connexion et réessaie.",
+  "push": {
+    "unsupported": "Ce navigateur ne peut pas afficher de rappels.",
+    "iosHint": "Sur iPhone, les rappels n'arrivent que quand ebbe est sur ton écran d'accueil. Les étapes sont dans l'astuce d'installation sur Aujourd'hui.",
+    "turnOn": "Activer les rappels sur cet appareil",
+    "turnOff": "Désactiver",
+    "on": "Activés sur cet appareil",
+    "missing": "Les rappels ne sont pas configurés sur ce serveur."
+  },
+  "types": {
+    "title": "Types de rappels",
+    "morning": "Rituel du matin",
+    "morningHint": "Un rappel pour commencer ton rituel du matin.",
+    "morningTime": "Heure du matin",
+    "weeklyReset": "Bilan de la semaine",
+    "weeklyResetHint": "Un rappel quand la semaine a son bilan.",
+    "weeklyResetDay": "Jour du bilan de la semaine",
+    "weeklyResetTime": "Heure du bilan de la semaine",
+    "errands": "Courses",
+    "errandsHint": "Un rappel le jour de tes courses.",
+    "errandsDay": "Jour des courses",
+    "habits": "Habitudes",
+    "habitsHint": "L'heure se règle sur chaque habitude.",
+    "habitsLink": "Ouvrir les habitudes",
+    "timer": "Minuteur de concentration",
+    "timerHint": "Un rappel quand une session de concentration se termine.",
+    "trial": "Fin de l'essai",
+    "trialHint": "Une ligne calme avant la fin de ton essai."
+  },
+  "weekdays": {
+    "none": "Aucun"
+  },
+  "quiet": {
+    "title": "Heures calmes",
+    "start": "De",
+    "end": "À",
+    "hint": "Seul le minuteur de concentration envoie pendant ces heures."
+  },
+  "errors": {
+    "generic": "Ça n'a pas été enregistré. Vérifie la connexion et réessaie."
+  }
+}

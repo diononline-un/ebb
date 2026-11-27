@@ -1,0 +1,26 @@
+{
+  "morning": {
+    "title": "Ton matin, quand tu veux",
+    "body": "Quelques minutes calmes pour choisir la journée."
+  },
+  "habit": {
+    "title": "C'est l'heure de {{name}}",
+    "body": "Un petit pas aujourd'hui suffit."
+  },
+  "weeklyReset": {
+    "title": "Bilan de la semaine",
+    "body": "Regarde la semaine et choisis un petit changement."
+  },
+  "errands": {
+    "title": "Jour des courses",
+    "body": "Les courses attendent. Choisis ce qui tient aujourd'hui."
+  },
+  "timer": {
+    "title": "C'est l'heure d'une pause",
+    "body": "Ta session de concentration est finie. Lève-toi et respire."
+  },
+  "trial": {
+    "title": "Ton essai se termine bientôt",
+    "body": "Tout reste comme il est. Choisis un abonnement quand tu veux."
+  }
+}

@@ -1,4 +1,36 @@
 {
+  "nav": "Abo",
+  "title": "Abo",
+  "backToMore": "Zurück zu Mehr",
+  "status": {
+    "trial": "Deine Testphase läuft bis {{date}}. Bis dahin ist nichts zu zahlen.",
+    "own": "Dein Abo ist aktiv.",
+    "canceled": "Dein Abo ist gekündigt. Es bleibt bis zum Ende des bezahlten Zeitraums offen.",
+    "seat": "Ein Abo in einem geteilten Bereich deckt dich ab. Hier ist nichts zu zahlen."
+  },
+  "founder": "Das ist der Founder-Plan. Der Preis steht im Checkout.",
+  "paymentsNotSetUp": "Zahlungen sind noch nicht eingerichtet.",
+  "checkoutError": "Der Checkout hat sich nicht geöffnet. Versuch es gleich noch einmal.",
+  "manage": "Abo verwalten",
+  "portalError": "Das Kundenportal hat sich nicht geöffnet. Versuch es gleich noch einmal.",
+  "seats": {
+    "heading": "Sitzplätze",
+    "limit": "Du kannst bis zu {{max}} Personen zusätzlich zu dir einen Sitzplatz geben.",
+    "candidatesHeading": "Personen, mit denen du einen Bereich teilst",
+    "pending": "Ausstehend",
+    "cover": "Sitzplatz geben",
+    "release": "Freigeben",
+    "empty": "Gerade ist niemand übrig, dem du einen Sitzplatz geben könntest.",
+    "errors": {
+      "not_your_subscription": "Sitzplätze gibt es nur im eigenen Abo, und dieses gehört dir nicht.",
+      "already_covered": "Diese Person hat schon einen Sitzplatz.",
+      "not_a_co_member": "Diese Person ist mit dir in keinem geteilten Bereich.",
+      "seat_limit": "Das ginge über dein Sitzplatzlimit hinaus.",
+      "billing_not_configured": "Zahlungen sind noch nicht eingerichtet, deshalb lassen sich Sitzplätze nicht ändern.",
+      "billing_failed": "Paddle hat nicht geantwortet. Es hat sich nichts geändert, versuch es gleich noch einmal.",
+      "generic": "Das hat nicht funktioniert. Versuch es gleich noch einmal."
+    }
+  },
   "readOnly": {
     "line": "Deine Testphase ist beendet. Alles ist noch da, und du kannst es jederzeit exportieren.",
     "action": "Abo abschließen"

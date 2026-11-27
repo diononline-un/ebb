@@ -1,4 +1,36 @@
 {
+  "nav": "Abonnement",
+  "title": "Abonnement",
+  "backToMore": "Retour à Plus",
+  "status": {
+    "trial": "Ton essai court jusqu'au {{date}}. Rien à payer d'ici là.",
+    "own": "Ton abonnement est actif.",
+    "canceled": "Ton abonnement est résilié. Il reste ouvert jusqu'à la fin de la période payée.",
+    "seat": "Un abonnement dans un espace partagé te couvre. Ici, il n'y a rien à payer."
+  },
+  "founder": "C'est l'offre fondateur. Le prix s'affiche au paiement.",
+  "paymentsNotSetUp": "Les paiements ne sont pas encore configurés.",
+  "checkoutError": "Le paiement ne s'est pas ouvert. Réessaie dans un instant.",
+  "manage": "Gérer l'abonnement",
+  "portalError": "Le portail client ne s'est pas ouvert. Réessaie dans un instant.",
+  "seats": {
+    "heading": "Places",
+    "limit": "Tu peux couvrir jusqu'à {{max}} personnes en plus de toi.",
+    "candidatesHeading": "Les personnes avec qui tu partages un espace",
+    "pending": "En attente",
+    "cover": "Couvrir",
+    "release": "Libérer",
+    "empty": "Il ne reste personne à couvrir pour l'instant.",
+    "errors": {
+      "not_your_subscription": "Les places vont à ton propre abonnement, et celui-ci n'est pas le tien.",
+      "already_covered": "Cette personne a déjà une place.",
+      "not_a_co_member": "Cette personne n'est dans aucun espace partagé avec toi.",
+      "seat_limit": "Ça dépasserait ta limite de places.",
+      "billing_not_configured": "Les paiements ne sont pas encore configurés, donc les places ne peuvent pas changer.",
+      "billing_failed": "Paddle n'a pas répondu. Rien n'a changé, réessaie dans un instant.",
+      "generic": "Ça n'a pas marché. Réessaie dans un instant."
+    }
+  },
   "readOnly": {
     "line": "Ton essai est terminé. Tout est encore là et tu peux l'exporter quand tu veux.",
     "action": "S'abonner"

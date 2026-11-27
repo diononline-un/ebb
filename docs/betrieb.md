@@ -259,3 +259,92 @@ Query, Header, Body, User-ID und IP-Adresse landen bewusst nicht im Log. `GET /a
 Ansehen mit `docker compose -f docker-compose.prod.yml logs app`. Die Rotation ist in
 `docker-compose.prod.yml` je Dienst gesetzt (`max-size: 10m`, `max-file: "5"`), ältere Zeilen fallen
 also von selbst weg.
+
+## Lasttest
+
+Zielwerte (PRD §9, Kapazitätsschätzung): 5 000 Nutzer mit je 50 Aufgaben, Morgenspitze um 100 req/s
+gemischt, p95 unter 200 ms bei 50 gleichzeitigen Requests.
+
+`k6` ist nicht installiert und kommt nicht dazu. Die Mischlast läuft in Node über `fetch`:
+`scripts/load/seed.ts` legt die Daten an, `scripts/load/scenario.ts` fährt sie. Beide Dateien stehen
+unter `tsconfig.server.json` und werden von `npm run check` geprüft.
+
+### Auf dem Ziel-VPS
+
+**Nie gegen Produktion.** Der Seed schreibt 250 000 Aufgaben, der Lauf schreibt echte Dumps und
+Aufgaben dazu. Immer gegen eine Kopie, die nach dem Abschnitt „Restore-Runbook“ in eine eigene
+Datenbank gespielt wird. Eigener Port, eigener Prozess, und am Ende wieder aufräumen.
+
+```bash
+# 1. Eigene Datenbank mit Rollen und Migrationen. db:test-setup akzeptiert nur Namen mit dem
+#    Präfix ebb_test, deshalb heißt die Lastdatenbank ebb_test_load.
+export EBB_DB_NAME=ebb_test_load
+npm run db:test-setup
+
+# 2. Daten: 5000 Konten mit je 50 Aufgaben, 200 Sitzungen nach /tmp/ebb-load-sessions.json
+node scripts/load/seed.ts --users 5000
+
+# 3. Server auf eigenem Port, Timeout als Absicherung
+setsid env APP_MODE=development PORT=2050 EBB_DB_NAME=ebb_test_load \
+  timeout 1800 node src/server/index.ts >/tmp/ebb-load-server.log 2>&1 &
+
+# 4. Lauf: 100 req/s für 120 s, höchstens 50 gleichzeitig
+node scripts/load/scenario.ts --rate 100 --duration 120 --concurrency 50
+
+# 5. Aufräumen: PID aus `ss -ltnp | grep :2050` gezielt beenden, danach die Datenbank löschen
+kill <PID>
+psql "$POSTGRES_SUPERUSER_URL" -c 'drop database ebb_test_load with (force)'
+```
+
+`--base` nimmt nur `http://127.0.0.1:<port>` oder `http://localhost:<port>` an. Cookies und
+Datenbanknamen gehören nicht ins Repo; die Sitzungen landen in `/tmp/ebb-load-sessions.json`.
+
+### Messwerte (2026-11-27, Entwicklungs-VPS, vorläufig)
+
+Lauf wie oben: 5000 Konten mit 250 000 Aufgaben, 200 Sitzungen, 100 req/s für 120 s, höchstens 50
+gleichzeitig. Die Maschine ist die Entwicklungs-VPS und teilt Datenbank und CPU mit anderen
+Projekten. Die Werte sind vorläufig; der Ziel-VPS wird mit demselben Ablauf gemessen.
+
+| Größe | Ziel | Gemessen |
+|---|---|---|
+| Requests | 12 000 (100 req/s × 120 s) | 12 000, erreicht 99,9 req/s |
+| Fehler (Status ≥ 400 oder Verbindungsfehler) | 0 | 0 |
+| p50 gesamt | – | 92 ms |
+| p95 gesamt | unter 200 ms | **663 ms** |
+| p99 gesamt | – | 920 ms |
+| CPU des Node-Prozesses | – | 84 % eines Kerns (101 s in 120 s), `ps` über die Prozesslaufzeit: 55 % |
+| RAM des Node-Prozesses | – | Spitze 386 MB (`ps`), im Lauf zwischen 161 und 386 MB |
+| Datenbank | – | 109 MB, 252 127 Aufgaben, 5000 Konten |
+
+| Route | Requests | p50 | p95 | p99 |
+|---|---|---|---|---|
+| `GET /api/today` | 6061 | 92 ms | 609 ms | 793 ms |
+| `PATCH /api/tasks/:id` | 1813 | 108 ms | 799 ms | 1138 ms |
+| `GET /api/habits/today` | 1187 | 71 ms | 584 ms | 754 ms |
+| `POST /api/dump` | 1176 | 96 ms | 757 ms | 1038 ms |
+| `GET /api/tasks?view=week` | 1170 | 63 ms | 554 ms | 725 ms |
+| `POST /api/tasks` | 593 | 107 ms | 818 ms | 1085 ms |
+
+### Ursache für p95 über 200 ms
+
+Dieselben Skripte, einmal mit `--rate 5` und einmal mit `--rate 100`:
+
+- Ohne Last (5 req/s): p50 38 ms, p95 128 ms; Node 11 % und PostgreSQL 7 % eines Kerns. Das Ziel ist
+  ohne Last erreichbar.
+- Unter Last (100 req/s): Node 80 bis 84 %, PostgreSQL 77 bis 84 % eines Kerns. Beide Prozesse
+  brauchen zusammen rund 16 ms CPU je Request.
+
+`EXPLAIN (ANALYZE, BUFFERS)` auf den Abfragen der langsamsten Route (`POST /api/tasks`, p95 818 ms):
+die teuerste ist das `insert into task` mit 3,5 ms, davon 1,6 ms im Trigger `task_before_write`
+(liest `space` unter RLS) und 0,7 ms in den Fremdschlüssel-Triggern. Alle anderen Abfragen der Route
+liegen unter 1 ms: Sitzung 0,07 ms, Tagesbeginn 0,17 ms, Zugriff 0,05 bis 0,2 ms, persönlicher
+Bereich 0,6 ms. `GET /api/today` liest 46 Zeilen in 0,96 ms.
+
+Keine Abfrage ist langsam, kein Index fehlt. Die Antwortzeit entsteht aus der CPU-Arbeit je Request:
+viele kurze Abfragen mit je 0,1 bis 0,7 ms Planungszeit, dazu die RLS-Funktionen, verteilt auf einen
+einkernigen Node-Prozess und eine geteilte PostgreSQL-Instanz. Bei 50 gleichzeitigen Requests
+summieren sich 16 ms CPU je Request auf bis zu 800 ms Wartezeit. Drei Läufe am selben Tag streuten
+zwischen p95 663 und 929 ms; die VPS trägt auch andere Projekte.
+
+Verbesserungen an Poolgröße, Abfragezahl oder RLS-Aufrufen gehören deshalb in ein eigenes Paket,
+nicht in den Lasttest.

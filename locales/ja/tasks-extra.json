@@ -1,0 +1,49 @@
+{
+  "subtasks": {
+    "heading": "サブタスク",
+    "progress": "{{total}}のうち{{done}}件完了",
+    "empty": "サブタスクはまだありません。",
+    "addLabel": "サブタスクを追加",
+    "addAction": "追加",
+    "markDone": "{{title}}を完了にする",
+    "markOpen": "{{title}}のチェックを外す"
+  },
+  "repeat": {
+    "heading": "繰り返す",
+    "freqLabel": "繰り返す",
+    "freq": {
+      "daily": "毎日",
+      "weekdays": "平日ごと",
+      "weekly": "決まった曜日",
+      "every_n_days": "数日ごと",
+      "monthly": "毎月"
+    },
+    "weekdaysLabel": "どの曜日",
+    "intervalLabel": "何日ごと",
+    "monthDayLabel": "何日",
+    "startHint": "今日から始まります。",
+    "add": "今日から繰り返す",
+    "empty": "このタスクはまだ繰り返しません。",
+    "rule": {
+      "daily": "毎日",
+      "weekdays": "平日ごと",
+      "weekly": "毎週{{days}}",
+      "every_n_days": "{{interval}}日ごと",
+      "monthly": "毎月{{day}}日"
+    }
+  },
+  "space": {
+    "heading": "スペースと担当",
+    "label": "スペース",
+    "assigneeLabel": "担当",
+    "nobody": "まだ誰もいません",
+    "take": "これを引き受ける"
+  },
+  "errors": {
+    "subtask_too_deep": "サブタスクは一階層までです。",
+    "subtask_other_space": "上のタスクは別のスペースにあります。",
+    "unknown_parent": "上のタスクはもうありません。",
+    "unknown_project": "そのプロジェクトはもうありません。",
+    "generic": "保存できませんでした。接続を確認して、もう一度お試しください。"
+  }
+}

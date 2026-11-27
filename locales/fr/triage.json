@@ -1,0 +1,27 @@
+{
+  "question": "Qu'est-ce qui casse si ça attend demain ?",
+  "progressLabel": "Progression du tri",
+  "progress": "{{done}} sur {{total}}",
+  "answers": {
+    "must": "Quelque chose de réel, c'est prioritaire aujourd'hui",
+    "later": "Rien de grave, choisis un jour",
+    "errand": "C'est une petite course",
+    "today": "Je veux le faire aujourd'hui"
+  },
+  "blockQuestion": "Dans quel bloc ?",
+  "block1": "Bloc 1",
+  "block2": "Bloc 2",
+  "block3": "Bloc 3",
+  "block4": "Bloc 4",
+  "laterQuestion": "Quel jour lui va bien ?",
+  "tomorrow": "Demain",
+  "dayAfter": "Après-demain",
+  "nextMonday": "Lundi prochain",
+  "pickDate": "Choisir une date",
+  "laterConfirm": "Prendre ce jour",
+  "anchorTitle": "Choisis ton ancre",
+  "anchorSkip": "Passer",
+  "close": "Quitter le tri",
+  "loading": "Un instant.",
+  "loadError": "Le tri ne s'est pas chargé. Vérifie la connexion et réessaie."
+}

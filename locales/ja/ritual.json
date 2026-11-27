@@ -1,0 +1,25 @@
+{
+  "leave": "離れる",
+  "progressLabel": "朝の儀式の進み具合",
+  "startYourDay": "一日を始める",
+  "loading": "少々お待ちください。",
+  "loadError": "今日を読み込めませんでした。接続を確認して、もう一度お試しください。",
+  "saveError": "保存できませんでした。接続を確認して、もう一度お試しください。",
+  "energy": {
+    "question": "今日の電池はどれくらいですか？",
+    "low": "少ない",
+    "good": "多い"
+  },
+  "rollover": {
+    "continue": "次へ"
+  },
+  "dump": {
+    "question": "いま頭にあることは？",
+    "done": "できた",
+    "skip": "スキップ"
+  },
+  "start": {
+    "question": "最初のブロックに進みますか？",
+    "notNow": "今はしない"
+  }
+}

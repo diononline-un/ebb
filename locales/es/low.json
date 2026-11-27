@@ -1,0 +1,36 @@
+{
+  "title": "Hoy",
+  "loading": "Un momento.",
+  "loadError": "El día no se cargó. Revisa la conexión y vuelve a intentarlo.",
+  "empty": "No queda nada para hoy. Es suficiente.",
+  "emptyAction": "Volver a hoy",
+  "step": {
+    "label": "Primer paso de 10 minutos",
+    "placeholder": "El siguiente paso más pequeño"
+  },
+  "actions": {
+    "done": "Hecho",
+    "chooseAnother": "Elegir otra",
+    "stop": "Parar por hoy"
+  },
+  "after": {
+    "line": "Hecho. ¿Una más o lo dejamos por hoy?",
+    "oneMore": "Una más",
+    "callItADay": "Lo dejamos por hoy"
+  },
+  "stop": {
+    "question": "¿Dónde lo dejaste?",
+    "placeholder": "Para que mañana empiece donde terminó hoy",
+    "save": "Guardar y parar",
+    "cancel": "Cancelar"
+  },
+  "choose": {
+    "title": "¿Cuál?"
+  },
+  "toggle": {
+    "label": "Energía hoy",
+    "low": "Poca",
+    "good": "Buena"
+  },
+  "link": "Mostrar una cosa"
+}

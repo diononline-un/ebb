@@ -1,0 +1,25 @@
+{
+  "leave": "离开",
+  "progressLabel": "早晨仪式进度",
+  "startYourDay": "开始你的一天",
+  "loading": "稍等。",
+  "loadError": "今天没有加载出来。检查一下连接，再试一次。",
+  "saveError": "没有保存。检查一下连接，再试一次。",
+  "energy": {
+    "question": "今天电量有多少？",
+    "low": "少",
+    "good": "多"
+  },
+  "rollover": {
+    "continue": "继续"
+  },
+  "dump": {
+    "question": "现在在想什么？",
+    "done": "完成",
+    "skip": "跳过"
+  },
+  "start": {
+    "question": "准备好第一个区块了吗？",
+    "notNow": "现在不"
+  }
+}

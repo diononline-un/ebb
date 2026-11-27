@@ -1,0 +1,45 @@
+{
+  "nav": "项目",
+  "title": "项目",
+  "loading": "稍等。",
+  "loadError": "项目没有加载出来。检查一下连接，再试一次。",
+  "empty": "还没有项目。有一个就能开始。",
+  "add": "新项目",
+  "open": "打开 {{name}}",
+  "progress": "{{total}} 中的 {{done}} 已完成",
+  "allDone": "全部完成",
+  "noTasks": "还没有任务",
+  "warnings": {
+    "deadline_soon": "快到期了",
+    "no_next_step": "还没定下一步"
+  },
+  "status": {
+    "active": "进行中",
+    "paused": "暂停",
+    "done": "完成"
+  },
+  "backToProjects": "全部项目",
+  "tasksHeading": "任务",
+  "noProjectTasks": "还没有任务挂在这个项目上。",
+  "sheet": {
+    "createTitle": "新项目",
+    "editTitle": "编辑项目",
+    "nameLabel": "项目",
+    "goalLabel": "目标",
+    "goalNone": "没有目标",
+    "startLabel": "开始",
+    "deadlineLabel": "截止日期",
+    "statusLabel": "状态",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除项目",
+    "deleteQuestion": "删除这个项目？",
+    "deleteText": "它的任务会留下，只是不再指向项目。",
+    "deleteConfirm": "删除"
+  },
+  "errors": {
+    "unknown_goal": "那个目标不在了。",
+    "unknown_project": "那个项目不在了。",
+    "generic": "没有保存。检查一下连接，再试一次。"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "title": "Volcado",
+  "composer": {
+    "label": "Añadir un pensamiento",
+    "placeholder": "¿Qué tienes en la cabeza?",
+    "hint": "Intro lo guarda. Mayús e Intro empiezan una línea nueva.",
+    "submit": "Guardarlo"
+  },
+  "toTask": "→ Tarea",
+  "archive": "Archivar",
+  "openTask": "Abrir tarea",
+  "waiting": "Esperando conexión",
+  "pending_one": "{{count}} pensamiento esperando conexión",
+  "pending_other": "{{count}} pensamientos esperando conexión",
+  "prompts": {
+    "title": "Aún no hay nada aquí. Un pensamiento solo tiene que salir de tu cabeza, no tiene que tener sentido.",
+    "prompt1": "¿Qué vuelve hoy una y otra vez?",
+    "prompt2": "¿Qué le prometiste a alguien?",
+    "prompt3": "¿Qué llevas un tiempo arrastrando?"
+  },
+  "quickCapture": {
+    "title": "Añadir un pensamiento",
+    "placeholder": "¿Qué tienes en la cabeza?",
+    "submit": "Guardarlo"
+  },
+  "errors": {
+    "tooLong": "Un pensamiento cabe en 500 caracteres. Recórtalo y vuelve a intentarlo.",
+    "generic": "No ha funcionado. Tu pensamiento sigue en el campo."
+  }
+}

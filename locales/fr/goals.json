@@ -1,0 +1,36 @@
+{
+  "title": "Objectifs",
+  "loading": "Un instant.",
+  "loadError": "Les objectifs ne se sont pas chargés. Vérifie la connexion et réessaie.",
+  "empty": "Pas encore d'objectif. Un seul suffit pour commencer.",
+  "add": "Nouvel objectif",
+  "open": "Ouvrir {{title}}",
+  "whyHeading": "Pourquoi c'est important",
+  "noWhy": "Aucune raison écrite pour l'instant. Une ligne suffit.",
+  "habitsHeading": "Habitudes cette semaine",
+  "noHabits": "Aucune habitude ne dépend encore de cet objectif.",
+  "weekLine": "{{done}} sur {{target}} cette semaine",
+  "backToGoals": "Tous les objectifs",
+  "status": {
+    "active": "Actif",
+    "paused": "En pause",
+    "done": "Terminé"
+  },
+  "sheet": {
+    "createTitle": "Nouvel objectif",
+    "editTitle": "Modifier l'objectif",
+    "titleLabel": "Objectif",
+    "whyLabel": "Pourquoi est-ce important pour toi ?",
+    "statusLabel": "Statut",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer l'objectif",
+    "deleteQuestion": "Supprimer cet objectif ?",
+    "deleteText": "Ses habitudes restent, elles ne pointent simplement plus vers un objectif.",
+    "deleteConfirm": "Supprimer"
+  },
+  "errors": {
+    "too_many_goals": "Cinq objectifs suffisent pour le moment. L'un d'eux peut se mettre en pause.",
+    "generic": "Ça n'a pas été enregistré. Vérifie la connexion et réessaie."
+  }
+}

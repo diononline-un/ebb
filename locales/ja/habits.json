@@ -1,0 +1,46 @@
+{
+  "todayHeading": "今日の習慣",
+  "markDone": "{{name}}を今日できたことにする",
+  "markOpen": "{{name}}のチェックを外す",
+  "weekLine": "今週は{{target}}のうち{{done}}",
+  "rhythm": {
+    "daily": "毎日",
+    "weekdays": "選んだ曜日",
+    "weekly": "週{{count}}回"
+  },
+  "title": "習慣",
+  "loading": "少々お待ちください。",
+  "loadError": "習慣を読み込めませんでした。接続を確認して、もう一度お試しください。",
+  "empty": "まだ習慣はありません。ひとつあれば始められます。",
+  "add": "新しい習慣",
+  "edit": "{{name}}を編集",
+  "sheet": {
+    "createTitle": "新しい習慣",
+    "editTitle": "習慣を編集",
+    "nameLabel": "名前",
+    "goalLabel": "目標",
+    "goalNone": "目標なし",
+    "cadenceLabel": "リズム",
+    "cadenceDaily": "毎日",
+    "cadenceWeekly": "週に数回",
+    "targetLabel": "どのくらいの頻度",
+    "weekdaysLabel": "どの曜日",
+    "reminderLabel": "リマインダー",
+    "save": "保存",
+    "archive": "習慣をアーカイブ",
+    "restore": "戻す",
+    "archivedLine": "アーカイブ済み",
+    "cancel": "キャンセル",
+    "weeklyTarget": "{{count}}回",
+    "yesterdayDone": "昨日できた",
+    "yesterdayOpen": "昨日を取り戻す",
+    "todayDone": "今日できた",
+    "todayOpen": "今日できたことにする"
+  },
+  "errors": {
+    "weekly_target_required": "週ごとの習慣には日数が必要です。",
+    "unknown_goal": "その目標はもうありません。",
+    "day_locked": "チェックできるのは今日と昨日だけです。",
+    "generic": "保存できませんでした。接続を確認して、もう一度お試しください。"
+  }
+}

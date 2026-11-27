@@ -1,0 +1,12 @@
+{
+  "title": "Courses",
+  "loading": "Un instant.",
+  "loadError": "Les courses ne se sont pas chargées. Vérifie la connexion et réessaie.",
+  "dayLine_one": "Journée courses · {{count}} course",
+  "dayLine_other": "Journée courses · {{count}} courses",
+  "openHeading": "Ouvertes",
+  "doneHeading": "Faites ces 7 derniers jours",
+  "empty": "Aucune course en attente.",
+  "emptyDone": "Aucune course terminée ces 7 derniers jours.",
+  "planLink": "Ouvrir les courses"
+}

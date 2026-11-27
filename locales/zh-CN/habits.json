@@ -1,0 +1,46 @@
+{
+  "todayHeading": "今天的习惯",
+  "markDone": "把 {{name}} 标为今天完成",
+  "markOpen": "取消 {{name}} 的勾",
+  "weekLine": "这周 {{target}} 中的 {{done}}",
+  "rhythm": {
+    "daily": "每天",
+    "weekdays": "选定的日子",
+    "weekly": "每周 {{count}} 次"
+  },
+  "title": "习惯",
+  "loading": "稍等。",
+  "loadError": "习惯没有加载出来。检查一下连接，再试一次。",
+  "empty": "还没有习惯。有一个就能开始。",
+  "add": "新习惯",
+  "edit": "编辑 {{name}}",
+  "sheet": {
+    "createTitle": "新习惯",
+    "editTitle": "编辑习惯",
+    "nameLabel": "名称",
+    "goalLabel": "目标",
+    "goalNone": "没有目标",
+    "cadenceLabel": "节奏",
+    "cadenceDaily": "每天",
+    "cadenceWeekly": "每周几次",
+    "targetLabel": "多常",
+    "weekdaysLabel": "哪些天",
+    "reminderLabel": "提醒",
+    "save": "保存",
+    "archive": "归档习惯",
+    "restore": "拿回来",
+    "archivedLine": "已归档",
+    "cancel": "取消",
+    "weeklyTarget": "{{count}} 次",
+    "yesterdayDone": "昨天完成",
+    "yesterdayOpen": "补上昨天",
+    "todayDone": "今天完成",
+    "todayOpen": "标为今天完成"
+  },
+  "errors": {
+    "weekly_target_required": "每周的习惯需要一个天数。",
+    "unknown_goal": "那个目标不在了。",
+    "day_locked": "只能勾今天和昨天。",
+    "generic": "没有保存。检查一下连接，再试一次。"
+  }
+}

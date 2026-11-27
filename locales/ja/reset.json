@@ -1,0 +1,67 @@
+{
+  "nav": "ウィークリーリセット",
+  "title": "ウィークリーリセット",
+  "loading": "少々お待ちください。",
+  "loadError": "週を読み込めませんでした。接続を確認して、もう一度お試しください。",
+  "saveError": "保存できませんでした。接続を確認して、もう一度お試しください。",
+  "progressLabel": "ウィークリーリセットの進み具合",
+  "todayReady": "ウィークリーリセットの準備ができました",
+  "review": {
+    "question": "今週はどうでしたか？",
+    "wentWell": "うまくいったことは？",
+    "wentBadly": "いかなかったことは？",
+    "change": "何を変えますか？",
+    "continue": "次へ"
+  },
+  "numbers": {
+    "question": "数字で見る一週間",
+    "anchorLabel": "アンカーができた日",
+    "anchorValue": "7日のうち{{done}}",
+    "tasksLabel": "できたタスク",
+    "tasksValue_other": "{{count}}件",
+    "focusLabel": "集中",
+    "focusValue_other": "{{count}}分",
+    "rolledLabel": "昨日から来たもの",
+    "rolledValue_other": "{{count}}件",
+    "habitsHeading": "習慣",
+    "habitValue": "今週は{{target}}のうち{{done}}",
+    "projectsHeading": "プロジェクト",
+    "projectValue_other": "{{count}}件完了",
+    "continue": "次へ"
+  },
+  "stuck": {
+    "question": "これらはどうしますか？",
+    "pushed": "{{count}}回移動",
+    "older": "14日より古い",
+    "empty": "決めるのを待っているものはありません。",
+    "date": "日付を決める",
+    "dateLabel": "このタスクの新しい日",
+    "split": "ステップに分ける",
+    "skip": "今日はしない",
+    "delete": "削除",
+    "deleteQuestion": "このタスクを削除しますか？",
+    "deleteText": "完全に消えます。ほかはすべて残ります。",
+    "deleteConfirm": "削除",
+    "waiting": "まだ決めるのを待っているタスクがひとつあります。",
+    "continue": "次へ"
+  },
+  "outlook": {
+    "question": "この先にあるもの",
+    "deadline": "期限",
+    "empty": "これから七日間の予定はありません。",
+    "finish": "週を閉じる"
+  },
+  "done": {
+    "title": "今週は閉じました",
+    "empty": "今週は答えが書かれていません。",
+    "history": "これまでの週"
+  },
+  "history": {
+    "title": "これまでの週",
+    "loading": "少々お待ちください。",
+    "loadError": "週を読み込めませんでした。接続を確認して、もう一度お試しください。",
+    "empty": "まだ閉じた週はありません。",
+    "done": "完了",
+    "open": "未完了"
+  }
+}

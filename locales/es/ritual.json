@@ -1,0 +1,25 @@
+{
+  "leave": "Salir",
+  "progressLabel": "Progreso del ritual de la mañana",
+  "startYourDay": "Empieza tu día",
+  "loading": "Un momento.",
+  "loadError": "El día no se cargó. Revisa la conexión y vuelve a intentarlo.",
+  "saveError": "No se guardó. Revisa la conexión y vuelve a intentarlo.",
+  "energy": {
+    "question": "¿Cuánta batería tienes hoy?",
+    "low": "Poca",
+    "good": "Mucha"
+  },
+  "rollover": {
+    "continue": "Seguir"
+  },
+  "dump": {
+    "question": "¿Qué tienes en la cabeza?",
+    "done": "Hecho",
+    "skip": "Saltar"
+  },
+  "start": {
+    "question": "¿Listo para el primer bloque?",
+    "notNow": "Ahora no"
+  }
+}

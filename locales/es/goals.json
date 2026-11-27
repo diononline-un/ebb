@@ -1,0 +1,36 @@
+{
+  "title": "Metas",
+  "loading": "Un momento.",
+  "loadError": "Las metas no se cargaron. Revisa la conexión y vuelve a intentarlo.",
+  "empty": "Aún no hay metas. Con una basta para empezar.",
+  "add": "Meta nueva",
+  "open": "Abrir {{title}}",
+  "whyHeading": "Por qué importa",
+  "noWhy": "Aún no hay un motivo escrito. Una línea basta.",
+  "habitsHeading": "Hábitos de esta semana",
+  "noHabits": "Ningún hábito cuelga todavía de esta meta.",
+  "weekLine": "{{done}} de {{target}} esta semana",
+  "backToGoals": "Todas las metas",
+  "status": {
+    "active": "Activa",
+    "paused": "En pausa",
+    "done": "Hecha"
+  },
+  "sheet": {
+    "createTitle": "Meta nueva",
+    "editTitle": "Editar meta",
+    "titleLabel": "Meta",
+    "whyLabel": "¿Por qué es importante para ti?",
+    "statusLabel": "Estado",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar meta",
+    "deleteQuestion": "¿Eliminar esta meta?",
+    "deleteText": "Sus hábitos se quedan, solo dejan de apuntar a una meta.",
+    "deleteConfirm": "Eliminar"
+  },
+  "errors": {
+    "too_many_goals": "Cinco metas son suficientes por ahora. Una de ellas puede pausar.",
+    "generic": "No se guardó. Revisa la conexión y vuelve a intentarlo."
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "nav": "Projets",
+  "title": "Projets",
+  "loading": "Un instant.",
+  "loadError": "Les projets ne se sont pas chargés. Vérifie la connexion et réessaie.",
+  "empty": "Pas encore de projet. Un seul suffit pour commencer.",
+  "add": "Nouveau projet",
+  "open": "Ouvrir {{name}}",
+  "progress": "{{done}} sur {{total}} faits",
+  "allDone": "Tout est fait",
+  "noTasks": "Pas encore de tâches",
+  "warnings": {
+    "deadline_soon": "Échéance proche",
+    "no_next_step": "Aucun prochain pas prévu"
+  },
+  "status": {
+    "active": "Actif",
+    "paused": "En pause",
+    "done": "Terminé"
+  },
+  "backToProjects": "Tous les projets",
+  "tasksHeading": "Tâches",
+  "noProjectTasks": "Aucune tâche ne dépend encore de ce projet.",
+  "sheet": {
+    "createTitle": "Nouveau projet",
+    "editTitle": "Modifier le projet",
+    "nameLabel": "Projet",
+    "goalLabel": "Objectif",
+    "goalNone": "Aucun objectif",
+    "startLabel": "Début",
+    "deadlineLabel": "Échéance",
+    "statusLabel": "Statut",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer le projet",
+    "deleteQuestion": "Supprimer ce projet ?",
+    "deleteText": "Ses tâches restent, elles ne pointent simplement plus vers un projet.",
+    "deleteConfirm": "Supprimer"
+  },
+  "errors": {
+    "unknown_goal": "Cet objectif n'existe plus.",
+    "unknown_project": "Ce projet n'existe plus.",
+    "generic": "Ça n'a pas été enregistré. Vérifie la connexion et réessaie."
+  }
+}

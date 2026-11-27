@@ -1,0 +1,25 @@
+{
+  "leave": "Verlassen",
+  "progressLabel": "Fortschritt des Morgenrituals",
+  "startYourDay": "Starte deinen Tag",
+  "loading": "Einen Moment.",
+  "loadError": "Der Tag ist nicht geladen. Prüf die Verbindung und versuch es noch einmal.",
+  "saveError": "Das wurde nicht gespeichert. Prüf die Verbindung und versuch es noch einmal.",
+  "energy": {
+    "question": "Wie viel Akku hast du heute?",
+    "low": "Wenig",
+    "good": "Viel"
+  },
+  "rollover": {
+    "continue": "Weiter"
+  },
+  "dump": {
+    "question": "Was geht dir durch den Kopf?",
+    "done": "Fertig",
+    "skip": "Überspringen"
+  },
+  "start": {
+    "question": "Bereit für den ersten Block?",
+    "notNow": "Nicht jetzt"
+  }
+}

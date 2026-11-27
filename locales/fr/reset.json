@@ -1,0 +1,71 @@
+{
+  "nav": "Bilan de la semaine",
+  "title": "Bilan de la semaine",
+  "loading": "Un instant.",
+  "loadError": "La semaine ne s'est pas chargée. Vérifie la connexion et réessaie.",
+  "saveError": "Ça n'a pas été enregistré. Vérifie la connexion et réessaie.",
+  "progressLabel": "Progression du bilan de la semaine",
+  "todayReady": "Le bilan de la semaine est prêt",
+  "review": {
+    "question": "Comment s'est passée la semaine ?",
+    "wentWell": "Qu'est-ce qui a bien marché ?",
+    "wentBadly": "Qu'est-ce qui n'a pas marché ?",
+    "change": "Qu'est-ce que je change ?",
+    "continue": "Continuer"
+  },
+  "numbers": {
+    "question": "La semaine en chiffres",
+    "anchorLabel": "Ancre faite sur",
+    "anchorValue": "{{done}} sur 7 jours",
+    "tasksLabel": "Tâches faites",
+    "tasksValue_one": "{{count}} tâche",
+    "tasksValue_other": "{{count}} tâches",
+    "focusLabel": "Concentration",
+    "focusValue_one": "{{count}} minute",
+    "focusValue_other": "{{count}} minutes",
+    "rolledLabel": "Revenues d'hier",
+    "rolledValue_one": "{{count}} tâche",
+    "rolledValue_other": "{{count}} tâches",
+    "habitsHeading": "Habitudes",
+    "habitValue": "{{done}} sur {{target}} cette semaine",
+    "projectsHeading": "Projets",
+    "projectValue_one": "{{count}} tâche faite",
+    "projectValue_other": "{{count}} tâches faites",
+    "continue": "Continuer"
+  },
+  "stuck": {
+    "question": "Qu'est-ce qu'on fait de celles-ci ?",
+    "pushed": "déplacée {{count}}×",
+    "older": "plus de 14 jours",
+    "empty": "Rien n'attend une décision.",
+    "date": "Lui donner une date",
+    "dateLabel": "Nouveau jour pour cette tâche",
+    "split": "La découper en étapes",
+    "skip": "Pas aujourd'hui",
+    "delete": "Supprimer",
+    "deleteQuestion": "Supprimer cette tâche ?",
+    "deleteText": "Elle disparaît pour de bon. Tout le reste reste.",
+    "deleteConfirm": "Supprimer",
+    "waiting": "Une tâche attend encore une décision.",
+    "continue": "Continuer"
+  },
+  "outlook": {
+    "question": "Ce qui arrive",
+    "deadline": "Échéance",
+    "empty": "Rien de prévu pour les sept prochains jours.",
+    "finish": "Clôturer la semaine"
+  },
+  "done": {
+    "title": "Cette semaine est bouclée",
+    "empty": "Aucune réponse écrite cette semaine.",
+    "history": "Semaines précédentes"
+  },
+  "history": {
+    "title": "Semaines précédentes",
+    "loading": "Un instant.",
+    "loadError": "Les semaines ne se sont pas chargées. Vérifie la connexion et réessaie.",
+    "empty": "Aucune semaine bouclée pour l'instant.",
+    "done": "Terminée",
+    "open": "Pas terminée"
+  }
+}

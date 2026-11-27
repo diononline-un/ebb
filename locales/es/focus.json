@@ -1,0 +1,16 @@
+{
+  "timer": {
+    "stop": "Parar",
+    "close": "Cerrar",
+    "finished": "Hora de un descanso"
+  },
+  "start": {
+    "label": "Empezar",
+    "fixed": "Empezar {{minutes}} min",
+    "minutes": "{{minutes}} min",
+    "usual": "lo habitual",
+    "custom": "Duración propia…",
+    "customLabel": "Minutos",
+    "customConfirm": "Empezar"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "leave": "Quitter",
+  "progressLabel": "Progression du rituel du matin",
+  "startYourDay": "Commence ta journée",
+  "loading": "Un instant.",
+  "loadError": "La journée ne s'est pas chargée. Vérifie la connexion et réessaie.",
+  "saveError": "Ça n'a pas été enregistré. Vérifie la connexion et réessaie.",
+  "energy": {
+    "question": "Quel niveau de batterie aujourd'hui ?",
+    "low": "Peu",
+    "good": "Beaucoup"
+  },
+  "rollover": {
+    "continue": "Continuer"
+  },
+  "dump": {
+    "question": "Qu'est-ce que tu as en tête ?",
+    "done": "Fait",
+    "skip": "Passer"
+  },
+  "start": {
+    "question": "Prêt pour le premier bloc ?",
+    "notNow": "Pas maintenant"
+  }
+}

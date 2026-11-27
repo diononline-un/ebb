@@ -1,0 +1,27 @@
+{
+  "question": "¿Qué se rompe si esto espera hasta mañana?",
+  "progressLabel": "Progreso de la clasificación",
+  "progress": "{{done}} de {{total}}",
+  "answers": {
+    "must": "Algo real, es esencial hoy",
+    "later": "Nada grave, elige un día",
+    "errand": "Es un recado pequeño",
+    "today": "Quiero hacerlo hoy"
+  },
+  "blockQuestion": "¿En qué bloque?",
+  "block1": "Bloque 1",
+  "block2": "Bloque 2",
+  "block3": "Bloque 3",
+  "block4": "Bloque 4",
+  "laterQuestion": "¿Qué día le va bien?",
+  "tomorrow": "Mañana",
+  "dayAfter": "Pasado mañana",
+  "nextMonday": "El próximo lunes",
+  "pickDate": "Elegir una fecha",
+  "laterConfirm": "Usar este día",
+  "anchorTitle": "Elige tu ancla",
+  "anchorSkip": "Saltar",
+  "close": "Salir de la clasificación",
+  "loading": "Un momento.",
+  "loadError": "La clasificación no se cargó. Revisa la conexión y vuelve a intentarlo."
+}

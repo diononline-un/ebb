@@ -1,0 +1,46 @@
+{
+  "todayHeading": "Hábitos de hoy",
+  "markDone": "Marcar {{name}} como hecho hoy",
+  "markOpen": "Quitar la marca de {{name}}",
+  "weekLine": "{{done}} de {{target}} esta semana",
+  "rhythm": {
+    "daily": "Todos los días",
+    "weekdays": "En los días elegidos",
+    "weekly": "{{count}}× por semana"
+  },
+  "title": "Hábitos",
+  "loading": "Un momento.",
+  "loadError": "Los hábitos no se cargaron. Revisa la conexión y vuelve a intentarlo.",
+  "empty": "Aún no hay hábitos. Con uno basta para empezar.",
+  "add": "Hábito nuevo",
+  "edit": "Editar {{name}}",
+  "sheet": {
+    "createTitle": "Hábito nuevo",
+    "editTitle": "Editar hábito",
+    "nameLabel": "Nombre",
+    "goalLabel": "Meta",
+    "goalNone": "Sin meta",
+    "cadenceLabel": "Ritmo",
+    "cadenceDaily": "Todos los días",
+    "cadenceWeekly": "Unas veces por semana",
+    "targetLabel": "Cuántas veces",
+    "weekdaysLabel": "En qué días",
+    "reminderLabel": "Recordatorio",
+    "save": "Guardar",
+    "archive": "Archivar hábito",
+    "restore": "Traerlo de vuelta",
+    "archivedLine": "Archivado",
+    "cancel": "Cancelar",
+    "weeklyTarget": "{{count}}×",
+    "yesterdayDone": "Ayer hecho",
+    "yesterdayOpen": "Poner al día ayer",
+    "todayDone": "Hoy hecho",
+    "todayOpen": "Marcar hoy como hecho"
+  },
+  "errors": {
+    "weekly_target_required": "Un hábito semanal necesita un número de días.",
+    "unknown_goal": "Esa meta ya no está.",
+    "day_locked": "Solo se pueden marcar hoy y ayer.",
+    "generic": "No se guardó. Revisa la conexión y vuelve a intentarlo."
+  }
+}

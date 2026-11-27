@@ -1,0 +1,12 @@
+{
+  "title": "Erledigungen",
+  "loading": "Einen Moment.",
+  "loadError": "Die Erledigungen sind nicht geladen. Prüf die Verbindung und versuch es noch einmal.",
+  "dayLine_one": "Erledigungstag · {{count}} Erledigung",
+  "dayLine_other": "Erledigungstag · {{count}} Erledigungen",
+  "openHeading": "Offen",
+  "doneHeading": "In den letzten 7 Tagen erledigt",
+  "empty": "Keine Erledigung offen.",
+  "emptyDone": "In den letzten 7 Tagen ist keine Erledigung fertig geworden.",
+  "planLink": "Erledigungen öffnen"
+}

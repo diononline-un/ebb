@@ -1,0 +1,11 @@
+{
+  "app": {
+    "name": "ebbe"
+  },
+  "actions": {
+    "cancel": "取消",
+    "close": "关闭",
+    "save": "保存",
+    "delete": "删除"
+  }
+}

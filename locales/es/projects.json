@@ -1,0 +1,45 @@
+{
+  "nav": "Proyectos",
+  "title": "Proyectos",
+  "loading": "Un momento.",
+  "loadError": "Los proyectos no se cargaron. Revisa la conexión y vuelve a intentarlo.",
+  "empty": "Aún no hay proyectos. Con uno basta para empezar.",
+  "add": "Proyecto nuevo",
+  "open": "Abrir {{name}}",
+  "progress": "{{done}} de {{total}} hechas",
+  "allDone": "Todo hecho",
+  "noTasks": "Aún no hay tareas",
+  "warnings": {
+    "deadline_soon": "La fecha límite se acerca",
+    "no_next_step": "Sin siguiente paso planeado"
+  },
+  "status": {
+    "active": "Activo",
+    "paused": "En pausa",
+    "done": "Hecho"
+  },
+  "backToProjects": "Todos los proyectos",
+  "tasksHeading": "Tareas",
+  "noProjectTasks": "Ninguna tarea cuelga todavía de este proyecto.",
+  "sheet": {
+    "createTitle": "Proyecto nuevo",
+    "editTitle": "Editar proyecto",
+    "nameLabel": "Proyecto",
+    "goalLabel": "Meta",
+    "goalNone": "Sin meta",
+    "startLabel": "Inicio",
+    "deadlineLabel": "Fecha límite",
+    "statusLabel": "Estado",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar proyecto",
+    "deleteQuestion": "¿Eliminar este proyecto?",
+    "deleteText": "Sus tareas se quedan, solo dejan de apuntar a un proyecto.",
+    "deleteConfirm": "Eliminar"
+  },
+  "errors": {
+    "unknown_goal": "Esa meta ya no está.",
+    "unknown_project": "Ese proyecto ya no está.",
+    "generic": "No se guardó. Revisa la conexión y vuelve a intentarlo."
+  }
+}

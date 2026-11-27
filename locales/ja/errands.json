@@ -1,0 +1,11 @@
+{
+  "title": "用事",
+  "loading": "少々お待ちください。",
+  "loadError": "用事を読み込めませんでした。接続を確認して、もう一度お試しください。",
+  "dayLine_other": "用事の日・{{count}}件",
+  "openHeading": "未完了",
+  "doneHeading": "過去7日間に終わったもの",
+  "empty": "待っている用事はありません。",
+  "emptyDone": "過去7日間に終わった用事はありません。",
+  "planLink": "用事を開く"
+}

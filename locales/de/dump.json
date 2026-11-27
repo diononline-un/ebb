@@ -1,0 +1,30 @@
+{
+  "title": "Dump",
+  "composer": {
+    "label": "Einen Gedanken hinzufügen",
+    "placeholder": "Was geht dir durch den Kopf?",
+    "hint": "Enter behält ihn. Shift und Enter beginnt eine neue Zeile.",
+    "submit": "Behalten"
+  },
+  "toTask": "→ Aufgabe",
+  "archive": "Archivieren",
+  "openTask": "Aufgabe öffnen",
+  "waiting": "Wartet auf Verbindung",
+  "pending_one": "{{count}} Gedanke wartet auf Verbindung",
+  "pending_other": "{{count}} Gedanken warten auf Verbindung",
+  "prompts": {
+    "title": "Noch nichts hier. Ein Gedanke muss nur den Kopf verlassen, er muss keinen Sinn ergeben.",
+    "prompt1": "Was kommt heute immer wieder?",
+    "prompt2": "Was hast du jemandem versprochen?",
+    "prompt3": "Was trägst du schon eine Weile mit dir herum?"
+  },
+  "quickCapture": {
+    "title": "Einen Gedanken hinzufügen",
+    "placeholder": "Was geht dir durch den Kopf?",
+    "submit": "Behalten"
+  },
+  "errors": {
+    "tooLong": "Ein Gedanke passt in 500 Zeichen. Kürz ihn und versuch es noch einmal.",
+    "generic": "Das hat nicht funktioniert. Dein Gedanke steht noch im Feld."
+  }
+}

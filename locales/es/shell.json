@@ -1,0 +1,29 @@
+{
+  "nav": {
+    "label": "Principal",
+    "today": "Hoy",
+    "dump": "Volcado",
+    "plan": "Plan",
+    "more": "Más"
+  },
+  "quickCapture": "Añadir un pensamiento",
+  "today": {
+    "title": "Hoy",
+    "empty": "Aún no hay nada aquí. Tu día toma forma en cuanto algo aterriza en él."
+  },
+  "dump": {
+    "title": "Volcado",
+    "empty": "Vacío. Cada pensamiento que dejas aquí espera hasta que decides qué es."
+  },
+  "plan": {
+    "title": "Plan",
+    "empty": "No hay nada planeado más allá de hoy."
+  },
+  "more": {
+    "title": "Más",
+    "goals": "Metas",
+    "habits": "Hábitos",
+    "security": "Entrada y seguridad",
+    "empty": "Proyectos, espacios y los demás ajustes llegan en los próximos pasos."
+  }
+}

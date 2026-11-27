@@ -1,0 +1,65 @@
+{
+  "nav": "Espacios",
+  "title": "Espacios",
+  "loading": "Un momento.",
+  "loadError": "Los espacios no se cargaron. Revisa la conexión y vuelve a intentarlo.",
+  "empty": "Aún no hay un espacio compartido. Tu espacio personal basta para el día.",
+  "add": "Espacio nuevo",
+  "open": "Abrir {{name}}",
+  "kind": {
+    "personal": "Espacio personal",
+    "shared": "Espacio compartido"
+  },
+  "memberCount_one": "{{count}} persona",
+  "memberCount_other": "{{count}} personas",
+  "backToSpaces": "Todos los espacios",
+  "peopleHeading": "Personas",
+  "peopleEmpty": "De momento solo tú.",
+  "role": {
+    "owner": "Propietario",
+    "member": "Miembro"
+  },
+  "remove": "Quitar",
+  "removeLabel": "Quitar a {{name}}",
+  "renameLabel": "Nombre del espacio",
+  "renameAction": "Renombrar",
+  "invite": "Invitar a alguien",
+  "inviteHint": "Este enlace funciona una vez y caduca en siete días. Solo se muestra ahora.",
+  "inviteLinkLabel": "Enlace de invitación",
+  "copy": "Copiar enlace",
+  "copied": "Enlace copiado",
+  "share": "Compartir",
+  "inviteDone": "Hecho",
+  "leave": "Salir del espacio",
+  "delete": "Eliminar espacio",
+  "deleteQuestion": "¿Eliminar este espacio?",
+  "deleteText": "Todo lo que hay dentro se va también. Escribe el nombre del espacio para confirmar.",
+  "deleteNameLabel": "Escribe el nombre del espacio",
+  "deleteConfirm": "Eliminar",
+  "cancel": "Dejarlo",
+  "sheet": {
+    "createTitle": "Espacio nuevo",
+    "nameLabel": "Espacio",
+    "hint": "Podrás invitar a gente cuando exista.",
+    "save": "Guardar",
+    "cancel": "Cancelar"
+  },
+  "join": {
+    "title": "Unirse al espacio",
+    "action": "Unirme al espacio",
+    "hint": "Verás las tareas de este espacio y cogerás las que quieras.",
+    "joined": "Estás en {{name}}.",
+    "open": "Abrir {{name}}",
+    "openFallback": "Abrir el espacio"
+  },
+  "errors": {
+    "name_mismatch": "El nombre no coincidía. El espacio se queda como está.",
+    "owner_cannot_leave": "El propietario no puede salir del espacio. Elimínalo en su lugar.",
+    "personal_space": "Tu espacio personal se queda.",
+    "owner_only": "Eso solo lo puede hacer el propietario.",
+    "already_assigned": "Otra persona ya cogió esta tarea.",
+    "not_your_plan": "Solo la persona responsable planifica esta tarea.",
+    "invite_invalid": "Esta invitación ya no vale. Pide una nueva.",
+    "generic": "No se guardó. Revisa la conexión y vuelve a intentarlo."
+  }
+}

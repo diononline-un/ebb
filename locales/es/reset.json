@@ -1,0 +1,71 @@
+{
+  "nav": "Revisión semanal",
+  "title": "Revisión semanal",
+  "loading": "Un momento.",
+  "loadError": "La semana no se cargó. Revisa la conexión y vuelve a intentarlo.",
+  "saveError": "No se guardó. Revisa la conexión y vuelve a intentarlo.",
+  "progressLabel": "Progreso de la revisión semanal",
+  "todayReady": "La revisión semanal está lista",
+  "review": {
+    "question": "¿Cómo fue la semana?",
+    "wentWell": "¿Qué fue bien?",
+    "wentBadly": "¿Qué no?",
+    "change": "¿Qué voy a cambiar?",
+    "continue": "Seguir"
+  },
+  "numbers": {
+    "question": "La semana en cifras",
+    "anchorLabel": "Ancla hecha en",
+    "anchorValue": "{{done}} de 7 días",
+    "tasksLabel": "Tareas hechas",
+    "tasksValue_one": "{{count}} tarea",
+    "tasksValue_other": "{{count}} tareas",
+    "focusLabel": "Enfoque",
+    "focusValue_one": "{{count}} minuto",
+    "focusValue_other": "{{count}} minutos",
+    "rolledLabel": "Vinieron de ayer",
+    "rolledValue_one": "{{count}} tarea",
+    "rolledValue_other": "{{count}} tareas",
+    "habitsHeading": "Hábitos",
+    "habitValue": "{{done}} de {{target}} esta semana",
+    "projectsHeading": "Proyectos",
+    "projectValue_one": "{{count}} tarea hecha",
+    "projectValue_other": "{{count}} tareas hechas",
+    "continue": "Seguir"
+  },
+  "stuck": {
+    "question": "¿Qué pasa con estas?",
+    "pushed": "movida {{count}}×",
+    "older": "más de 14 días",
+    "empty": "Nada espera una decisión.",
+    "date": "Darle una fecha",
+    "dateLabel": "Día nuevo para esta tarea",
+    "split": "Partirla en pasos",
+    "skip": "Hoy no",
+    "delete": "Eliminar",
+    "deleteQuestion": "¿Eliminar esta tarea?",
+    "deleteText": "Se va para siempre. Todo lo demás se queda.",
+    "deleteConfirm": "Eliminar",
+    "waiting": "Una tarea sigue esperando una decisión.",
+    "continue": "Seguir"
+  },
+  "outlook": {
+    "question": "Lo que viene",
+    "deadline": "Fecha límite",
+    "empty": "No hay nada planeado para los próximos siete días.",
+    "finish": "Cerrar la semana"
+  },
+  "done": {
+    "title": "Esta semana está cerrada",
+    "empty": "Esta semana no se escribió ninguna respuesta.",
+    "history": "Semanas anteriores"
+  },
+  "history": {
+    "title": "Semanas anteriores",
+    "loading": "Un momento.",
+    "loadError": "Las semanas no se cargaron. Revisa la conexión y vuelve a intentarlo.",
+    "empty": "Aún no hay ninguna semana cerrada.",
+    "done": "Hecha",
+    "open": "Sin terminar"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "subtasks": {
+    "heading": "Subtareas",
+    "progress": "{{done}} de {{total}} hechas",
+    "empty": "Aún no hay subtareas.",
+    "addLabel": "Añadir una subtarea",
+    "addAction": "Añadir",
+    "markDone": "Marcar {{title}} como hecho",
+    "markOpen": "Quitar la marca de {{title}}"
+  },
+  "repeat": {
+    "heading": "Repetir",
+    "freqLabel": "Repetir",
+    "freq": {
+      "daily": "Todos los días",
+      "weekdays": "Cada día laborable",
+      "weekly": "Ciertos días de la semana",
+      "every_n_days": "Cada pocos días",
+      "monthly": "Cada mes"
+    },
+    "weekdaysLabel": "En qué días",
+    "intervalLabel": "Cada cuántos días",
+    "monthDayLabel": "En qué día del mes",
+    "startHint": "Empieza hoy.",
+    "add": "Repetir desde hoy",
+    "empty": "Esta tarea todavía no se repite.",
+    "rule": {
+      "daily": "Todos los días",
+      "weekdays": "Cada día laborable",
+      "weekly": "Cada semana los {{days}}",
+      "every_n_days": "Cada {{interval}} días",
+      "monthly": "Cada mes el día {{day}}"
+    }
+  },
+  "space": {
+    "heading": "Espacio y responsable",
+    "label": "Espacio",
+    "assigneeLabel": "Responsable",
+    "nobody": "Todavía nadie",
+    "take": "La cojo yo"
+  },
+  "errors": {
+    "subtask_too_deep": "Las subtareas van un nivel hacia abajo.",
+    "subtask_other_space": "La tarea de arriba está en otro espacio.",
+    "unknown_parent": "La tarea de arriba ya no está.",
+    "unknown_project": "Ese proyecto ya no está.",
+    "generic": "No se guardó. Revisa la conexión y vuelve a intentarlo."
+  }
+}

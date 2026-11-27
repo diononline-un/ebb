@@ -1,0 +1,64 @@
+{
+  "progressLabel": "设置进度",
+  "loading": "稍等。",
+  "welcome": {
+    "title": "来把一天安排好。",
+    "text": "九个小步骤，没有一步是必须的。以后什么都能改。",
+    "timezoneNote": "你的一天从 {{timezone}} 开始。",
+    "start": "开始"
+  },
+  "goals": {
+    "question": "你为了什么做这些？",
+    "hint": "一个目标就够了。三个已经很多。",
+    "suggestionsLabel": "例子",
+    "ownLabel": "或者你自己的",
+    "ownPlaceholder": "用几个字说一个目标",
+    "continue": "继续",
+    "skip": "跳过",
+    "limit": "三个目标就够开始。"
+  },
+  "habits": {
+    "question": "你想定期做什么？",
+    "hint": "开头两个习惯就够，以后可以再加。",
+    "suggestionsLabel": "建议",
+    "ownLabel": "或者你自己的",
+    "ownPlaceholder": "用几个字说一个习惯",
+    "continue": "继续",
+    "skip": "跳过",
+    "limit": "两个习惯现在够了。"
+  },
+  "dump": {
+    "question": "什么不能漏掉？",
+    "continue": "继续",
+    "skip": "跳过"
+  },
+  "toTasks": {
+    "question": "这些里面哪个是任务？",
+    "continue": "继续",
+    "skip": "跳过",
+    "empty": "没有在等的。这样也好。"
+  },
+  "rituals": {
+    "question": "一天应该什么时候开始？",
+    "morningLabel": "早晨仪式",
+    "resetDayLabel": "每周重置的日子",
+    "resetTimeLabel": "时间",
+    "iosHint": "在 iPhone 上，先把应用放到主屏幕。这样才收得到提醒。",
+    "reminderHint": "提醒在夜里是安静的。每周重置会回看 {{day}}。",
+    "finish": "完成",
+    "skip": "跳过"
+  },
+  "goalSuggestions": [
+    "工作时更从容",
+    "晚上留给自己",
+    "把开始的事做完"
+  ],
+  "habitSuggestions": [
+    "收拾十分钟",
+    "睡前读一页",
+    "午饭后走一走"
+  ],
+  "errors": {
+    "generic": "没有保存。检查一下连接，再试一次。"
+  }
+}

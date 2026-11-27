@@ -1,0 +1,64 @@
+{
+  "nav": "空间",
+  "title": "空间",
+  "loading": "稍等。",
+  "loadError": "空间没有加载出来。检查一下连接，再试一次。",
+  "empty": "还没有共享空间。个人空间够一天用了。",
+  "add": "新空间",
+  "open": "打开 {{name}}",
+  "kind": {
+    "personal": "个人空间",
+    "shared": "共享空间"
+  },
+  "memberCount_other": "{{count}} 人",
+  "backToSpaces": "全部空间",
+  "peopleHeading": "成员",
+  "peopleEmpty": "现在只有你。",
+  "role": {
+    "owner": "所有者",
+    "member": "成员"
+  },
+  "remove": "移除",
+  "removeLabel": "移除 {{name}}",
+  "renameLabel": "空间名称",
+  "renameAction": "重命名",
+  "invite": "邀请别人",
+  "inviteHint": "这个链接只能用一次，七天后失效。只在现在显示。",
+  "inviteLinkLabel": "邀请链接",
+  "copy": "复制链接",
+  "copied": "链接已复制",
+  "share": "分享",
+  "inviteDone": "完成",
+  "leave": "离开空间",
+  "delete": "删除空间",
+  "deleteQuestion": "删除这个空间？",
+  "deleteText": "里面的东西也会一起消失。输入空间名称来确认。",
+  "deleteNameLabel": "输入空间名称",
+  "deleteConfirm": "删除",
+  "cancel": "留着",
+  "sheet": {
+    "createTitle": "新空间",
+    "nameLabel": "空间",
+    "hint": "建好之后就能邀请别人。",
+    "save": "保存",
+    "cancel": "取消"
+  },
+  "join": {
+    "title": "加入空间",
+    "action": "加入这个空间",
+    "hint": "你会看到这个空间的任务，挑你想做的。",
+    "joined": "你在 {{name}} 里了。",
+    "open": "打开 {{name}}",
+    "openFallback": "打开空间"
+  },
+  "errors": {
+    "name_mismatch": "名称不匹配。空间保持原样。",
+    "owner_cannot_leave": "所有者不能离开空间。删掉它吧。",
+    "personal_space": "你的个人空间会留下。",
+    "owner_only": "只有所有者能做这个。",
+    "already_assigned": "别人已经接了这个任务。",
+    "not_your_plan": "只有负责的人能安排这个任务。",
+    "invite_invalid": "这个邀请已经不能用了。请重新申请一个。",
+    "generic": "没有保存。检查一下连接，再试一次。"
+  }
+}

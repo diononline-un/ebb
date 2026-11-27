@@ -1,0 +1,30 @@
+{
+  "title": "Vidage",
+  "composer": {
+    "label": "Ajouter une pensée",
+    "placeholder": "Qu'est-ce que tu as en tête ?",
+    "hint": "Entrée la garde. Maj et Entrée commencent une nouvelle ligne.",
+    "submit": "La garder"
+  },
+  "toTask": "→ Tâche",
+  "archive": "Archiver",
+  "openTask": "Ouvrir la tâche",
+  "waiting": "En attente de connexion",
+  "pending_one": "{{count}} pensée en attente de connexion",
+  "pending_other": "{{count}} pensées en attente de connexion",
+  "prompts": {
+    "title": "Rien ici pour l'instant. Une pensée doit juste sortir de ta tête, elle n'a pas besoin d'avoir du sens.",
+    "prompt1": "Qu'est-ce qui revient sans cesse aujourd'hui ?",
+    "prompt2": "Qu'as-tu promis à quelqu'un ?",
+    "prompt3": "Qu'est-ce que tu portes depuis un moment ?"
+  },
+  "quickCapture": {
+    "title": "Ajouter une pensée",
+    "placeholder": "Qu'est-ce que tu as en tête ?",
+    "submit": "La garder"
+  },
+  "errors": {
+    "tooLong": "Une pensée tient en 500 caractères. Raccourcis-la et réessaie.",
+    "generic": "Ça n'a pas marché. Ta pensée est toujours dans le champ."
+  }
+}

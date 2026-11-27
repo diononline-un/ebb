@@ -1,0 +1,16 @@
+{
+  "timer": {
+    "stop": "停止",
+    "close": "閉じる",
+    "finished": "休憩の時間です"
+  },
+  "start": {
+    "label": "開始",
+    "fixed": "{{minutes}}分を開始",
+    "minutes": "{{minutes}}分",
+    "usual": "いつもの",
+    "custom": "長さを指定…",
+    "customLabel": "分",
+    "customConfirm": "開始"
+  }
+}

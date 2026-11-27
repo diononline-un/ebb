@@ -1,0 +1,41 @@
+{
+  "title": "今日",
+  "must": "必須",
+  "markDone": "{{title}}を完了にする",
+  "markOpen": "{{title}}を未完了に戻す",
+  "deadlineSoon": "{{date}}が期限です",
+  "pushed": "{{count}}回移動しました",
+  "sheet": {
+    "title": "タスク",
+    "titleLabel": "タイトル",
+    "notesLabel": "メモ",
+    "doDateLabel": "着手日",
+    "deadlineLabel": "期限",
+    "mustLabel": "今日の必須",
+    "anchorLabel": "アンカー",
+    "statusLabel": "状態",
+    "delete": "タスクを削除",
+    "deleteQuestion": "このタスクを削除しますか？",
+    "deleteText": "完全に消えます。元に戻せません。",
+    "deleteConfirm": "削除",
+    "cancel": "残す",
+    "replaceQuestion": "今のアンカーを置き換えますか？",
+    "replaceAction": "置き換える",
+    "keepAnchor": "今のままにする"
+  },
+  "status": {
+    "todo": "未着手",
+    "doing": "進行中",
+    "waiting": "待ち",
+    "done": "完了",
+    "skipped": "今日はしない"
+  },
+  "warnings": {
+    "must_many": "一日にしては必須が多いようです。ひとつは待てるかもしれません。",
+    "deadline_before_do_date": "期限が、取りかかる予定の日より前です。"
+  },
+  "errors": {
+    "must_limit": "一日の必須は5件までです。先にどれかを普通のタスクに戻してください。",
+    "generic": "うまくいきませんでした。少ししてからもう一度お試しください。"
+  }
+}

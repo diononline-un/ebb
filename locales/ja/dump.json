@@ -1,0 +1,29 @@
+{
+  "title": "ダンプ",
+  "composer": {
+    "label": "思いつきを追加",
+    "placeholder": "いま頭にあることは？",
+    "hint": "Enter で残します。Shift と Enter で改行します。",
+    "submit": "残す"
+  },
+  "toTask": "→ タスク",
+  "archive": "アーカイブ",
+  "openTask": "タスクを開く",
+  "waiting": "接続を待っています",
+  "pending_other": "接続待ちの思いつき{{count}}件",
+  "prompts": {
+    "title": "まだ何もありません。思いつきは頭から出ていけば十分で、意味はいりません。",
+    "prompt1": "今日、何度も戻ってくることは？",
+    "prompt2": "誰かに約束したことは？",
+    "prompt3": "しばらく持ち歩いていることは？"
+  },
+  "quickCapture": {
+    "title": "思いつきを追加",
+    "placeholder": "いま頭にあることは？",
+    "submit": "残す"
+  },
+  "errors": {
+    "tooLong": "思いつきは500文字までです。短くしてからもう一度お試しください。",
+    "generic": "うまくいきませんでした。思いつきは入力欄にあります。"
+  }
+}

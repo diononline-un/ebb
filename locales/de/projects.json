@@ -1,0 +1,45 @@
+{
+  "nav": "Projekte",
+  "title": "Projekte",
+  "loading": "Einen Moment.",
+  "loadError": "Die Projekte sind nicht geladen. Prüf die Verbindung und versuch es noch einmal.",
+  "empty": "Noch keine Projekte. Eins genügt zum Anfangen.",
+  "add": "Neues Projekt",
+  "open": "{{name}} öffnen",
+  "progress": "{{done}} von {{total}} erledigt",
+  "allDone": "Alles erledigt",
+  "noTasks": "Noch keine Aufgaben",
+  "warnings": {
+    "deadline_soon": "Die Deadline rückt näher",
+    "no_next_step": "Kein nächster Schritt geplant"
+  },
+  "status": {
+    "active": "Aktiv",
+    "paused": "Pausiert",
+    "done": "Fertig"
+  },
+  "backToProjects": "Alle Projekte",
+  "tasksHeading": "Aufgaben",
+  "noProjectTasks": "An diesem Projekt hängt noch keine Aufgabe.",
+  "sheet": {
+    "createTitle": "Neues Projekt",
+    "editTitle": "Projekt bearbeiten",
+    "nameLabel": "Projekt",
+    "goalLabel": "Ziel",
+    "goalNone": "Kein Ziel",
+    "startLabel": "Start",
+    "deadlineLabel": "Deadline",
+    "statusLabel": "Status",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Projekt löschen",
+    "deleteQuestion": "Dieses Projekt löschen?",
+    "deleteText": "Seine Aufgaben bleiben, sie zeigen nur auf kein Projekt mehr.",
+    "deleteConfirm": "Löschen"
+  },
+  "errors": {
+    "unknown_goal": "Dieses Ziel gibt es nicht mehr.",
+    "unknown_project": "Dieses Projekt gibt es nicht mehr.",
+    "generic": "Das wurde nicht gespeichert. Prüf die Verbindung und versuch es noch einmal."
+  }
+}

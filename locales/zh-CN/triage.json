@@ -1,0 +1,27 @@
+{
+  "question": "这件事等到明天，会坏什么？",
+  "progressLabel": "整理进度",
+  "progress": "{{total}} 中的 {{done}}",
+  "answers": {
+    "must": "真有影响，今天就必须要",
+    "later": "没什么大不了，挑一天",
+    "errand": "是件小杂事",
+    "today": "我今天想做"
+  },
+  "blockQuestion": "哪个区块？",
+  "block1": "区块 1",
+  "block2": "区块 2",
+  "block3": "区块 3",
+  "block4": "区块 4",
+  "laterQuestion": "哪一天合适？",
+  "tomorrow": "明天",
+  "dayAfter": "后天",
+  "nextMonday": "下周一",
+  "pickDate": "选一个日期",
+  "laterConfirm": "就这一天",
+  "anchorTitle": "选你的锚点",
+  "anchorSkip": "跳过",
+  "close": "离开整理",
+  "loading": "稍等。",
+  "loadError": "整理没有加载出来。检查一下连接，再试一次。"
+}

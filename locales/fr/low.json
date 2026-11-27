@@ -1,0 +1,36 @@
+{
+  "title": "Aujourd'hui",
+  "loading": "Un instant.",
+  "loadError": "La journée ne s'est pas chargée. Vérifie la connexion et réessaie.",
+  "empty": "Il ne reste rien pour aujourd'hui. C'est assez.",
+  "emptyAction": "Retour à aujourd'hui",
+  "step": {
+    "label": "Premier pas de 10 minutes",
+    "placeholder": "Le plus petit pas suivant"
+  },
+  "actions": {
+    "done": "Fait",
+    "chooseAnother": "En choisir une autre",
+    "stop": "Arrêter pour aujourd'hui"
+  },
+  "after": {
+    "line": "Fait. Encore une, ou on s'arrête là pour aujourd'hui ?",
+    "oneMore": "Encore une",
+    "callItADay": "On s'arrête là"
+  },
+  "stop": {
+    "question": "Où t'es-tu arrêté ?",
+    "placeholder": "Pour que demain reprenne là où aujourd'hui s'est arrêté",
+    "save": "Enregistrer et arrêter",
+    "cancel": "Annuler"
+  },
+  "choose": {
+    "title": "Laquelle ?"
+  },
+  "toggle": {
+    "label": "Énergie aujourd'hui",
+    "low": "Peu",
+    "good": "Bonne"
+  },
+  "link": "Montrer une chose"
+}

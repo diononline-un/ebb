@@ -1,0 +1,46 @@
+{
+  "todayHeading": "Habitudes du jour",
+  "markDone": "Marquer {{name}} comme fait aujourd'hui",
+  "markOpen": "Retirer la coche de {{name}}",
+  "weekLine": "{{done}} sur {{target}} cette semaine",
+  "rhythm": {
+    "daily": "Tous les jours",
+    "weekdays": "Les jours choisis",
+    "weekly": "{{count}}× par semaine"
+  },
+  "title": "Habitudes",
+  "loading": "Un instant.",
+  "loadError": "Les habitudes ne se sont pas chargées. Vérifie la connexion et réessaie.",
+  "empty": "Pas encore d'habitude. Une seule suffit pour commencer.",
+  "add": "Nouvelle habitude",
+  "edit": "Modifier {{name}}",
+  "sheet": {
+    "createTitle": "Nouvelle habitude",
+    "editTitle": "Modifier l'habitude",
+    "nameLabel": "Nom",
+    "goalLabel": "Objectif",
+    "goalNone": "Aucun objectif",
+    "cadenceLabel": "Rythme",
+    "cadenceDaily": "Tous les jours",
+    "cadenceWeekly": "Quelques fois par semaine",
+    "targetLabel": "Combien de fois",
+    "weekdaysLabel": "Quels jours",
+    "reminderLabel": "Rappel",
+    "save": "Enregistrer",
+    "archive": "Archiver l'habitude",
+    "restore": "La ramener",
+    "archivedLine": "Archivée",
+    "cancel": "Annuler",
+    "weeklyTarget": "{{count}}×",
+    "yesterdayDone": "Hier fait",
+    "yesterdayOpen": "Rattraper hier",
+    "todayDone": "Aujourd'hui fait",
+    "todayOpen": "Marquer aujourd'hui comme fait"
+  },
+  "errors": {
+    "weekly_target_required": "Une habitude hebdomadaire a besoin d'un nombre de jours.",
+    "unknown_goal": "Cet objectif n'existe plus.",
+    "day_locked": "Seuls aujourd'hui et hier peuvent être cochés.",
+    "generic": "Ça n'a pas été enregistré. Vérifie la connexion et réessaie."
+  }
+}

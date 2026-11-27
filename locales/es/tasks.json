@@ -1,0 +1,41 @@
+{
+  "title": "Hoy",
+  "must": "Esencial",
+  "markDone": "Marcar {{title}} como hecho",
+  "markOpen": "Volver a marcar {{title}} como abierto",
+  "deadlineSoon": "Vence el {{date}}",
+  "pushed": "Movida {{count}}×",
+  "sheet": {
+    "title": "Tarea",
+    "titleLabel": "Título",
+    "notesLabel": "Notas",
+    "doDateLabel": "Fecha de trabajo",
+    "deadlineLabel": "Fecha límite",
+    "mustLabel": "Esencial de hoy",
+    "anchorLabel": "Ancla",
+    "statusLabel": "Estado",
+    "delete": "Eliminar tarea",
+    "deleteQuestion": "¿Eliminar esta tarea?",
+    "deleteText": "Desaparece para siempre. No se puede deshacer.",
+    "deleteConfirm": "Eliminar",
+    "cancel": "Dejarla",
+    "replaceQuestion": "¿Cambiar el ancla actual?",
+    "replaceAction": "Cambiar",
+    "keepAnchor": "Dejar la actual"
+  },
+  "status": {
+    "todo": "Por hacer",
+    "doing": "En curso",
+    "waiting": "En espera",
+    "done": "Hecho",
+    "skipped": "Hoy no"
+  },
+  "warnings": {
+    "must_many": "Son muchos esenciales para un día. Quizá uno pueda esperar.",
+    "deadline_before_do_date": "La fecha límite es anterior al día en que quieres trabajarla."
+  },
+  "errors": {
+    "must_limit": "Cinco esenciales son suficientes para un día. Vuelve a convertir uno de los otros en una tarea normal.",
+    "generic": "No ha funcionado. Inténtalo de nuevo en un momento."
+  }
+}

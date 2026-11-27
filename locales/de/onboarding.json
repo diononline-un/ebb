@@ -1,0 +1,64 @@
+{
+  "progressLabel": "Fortschritt der Einrichtung",
+  "loading": "Einen Moment.",
+  "welcome": {
+    "title": "Richten wir deinen Tag ein.",
+    "text": "Neun kurze Schritte, keiner davon ist verbindlich. Alles bleibt später änderbar.",
+    "timezoneNote": "Deine Tage beginnen in {{timezone}}.",
+    "start": "Los geht's"
+  },
+  "goals": {
+    "question": "Wofür machst du das?",
+    "hint": "Ein Ziel genügt. Drei sind reichlich.",
+    "suggestionsLabel": "Beispiele",
+    "ownLabel": "Oder dein eigenes",
+    "ownPlaceholder": "Ein Ziel in ein paar Worten",
+    "continue": "Weiter",
+    "skip": "Überspringen",
+    "limit": "Drei Ziele reichen zum Anfangen."
+  },
+  "habits": {
+    "question": "Was möchtest du regelmäßig tun?",
+    "hint": "Zwei Habits genügen zum Start, mehr können später dazukommen.",
+    "suggestionsLabel": "Vorschläge",
+    "ownLabel": "Oder dein eigenes",
+    "ownPlaceholder": "Ein Habit in ein paar Worten",
+    "continue": "Weiter",
+    "skip": "Überspringen",
+    "limit": "Zwei Habits reichen erst einmal."
+  },
+  "dump": {
+    "question": "Was darf dir nicht entgehen?",
+    "continue": "Weiter",
+    "skip": "Überspringen"
+  },
+  "toTasks": {
+    "question": "Was davon ist eine Aufgabe?",
+    "continue": "Weiter",
+    "skip": "Überspringen",
+    "empty": "Nichts wartet. Das ist in Ordnung."
+  },
+  "rituals": {
+    "question": "Wann soll der Tag beginnen?",
+    "morningLabel": "Morgenritual",
+    "resetDayLabel": "Weekly Reset am",
+    "resetTimeLabel": "um",
+    "iosHint": "Leg die App auf dem iPhone zuerst auf den Home-Bildschirm. Erst dann erreichen dich Erinnerungen.",
+    "reminderHint": "Erinnerungen bleiben nachts still. Der Weekly Reset blickt auf {{day}} zurück.",
+    "finish": "Fertig",
+    "skip": "Überspringen"
+  },
+  "goalSuggestions": [
+    "Ruhiger bei der Arbeit sein",
+    "Die Abende für mich haben",
+    "Zu Ende bringen, was ich anfange"
+  ],
+  "habitSuggestions": [
+    "Zehn Minuten aufräumen",
+    "Eine Seite vor dem Schlafen",
+    "Ein Spaziergang nach dem Mittagessen"
+  ],
+  "errors": {
+    "generic": "Das wurde nicht gespeichert. Prüf die Verbindung und versuch es noch einmal."
+  }
+}

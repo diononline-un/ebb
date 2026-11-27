@@ -1,0 +1,11 @@
+{
+  "app": {
+    "name": "ebbe"
+  },
+  "actions": {
+    "cancel": "キャンセル",
+    "close": "閉じる",
+    "save": "保存",
+    "delete": "削除"
+  }
+}

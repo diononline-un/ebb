@@ -1,0 +1,67 @@
+{
+  "nav": "每周重置",
+  "title": "每周重置",
+  "loading": "稍等。",
+  "loadError": "这一周没有加载出来。检查一下连接，再试一次。",
+  "saveError": "没有保存。检查一下连接，再试一次。",
+  "progressLabel": "每周重置进度",
+  "todayReady": "每周重置可以开始了",
+  "review": {
+    "question": "这一周过得怎么样？",
+    "wentWell": "什么进展得顺利？",
+    "wentBadly": "什么不顺利？",
+    "change": "我要改什么？",
+    "continue": "继续"
+  },
+  "numbers": {
+    "question": "这一周的数字",
+    "anchorLabel": "锚点做到了",
+    "anchorValue": "7 天中的 {{done}} 天",
+    "tasksLabel": "完成的任务",
+    "tasksValue_other": "{{count}} 个",
+    "focusLabel": "专注",
+    "focusValue_other": "{{count}} 分钟",
+    "rolledLabel": "从昨天带来的",
+    "rolledValue_other": "{{count}} 个",
+    "habitsHeading": "习惯",
+    "habitValue": "这周 {{target}} 中的 {{done}}",
+    "projectsHeading": "项目",
+    "projectValue_other": "{{count}} 个任务完成",
+    "continue": "继续"
+  },
+  "stuck": {
+    "question": "这些怎么办？",
+    "pushed": "移动了 {{count}} 次",
+    "older": "超过 14 天",
+    "empty": "没有在等决定的。",
+    "date": "给它一天",
+    "dateLabel": "这个任务的新日子",
+    "split": "拆成几步",
+    "skip": "今天不做",
+    "delete": "删除",
+    "deleteQuestion": "删除这个任务？",
+    "deleteText": "它会彻底消失。别的都留着。",
+    "deleteConfirm": "删除",
+    "waiting": "还有一个任务在等决定。",
+    "continue": "继续"
+  },
+  "outlook": {
+    "question": "前面有什么",
+    "deadline": "截止日期",
+    "empty": "接下来七天没有安排。",
+    "finish": "结束这一周"
+  },
+  "done": {
+    "title": "这一周结束了",
+    "empty": "这一周没有写下回答。",
+    "history": "以前的周"
+  },
+  "history": {
+    "title": "以前的周",
+    "loading": "稍等。",
+    "loadError": "这些周没有加载出来。检查一下连接，再试一次。",
+    "empty": "还没有结束的周。",
+    "done": "完成",
+    "open": "没完成"
+  }
+}

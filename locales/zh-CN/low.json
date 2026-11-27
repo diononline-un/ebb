@@ -1,0 +1,36 @@
+{
+  "title": "今天",
+  "loading": "稍等。",
+  "loadError": "今天没有加载出来。检查一下连接，再试一次。",
+  "empty": "今天没剩下什么了。这就够了。",
+  "emptyAction": "回到今天",
+  "step": {
+    "label": "第一个 10 分钟的一步",
+    "placeholder": "最小的下一步"
+  },
+  "actions": {
+    "done": "完成",
+    "chooseAnother": "换一个",
+    "stop": "今天到这里"
+  },
+  "after": {
+    "line": "完成了。再来一个，还是今天就这样？",
+    "oneMore": "再来一个",
+    "callItADay": "今天就这样"
+  },
+  "stop": {
+    "question": "你停在哪里了？",
+    "placeholder": "让明天从今天停下的地方开始",
+    "save": "保存并停止",
+    "cancel": "取消"
+  },
+  "choose": {
+    "title": "哪一个？"
+  },
+  "toggle": {
+    "label": "今天的能量",
+    "low": "低",
+    "good": "好"
+  },
+  "link": "只看一件事"
+}

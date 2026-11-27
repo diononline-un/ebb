@@ -1,0 +1,24 @@
+{
+  "title": "Plan",
+  "tabsLabel": "Geplante Aufgaben",
+  "tabs": {
+    "inbox": "Inbox",
+    "tomorrow": "Morgen",
+    "week": "Woche",
+    "errands": "Erledigungen",
+    "waiting": "Wartet",
+    "done": "Erledigt",
+    "skipped": "Heute nicht"
+  },
+  "loading": "Einen Moment.",
+  "loadError": "Die Liste ist nicht geladen. Prüf die Verbindung und versuch es noch einmal.",
+  "empty": {
+    "inbox": "Die Inbox ist leer. Alles hat seinen Platz.",
+    "tomorrow": "Für morgen ist noch nichts geplant.",
+    "week": "Über morgen hinaus ist nichts geplant.",
+    "errands": "Keine Erledigung offen.",
+    "waiting": "Nichts wartet auf jemand anderen.",
+    "done": "In den letzten 30 Tagen ist nichts fertig geworden.",
+    "skipped": "In den letzten 30 Tagen wurde nichts beiseitegelegt."
+  }
+}

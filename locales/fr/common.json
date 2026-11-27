@@ -1,0 +1,11 @@
+{
+  "app": {
+    "name": "ebbe"
+  },
+  "actions": {
+    "cancel": "Annuler",
+    "close": "Fermer",
+    "save": "Enregistrer",
+    "delete": "Supprimer"
+  }
+}

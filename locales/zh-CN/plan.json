@@ -1,0 +1,24 @@
+{
+  "title": "计划",
+  "tabsLabel": "计划中的任务",
+  "tabs": {
+    "inbox": "收件箱",
+    "tomorrow": "明天",
+    "week": "这一周",
+    "errands": "杂事",
+    "waiting": "等待",
+    "done": "完成",
+    "skipped": "今天不做"
+  },
+  "loading": "稍等。",
+  "loadError": "列表没有加载出来。检查一下连接，再试一次。",
+  "empty": {
+    "inbox": "收件箱是空的。每件事都有地方。",
+    "tomorrow": "明天还没有安排。",
+    "week": "明天之后还没有安排。",
+    "errands": "没有等着的杂事。",
+    "waiting": "没有在等别人的事。",
+    "done": "最近 30 天没有完成的。",
+    "skipped": "最近 30 天没有放到一边的。"
+  }
+}

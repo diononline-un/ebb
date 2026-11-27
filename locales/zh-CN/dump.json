@@ -1,0 +1,29 @@
+{
+  "title": "倾倒",
+  "composer": {
+    "label": "加一个念头",
+    "placeholder": "现在在想什么？",
+    "hint": "回车就留下。Shift 加回车换行。",
+    "submit": "留下"
+  },
+  "toTask": "→ 任务",
+  "archive": "归档",
+  "openTask": "打开任务",
+  "waiting": "等待连接",
+  "pending_other": "{{count}} 个念头在等连接",
+  "prompts": {
+    "title": "这里还空着。念头只要离开脑袋就行，不必有意义。",
+    "prompt1": "今天什么总回来？",
+    "prompt2": "你答应了谁什么？",
+    "prompt3": "有什么你带在身边一阵子了？"
+  },
+  "quickCapture": {
+    "title": "加一个念头",
+    "placeholder": "现在在想什么？",
+    "submit": "留下"
+  },
+  "errors": {
+    "tooLong": "一个念头最多 500 个字符。缩短一点再试。",
+    "generic": "没成功。念头还在输入框里。"
+  }
+}

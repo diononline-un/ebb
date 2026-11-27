@@ -1,0 +1,49 @@
+{
+  "subtasks": {
+    "heading": "Teilaufgaben",
+    "progress": "{{done}} von {{total}} erledigt",
+    "empty": "Noch keine Teilaufgaben.",
+    "addLabel": "Teilaufgabe hinzufügen",
+    "addAction": "Hinzufügen",
+    "markDone": "{{title}} als erledigt markieren",
+    "markOpen": "Häkchen für {{title}} zurücknehmen"
+  },
+  "repeat": {
+    "heading": "Wiederholen",
+    "freqLabel": "Wiederholen",
+    "freq": {
+      "daily": "Jeden Tag",
+      "weekdays": "Jeden Werktag",
+      "weekly": "Bestimmte Wochentage",
+      "every_n_days": "Alle paar Tage",
+      "monthly": "Jeden Monat"
+    },
+    "weekdaysLabel": "An welchen Tagen",
+    "intervalLabel": "Alle wie vielen Tage",
+    "monthDayLabel": "An welchem Tag im Monat",
+    "startHint": "Beginnt heute.",
+    "add": "Ab heute wiederholen",
+    "empty": "Diese Aufgabe wiederholt sich noch nicht.",
+    "rule": {
+      "daily": "Jeden Tag",
+      "weekdays": "Jeden Werktag",
+      "weekly": "Wöchentlich am {{days}}",
+      "every_n_days": "Alle {{interval}} Tage",
+      "monthly": "Monatlich am {{day}}"
+    }
+  },
+  "space": {
+    "heading": "Bereich und Zuständigkeit",
+    "label": "Bereich",
+    "assigneeLabel": "Zuständig",
+    "nobody": "Noch niemand",
+    "take": "Das nehme ich"
+  },
+  "errors": {
+    "subtask_too_deep": "Teilaufgaben gehen eine Ebene tief.",
+    "subtask_other_space": "Die Aufgabe darüber liegt in einem anderen Bereich.",
+    "unknown_parent": "Die Aufgabe darüber gibt es nicht mehr.",
+    "unknown_project": "Dieses Projekt gibt es nicht mehr.",
+    "generic": "Das wurde nicht gespeichert. Prüf die Verbindung und versuch es noch einmal."
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "nav": {
+    "label": "Haupt",
+    "today": "Heute",
+    "dump": "Dump",
+    "plan": "Plan",
+    "more": "Mehr"
+  },
+  "quickCapture": "Gedanken hinzufügen",
+  "today": {
+    "title": "Heute",
+    "empty": "Noch nichts hier. Dein Tag nimmt Gestalt an, sobald etwas darin landet."
+  },
+  "dump": {
+    "title": "Dump",
+    "empty": "Leer. Jeder Gedanke, den du hier lässt, wartet, bis du entscheidest, was er ist."
+  },
+  "plan": {
+    "title": "Plan",
+    "empty": "Über heute hinaus ist nichts geplant."
+  },
+  "more": {
+    "title": "Mehr",
+    "goals": "Ziele",
+    "habits": "Habits",
+    "security": "Anmeldung und Sicherheit",
+    "empty": "Projekte, Bereiche und die anderen Einstellungen kommen in den nächsten Schritten."
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "title": "Ziele",
+  "loading": "Einen Moment.",
+  "loadError": "Die Ziele sind nicht geladen. Prüf die Verbindung und versuch es noch einmal.",
+  "empty": "Noch keine Ziele. Eins genügt zum Anfangen.",
+  "add": "Neues Ziel",
+  "open": "{{title}} öffnen",
+  "whyHeading": "Warum das zählt",
+  "noWhy": "Noch kein Grund notiert. Eine Zeile genügt.",
+  "habitsHeading": "Habits diese Woche",
+  "noHabits": "An diesem Ziel hängt noch kein Habit.",
+  "weekLine": "{{done}} von {{target}} diese Woche",
+  "backToGoals": "Alle Ziele",
+  "status": {
+    "active": "Aktiv",
+    "paused": "Pausiert",
+    "done": "Fertig"
+  },
+  "sheet": {
+    "createTitle": "Neues Ziel",
+    "editTitle": "Ziel bearbeiten",
+    "titleLabel": "Ziel",
+    "whyLabel": "Warum ist dir das wichtig?",
+    "statusLabel": "Status",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Ziel löschen",
+    "deleteQuestion": "Dieses Ziel löschen?",
+    "deleteText": "Seine Habits bleiben, sie zeigen nur auf kein Ziel mehr.",
+    "deleteConfirm": "Löschen"
+  },
+  "errors": {
+    "too_many_goals": "Fünf Ziele reichen erst einmal. Eins davon kann pausieren.",
+    "generic": "Das wurde nicht gespeichert. Prüf die Verbindung und versuch es noch einmal."
+  }
+}

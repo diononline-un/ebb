@@ -1,0 +1,27 @@
+{
+  "question": "Was bricht, wenn das bis morgen wartet?",
+  "progressLabel": "Fortschritt beim Sortieren",
+  "progress": "{{done}} von {{total}}",
+  "answers": {
+    "must": "Etwas Echtes, es ist heute ein Muss",
+    "later": "Nichts Wildes, gib ihm einen Tag",
+    "errand": "Es ist eine kleine Erledigung",
+    "today": "Ich will es heute tun"
+  },
+  "blockQuestion": "In welchem Block?",
+  "block1": "Block 1",
+  "block2": "Block 2",
+  "block3": "Block 3",
+  "block4": "Block 4",
+  "laterQuestion": "Welcher Tag passt?",
+  "tomorrow": "Morgen",
+  "dayAfter": "Übermorgen",
+  "nextMonday": "Nächsten Montag",
+  "pickDate": "Ein Datum wählen",
+  "laterConfirm": "Diesen Tag nehmen",
+  "anchorTitle": "Wähl deinen Anker",
+  "anchorSkip": "Überspringen",
+  "close": "Sortieren verlassen",
+  "loading": "Einen Moment.",
+  "loadError": "Das Sortieren ist nicht geladen. Prüf die Verbindung und versuch es noch einmal."
+}

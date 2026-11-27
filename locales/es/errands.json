@@ -1,0 +1,12 @@
+{
+  "title": "Recados",
+  "loading": "Un momento.",
+  "loadError": "Los recados no se cargaron. Revisa la conexión y vuelve a intentarlo.",
+  "dayLine_one": "Día de recados · {{count}} recado",
+  "dayLine_other": "Día de recados · {{count}} recados",
+  "openHeading": "Abiertos",
+  "doneHeading": "Hechos en los últimos 7 días",
+  "empty": "No hay recados esperando.",
+  "emptyDone": "Ningún recado terminado en los últimos 7 días.",
+  "planLink": "Abrir recados"
+}

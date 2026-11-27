@@ -1,0 +1,41 @@
+{
+  "title": "今天",
+  "must": "必须",
+  "markDone": "把 {{title}} 标为完成",
+  "markOpen": "把 {{title}} 重新标为未完成",
+  "deadlineSoon": "{{date}} 到期",
+  "pushed": "移动了 {{count}} 次",
+  "sheet": {
+    "title": "任务",
+    "titleLabel": "标题",
+    "notesLabel": "备注",
+    "doDateLabel": "执行日期",
+    "deadlineLabel": "截止日期",
+    "mustLabel": "今天必须",
+    "anchorLabel": "锚点",
+    "statusLabel": "状态",
+    "delete": "删除任务",
+    "deleteQuestion": "删除这个任务？",
+    "deleteText": "它会彻底消失，没法撤销。",
+    "deleteConfirm": "删除",
+    "cancel": "留着",
+    "replaceQuestion": "替换现在的锚点？",
+    "replaceAction": "替换",
+    "keepAnchor": "保留现在的"
+  },
+  "status": {
+    "todo": "待做",
+    "doing": "进行中",
+    "waiting": "等待",
+    "done": "完成",
+    "skipped": "今天不做"
+  },
+  "warnings": {
+    "must_many": "一天里的必须有点多。也许有一个可以等一等。",
+    "deadline_before_do_date": "截止日期早于你打算动手的那天。"
+  },
+  "errors": {
+    "must_limit": "一天五个必须就够了。先把其中一个变回普通任务。",
+    "generic": "没成功。稍后再试一次。"
+  }
+}

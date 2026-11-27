@@ -1,0 +1,36 @@
+{
+  "title": "目標",
+  "loading": "少々お待ちください。",
+  "loadError": "目標を読み込めませんでした。接続を確認して、もう一度お試しください。",
+  "empty": "まだ目標はありません。ひとつあれば始められます。",
+  "add": "新しい目標",
+  "open": "{{title}}を開く",
+  "whyHeading": "なぜ大事か",
+  "noWhy": "理由はまだ書かれていません。一行で十分です。",
+  "habitsHeading": "今週の習慣",
+  "noHabits": "この目標にまだ習慣はついていません。",
+  "weekLine": "今週は{{target}}のうち{{done}}",
+  "backToGoals": "すべての目標",
+  "status": {
+    "active": "進行中",
+    "paused": "休止中",
+    "done": "完了"
+  },
+  "sheet": {
+    "createTitle": "新しい目標",
+    "editTitle": "目標を編集",
+    "titleLabel": "目標",
+    "whyLabel": "なぜそれが大事なのですか？",
+    "statusLabel": "状態",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "目標を削除",
+    "deleteQuestion": "この目標を削除しますか？",
+    "deleteText": "習慣は残り、目標を指さなくなるだけです。",
+    "deleteConfirm": "削除"
+  },
+  "errors": {
+    "too_many_goals": "目標は5つで十分です。ひとつを休止できます。",
+    "generic": "保存できませんでした。接続を確認して、もう一度お試しください。"
+  }
+}

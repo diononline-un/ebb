@@ -1,0 +1,41 @@
+{
+  "title": "Aujourd'hui",
+  "must": "Prioritaire",
+  "markDone": "Marquer {{title}} comme fait",
+  "markOpen": "Remettre {{title}} en ouvert",
+  "deadlineSoon": "À rendre le {{date}}",
+  "pushed": "Déplacée {{count}}×",
+  "sheet": {
+    "title": "Tâche",
+    "titleLabel": "Titre",
+    "notesLabel": "Notes",
+    "doDateLabel": "Date de travail",
+    "deadlineLabel": "Échéance",
+    "mustLabel": "Prioritaire du jour",
+    "anchorLabel": "Ancre",
+    "statusLabel": "Statut",
+    "delete": "Supprimer la tâche",
+    "deleteQuestion": "Supprimer cette tâche ?",
+    "deleteText": "Elle disparaît pour de bon. On ne peut pas revenir en arrière.",
+    "deleteConfirm": "Supprimer",
+    "cancel": "La garder",
+    "replaceQuestion": "Remplacer l'ancre actuelle ?",
+    "replaceAction": "Remplacer",
+    "keepAnchor": "Garder celle-ci"
+  },
+  "status": {
+    "todo": "À faire",
+    "doing": "En cours",
+    "waiting": "En attente",
+    "done": "Fait",
+    "skipped": "Pas aujourd'hui"
+  },
+  "warnings": {
+    "must_many": "Ça fait beaucoup de prioritaires pour une journée. L'un d'eux peut peut-être attendre.",
+    "deadline_before_do_date": "L'échéance est avant le jour où tu veux y travailler."
+  },
+  "errors": {
+    "must_limit": "Cinq prioritaires suffisent pour une journée. Remets d'abord l'un des autres en tâche normale.",
+    "generic": "Ça n'a pas marché. Réessaie dans un instant."
+  }
+}

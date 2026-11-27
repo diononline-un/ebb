@@ -1,0 +1,65 @@
+{
+  "nav": "Bereiche",
+  "title": "Bereiche",
+  "loading": "Einen Moment.",
+  "loadError": "Die Bereiche sind nicht geladen. Prüf die Verbindung und versuch es noch einmal.",
+  "empty": "Noch kein geteilter Bereich. Dein persönlicher Bereich reicht für den Tag.",
+  "add": "Neuer Bereich",
+  "open": "{{name}} öffnen",
+  "kind": {
+    "personal": "Persönlicher Bereich",
+    "shared": "Geteilter Bereich"
+  },
+  "memberCount_one": "{{count}} Person",
+  "memberCount_other": "{{count}} Personen",
+  "backToSpaces": "Alle Bereiche",
+  "peopleHeading": "Personen",
+  "peopleEmpty": "Bisher nur du.",
+  "role": {
+    "owner": "Inhaber",
+    "member": "Mitglied"
+  },
+  "remove": "Entfernen",
+  "removeLabel": "{{name}} entfernen",
+  "renameLabel": "Name des Bereichs",
+  "renameAction": "Umbenennen",
+  "invite": "Jemanden einladen",
+  "inviteHint": "Dieser Link wirkt einmal und läuft in sieben Tagen ab. Er wird nur jetzt gezeigt.",
+  "inviteLinkLabel": "Einladungslink",
+  "copy": "Link kopieren",
+  "copied": "Link kopiert",
+  "share": "Teilen",
+  "inviteDone": "Fertig",
+  "leave": "Bereich verlassen",
+  "delete": "Bereich löschen",
+  "deleteQuestion": "Diesen Bereich löschen?",
+  "deleteText": "Alles darin geht mit. Tipp den Namen des Bereichs zur Bestätigung ein.",
+  "deleteNameLabel": "Namen des Bereichs eintippen",
+  "deleteConfirm": "Löschen",
+  "cancel": "Behalten",
+  "sheet": {
+    "createTitle": "Neuer Bereich",
+    "nameLabel": "Bereich",
+    "hint": "Du kannst Personen einladen, sobald er da ist.",
+    "save": "Speichern",
+    "cancel": "Abbrechen"
+  },
+  "join": {
+    "title": "Bereich beitreten",
+    "action": "Dem Bereich beitreten",
+    "hint": "Du siehst die Aufgaben dieses Bereichs und nimmst dir die, die du willst.",
+    "joined": "Du bist in {{name}}.",
+    "open": "{{name}} öffnen",
+    "openFallback": "Bereich öffnen"
+  },
+  "errors": {
+    "name_mismatch": "Der Name hat nicht gepasst. Der Bereich bleibt, wie er ist.",
+    "owner_cannot_leave": "Der Inhaber kann den Bereich nicht verlassen. Lösch ihn stattdessen.",
+    "personal_space": "Dein persönlicher Bereich bleibt.",
+    "owner_only": "Das kann nur der Inhaber.",
+    "already_assigned": "Jemand anderes hat diese Aufgabe schon übernommen.",
+    "not_your_plan": "Nur die zuständige Person plant diese Aufgabe.",
+    "invite_invalid": "Diese Einladung gilt nicht mehr. Bitte um eine neue.",
+    "generic": "Das wurde nicht gespeichert. Prüf die Verbindung und versuch es noch einmal."
+  }
+}

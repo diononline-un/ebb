@@ -1,0 +1,29 @@
+{
+  "nav": {
+    "label": "Principal",
+    "today": "Aujourd'hui",
+    "dump": "Vidage",
+    "plan": "Plan",
+    "more": "Plus"
+  },
+  "quickCapture": "Ajouter une pensée",
+  "today": {
+    "title": "Aujourd'hui",
+    "empty": "Rien ici pour l'instant. Ta journée prend forme dès que quelque chose y atterrit."
+  },
+  "dump": {
+    "title": "Vidage",
+    "empty": "Vide. Chaque pensée que tu laisses ici attend que tu décides ce qu'elle est."
+  },
+  "plan": {
+    "title": "Plan",
+    "empty": "Rien de prévu au-delà d'aujourd'hui."
+  },
+  "more": {
+    "title": "Plus",
+    "goals": "Objectifs",
+    "habits": "Habitudes",
+    "security": "Connexion et sécurité",
+    "empty": "Les projets, les espaces et les autres réglages arrivent dans les prochaines étapes."
+  }
+}

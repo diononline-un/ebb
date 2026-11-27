@@ -1,0 +1,36 @@
+{
+  "title": "Heute",
+  "loading": "Einen Moment.",
+  "loadError": "Der Tag ist nicht geladen. Prüf die Verbindung und versuch es noch einmal.",
+  "empty": "Für heute ist nichts mehr offen. Das ist genug.",
+  "emptyAction": "Zurück zu heute",
+  "step": {
+    "label": "Erster 10-Minuten-Schritt",
+    "placeholder": "Der kleinste nächste Schritt"
+  },
+  "actions": {
+    "done": "Erledigt",
+    "chooseAnother": "Anderes wählen",
+    "stop": "Für heute aufhören"
+  },
+  "after": {
+    "line": "Erledigt. Noch eins, oder für heute Schluss?",
+    "oneMore": "Noch eins",
+    "callItADay": "Für heute Schluss"
+  },
+  "stop": {
+    "question": "Wo hast du aufgehört?",
+    "placeholder": "Damit morgen dort weitergeht, wo heute aufgehört hat",
+    "save": "Speichern und aufhören",
+    "cancel": "Abbrechen"
+  },
+  "choose": {
+    "title": "Welche?"
+  },
+  "toggle": {
+    "label": "Energie heute",
+    "low": "Wenig",
+    "good": "Gut"
+  },
+  "link": "Eine Sache zeigen"
+}

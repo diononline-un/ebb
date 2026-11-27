@@ -1,0 +1,45 @@
+{
+  "nav": "プロジェクト",
+  "title": "プロジェクト",
+  "loading": "少々お待ちください。",
+  "loadError": "プロジェクトを読み込めませんでした。接続を確認して、もう一度お試しください。",
+  "empty": "まだプロジェクトはありません。ひとつあれば始められます。",
+  "add": "新しいプロジェクト",
+  "open": "{{name}}を開く",
+  "progress": "{{total}}のうち{{done}}件完了",
+  "allDone": "すべて完了",
+  "noTasks": "タスクはまだありません",
+  "warnings": {
+    "deadline_soon": "期限が近づいています",
+    "no_next_step": "次の一歩が決まっていません"
+  },
+  "status": {
+    "active": "進行中",
+    "paused": "休止中",
+    "done": "完了"
+  },
+  "backToProjects": "すべてのプロジェクト",
+  "tasksHeading": "タスク",
+  "noProjectTasks": "このプロジェクトにまだタスクはついていません。",
+  "sheet": {
+    "createTitle": "新しいプロジェクト",
+    "editTitle": "プロジェクトを編集",
+    "nameLabel": "プロジェクト",
+    "goalLabel": "目標",
+    "goalNone": "目標なし",
+    "startLabel": "開始",
+    "deadlineLabel": "期限",
+    "statusLabel": "状態",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "プロジェクトを削除",
+    "deleteQuestion": "このプロジェクトを削除しますか？",
+    "deleteText": "タスクは残り、プロジェクトを指さなくなるだけです。",
+    "deleteConfirm": "削除"
+  },
+  "errors": {
+    "unknown_goal": "その目標はもうありません。",
+    "unknown_project": "そのプロジェクトはもうありません。",
+    "generic": "保存できませんでした。接続を確認して、もう一度お試しください。"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "timer": {
+    "stop": "停止",
+    "close": "关闭",
+    "finished": "该休息一下了"
+  },
+  "start": {
+    "label": "开始",
+    "fixed": "开始 {{minutes}} 分钟",
+    "minutes": "{{minutes}} 分钟",
+    "usual": "平时那样",
+    "custom": "自定义长度…",
+    "customLabel": "分钟",
+    "customConfirm": "开始"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "title": "Plan",
+  "tabsLabel": "Tâches prévues",
+  "tabs": {
+    "inbox": "Boîte de réception",
+    "tomorrow": "Demain",
+    "week": "Semaine",
+    "errands": "Courses",
+    "waiting": "En attente",
+    "done": "Fait",
+    "skipped": "Pas aujourd'hui"
+  },
+  "loading": "Un instant.",
+  "loadError": "La liste ne s'est pas chargée. Vérifie la connexion et réessaie.",
+  "empty": {
+    "inbox": "La boîte de réception est vide. Tout a sa place.",
+    "tomorrow": "Rien de prévu pour demain pour l'instant.",
+    "week": "Rien de prévu au-delà de demain.",
+    "errands": "Aucune course en attente.",
+    "waiting": "Rien n'attend quelqu'un d'autre.",
+    "done": "Rien de terminé ces 30 derniers jours.",
+    "skipped": "Rien n'a été mis de côté ces 30 derniers jours."
+  }
+}

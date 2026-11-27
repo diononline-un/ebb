@@ -1,0 +1,64 @@
+{
+  "progressLabel": "Progreso de la configuración",
+  "loading": "Un momento.",
+  "welcome": {
+    "title": "Vamos a montar tu día.",
+    "text": "Nueve pasos cortos y ninguno es obligatorio. Todo se puede cambiar después.",
+    "timezoneNote": "Tus días empiezan en {{timezone}}.",
+    "start": "Empezar"
+  },
+  "goals": {
+    "question": "¿Para qué haces esto?",
+    "hint": "Una meta basta. Tres son demasiadas.",
+    "suggestionsLabel": "Ejemplos",
+    "ownLabel": "O la tuya",
+    "ownPlaceholder": "Una meta en pocas palabras",
+    "continue": "Seguir",
+    "skip": "Saltar",
+    "limit": "Tres metas bastan para empezar."
+  },
+  "habits": {
+    "question": "¿Qué te gustaría hacer con regularidad?",
+    "hint": "Dos hábitos bastan para el principio; más pueden llegar luego.",
+    "suggestionsLabel": "Sugerencias",
+    "ownLabel": "O el tuyo",
+    "ownPlaceholder": "Un hábito en pocas palabras",
+    "continue": "Seguir",
+    "skip": "Saltar",
+    "limit": "Dos hábitos son suficientes por ahora."
+  },
+  "dump": {
+    "question": "¿Qué no se te puede escapar?",
+    "continue": "Seguir",
+    "skip": "Saltar"
+  },
+  "toTasks": {
+    "question": "¿Cuál de estos es una tarea?",
+    "continue": "Seguir",
+    "skip": "Saltar",
+    "empty": "No hay nada esperando. Está bien."
+  },
+  "rituals": {
+    "question": "¿Cuándo debería empezar el día?",
+    "morningLabel": "Ritual de la mañana",
+    "resetDayLabel": "Revisión semanal el",
+    "resetTimeLabel": "a las",
+    "iosHint": "En el iPhone, pon primero la app en la pantalla de inicio. Solo entonces pueden llegarte los recordatorios.",
+    "reminderHint": "Los recordatorios callan de noche. La revisión semanal mira atrás el {{day}}.",
+    "finish": "Hecho",
+    "skip": "Saltar"
+  },
+  "goalSuggestions": [
+    "Estar más tranquilo en el trabajo",
+    "Tener las tardes para mí",
+    "Terminar lo que empiezo"
+  ],
+  "habitSuggestions": [
+    "Diez minutos de orden",
+    "Una página antes de dormir",
+    "Un paseo después de comer"
+  ],
+  "errors": {
+    "generic": "No se guardó. Revisa la conexión y vuelve a intentarlo."
+  }
+}

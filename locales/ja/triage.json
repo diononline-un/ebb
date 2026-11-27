@@ -1,0 +1,27 @@
+{
+  "question": "これが明日まで待つと、何が困りますか？",
+  "progressLabel": "仕分けの進み具合",
+  "progress": "{{total}}のうち{{done}}",
+  "answers": {
+    "must": "本当に困る、今日の必須です",
+    "later": "大して困らない、日を選ぶ",
+    "errand": "小さな用事です",
+    "today": "今日やりたい"
+  },
+  "blockQuestion": "どのブロック？",
+  "block1": "ブロック1",
+  "block2": "ブロック2",
+  "block3": "ブロック3",
+  "block4": "ブロック4",
+  "laterQuestion": "どの日がいいですか？",
+  "tomorrow": "明日",
+  "dayAfter": "明後日",
+  "nextMonday": "次の月曜",
+  "pickDate": "日付を選ぶ",
+  "laterConfirm": "この日にする",
+  "anchorTitle": "アンカーを選ぶ",
+  "anchorSkip": "スキップ",
+  "close": "仕分けを離れる",
+  "loading": "少々お待ちください。",
+  "loadError": "仕分けを読み込めませんでした。接続を確認して、もう一度お試しください。"
+}

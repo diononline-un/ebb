@@ -1,0 +1,64 @@
+{
+  "progressLabel": "Progression de l'installation",
+  "loading": "Un instant.",
+  "welcome": {
+    "title": "Mettons ta journée en place.",
+    "text": "Neuf étapes courtes, aucune n'est obligatoire. Tout reste modifiable plus tard.",
+    "timezoneNote": "Tes journées commencent en {{timezone}}.",
+    "start": "Commencer"
+  },
+  "goals": {
+    "question": "Tu fais ça pour quoi ?",
+    "hint": "Un objectif suffit. Trois, c'est déjà beaucoup.",
+    "suggestionsLabel": "Exemples",
+    "ownLabel": "Ou le tien",
+    "ownPlaceholder": "Un objectif en quelques mots",
+    "continue": "Continuer",
+    "skip": "Passer",
+    "limit": "Trois objectifs suffisent pour commencer."
+  },
+  "habits": {
+    "question": "Qu'aimerais-tu faire régulièrement ?",
+    "hint": "Deux habitudes suffisent pour commencer, d'autres peuvent venir plus tard.",
+    "suggestionsLabel": "Suggestions",
+    "ownLabel": "Ou la tienne",
+    "ownPlaceholder": "Une habitude en quelques mots",
+    "continue": "Continuer",
+    "skip": "Passer",
+    "limit": "Deux habitudes suffisent pour l'instant."
+  },
+  "dump": {
+    "question": "Qu'est-ce qui ne doit pas t'échapper ?",
+    "continue": "Continuer",
+    "skip": "Passer"
+  },
+  "toTasks": {
+    "question": "Laquelle de ces choses est une tâche ?",
+    "continue": "Continuer",
+    "skip": "Passer",
+    "empty": "Rien en attente. C'est très bien."
+  },
+  "rituals": {
+    "question": "Quand la journée doit-elle commencer ?",
+    "morningLabel": "Rituel du matin",
+    "resetDayLabel": "Bilan de la semaine le",
+    "resetTimeLabel": "à",
+    "iosHint": "Sur l'iPhone, mets d'abord l'app sur l'écran d'accueil. C'est seulement là que les rappels peuvent t'atteindre.",
+    "reminderHint": "Les rappels restent silencieux la nuit. Le bilan de la semaine revient sur le {{day}}.",
+    "finish": "Terminé",
+    "skip": "Passer"
+  },
+  "goalSuggestions": [
+    "Être plus calme au travail",
+    "Avoir mes soirées",
+    "Finir ce que je commence"
+  ],
+  "habitSuggestions": [
+    "Dix minutes de rangement",
+    "Une page avant de dormir",
+    "Une marche après le déjeuner"
+  ],
+  "errors": {
+    "generic": "Ça n'a pas été enregistré. Vérifie la connexion et réessaie."
+  }
+}

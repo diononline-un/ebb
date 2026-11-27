@@ -1,0 +1,24 @@
+{
+  "title": "Plan",
+  "tabsLabel": "Tareas planificadas",
+  "tabs": {
+    "inbox": "Bandeja",
+    "tomorrow": "Mañana",
+    "week": "Semana",
+    "errands": "Recados",
+    "waiting": "En espera",
+    "done": "Hecho",
+    "skipped": "Hoy no"
+  },
+  "loading": "Un momento.",
+  "loadError": "La lista no se cargó. Revisa la conexión y vuelve a intentarlo.",
+  "empty": {
+    "inbox": "La bandeja está vacía. Cada cosa tiene su sitio.",
+    "tomorrow": "Todavía no hay nada planeado para mañana.",
+    "week": "No hay nada planeado más allá de mañana.",
+    "errands": "No hay recados esperando.",
+    "waiting": "Nada espera por otra persona.",
+    "done": "No se terminó nada en los últimos 30 días.",
+    "skipped": "No se dejó nada a un lado en los últimos 30 días."
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "nav": "Weekly Reset",
+  "title": "Weekly Reset",
+  "loading": "Einen Moment.",
+  "loadError": "Die Woche ist nicht geladen. Prüf die Verbindung und versuch es noch einmal.",
+  "saveError": "Das wurde nicht gespeichert. Prüf die Verbindung und versuch es noch einmal.",
+  "progressLabel": "Fortschritt des Weekly Reset",
+  "todayReady": "Der Weekly Reset ist bereit",
+  "review": {
+    "question": "Wie ist die Woche gelaufen?",
+    "wentWell": "Was lief gut?",
+    "wentBadly": "Was nicht?",
+    "change": "Was ändere ich?",
+    "continue": "Weiter"
+  },
+  "numbers": {
+    "question": "Die Woche in Zahlen",
+    "anchorLabel": "Anker erledigt an",
+    "anchorValue": "{{done}} von 7 Tagen",
+    "tasksLabel": "Aufgaben erledigt",
+    "tasksValue_one": "{{count}} Aufgabe",
+    "tasksValue_other": "{{count}} Aufgaben",
+    "focusLabel": "Fokus",
+    "focusValue_one": "{{count}} Minute",
+    "focusValue_other": "{{count}} Minuten",
+    "rolledLabel": "Von gestern mitgekommen",
+    "rolledValue_one": "{{count}} Aufgabe",
+    "rolledValue_other": "{{count}} Aufgaben",
+    "habitsHeading": "Habits",
+    "habitValue": "{{done}} von {{target}} diese Woche",
+    "projectsHeading": "Projekte",
+    "projectValue_one": "{{count}} Aufgabe erledigt",
+    "projectValue_other": "{{count}} Aufgaben erledigt",
+    "continue": "Weiter"
+  },
+  "stuck": {
+    "question": "Was passiert mit diesen?",
+    "pushed": "{{count}}× verschoben",
+    "older": "älter als 14 Tage",
+    "empty": "Nichts wartet auf eine Entscheidung.",
+    "date": "Gib ihm ein Datum",
+    "dateLabel": "Neuer Tag für diese Aufgabe",
+    "split": "In Schritte aufteilen",
+    "skip": "Heute nicht",
+    "delete": "Löschen",
+    "deleteQuestion": "Diese Aufgabe löschen?",
+    "deleteText": "Sie ist endgültig weg. Alles andere bleibt.",
+    "deleteConfirm": "Löschen",
+    "waiting": "Eine Aufgabe wartet noch auf eine Entscheidung.",
+    "continue": "Weiter"
+  },
+  "outlook": {
+    "question": "Was liegt vor dir",
+    "deadline": "Deadline",
+    "empty": "Für die nächsten sieben Tage ist nichts geplant.",
+    "finish": "Woche abschließen"
+  },
+  "done": {
+    "title": "Diese Woche ist abgeschlossen",
+    "empty": "Diese Woche wurden keine Antworten geschrieben.",
+    "history": "Frühere Wochen"
+  },
+  "history": {
+    "title": "Frühere Wochen",
+    "loading": "Einen Moment.",
+    "loadError": "Die Wochen sind nicht geladen. Prüf die Verbindung und versuch es noch einmal.",
+    "empty": "Noch keine Woche abgeschlossen.",
+    "done": "Erledigt",
+    "open": "Nicht abgeschlossen"
+  }
+}

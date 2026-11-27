@@ -1,0 +1,65 @@
+{
+  "nav": "Espaces",
+  "title": "Espaces",
+  "loading": "Un instant.",
+  "loadError": "Les espaces ne se sont pas chargés. Vérifie la connexion et réessaie.",
+  "empty": "Pas encore d'espace partagé. Ton espace personnel suffit pour la journée.",
+  "add": "Nouvel espace",
+  "open": "Ouvrir {{name}}",
+  "kind": {
+    "personal": "Espace personnel",
+    "shared": "Espace partagé"
+  },
+  "memberCount_one": "{{count}} personne",
+  "memberCount_other": "{{count}} personnes",
+  "backToSpaces": "Tous les espaces",
+  "peopleHeading": "Personnes",
+  "peopleEmpty": "Toi seulement pour l'instant.",
+  "role": {
+    "owner": "Propriétaire",
+    "member": "Membre"
+  },
+  "remove": "Retirer",
+  "removeLabel": "Retirer {{name}}",
+  "renameLabel": "Nom de l'espace",
+  "renameAction": "Renommer",
+  "invite": "Inviter quelqu'un",
+  "inviteHint": "Ce lien marche une fois et expire dans sept jours. Il n'est affiché que maintenant.",
+  "inviteLinkLabel": "Lien d'invitation",
+  "copy": "Copier le lien",
+  "copied": "Lien copié",
+  "share": "Partager",
+  "inviteDone": "Terminé",
+  "leave": "Quitter l'espace",
+  "delete": "Supprimer l'espace",
+  "deleteQuestion": "Supprimer cet espace ?",
+  "deleteText": "Tout ce qu'il contient part aussi. Tape le nom de l'espace pour confirmer.",
+  "deleteNameLabel": "Tape le nom de l'espace",
+  "deleteConfirm": "Supprimer",
+  "cancel": "Le garder",
+  "sheet": {
+    "createTitle": "Nouvel espace",
+    "nameLabel": "Espace",
+    "hint": "Tu pourras inviter des gens dès qu'il existera.",
+    "save": "Enregistrer",
+    "cancel": "Annuler"
+  },
+  "join": {
+    "title": "Rejoindre l'espace",
+    "action": "Rejoindre l'espace",
+    "hint": "Tu verras les tâches de cet espace et prendras celles que tu veux.",
+    "joined": "Tu es dans {{name}}.",
+    "open": "Ouvrir {{name}}",
+    "openFallback": "Ouvrir l'espace"
+  },
+  "errors": {
+    "name_mismatch": "Le nom ne correspondait pas. L'espace reste comme il est.",
+    "owner_cannot_leave": "Le propriétaire ne peut pas quitter l'espace. Supprime-le plutôt.",
+    "personal_space": "Ton espace personnel reste.",
+    "owner_only": "Seul le propriétaire peut faire ça.",
+    "already_assigned": "Quelqu'un d'autre a déjà pris cette tâche.",
+    "not_your_plan": "Seule la personne responsable planifie cette tâche.",
+    "invite_invalid": "Cette invitation ne vaut plus. Demande-en une nouvelle.",
+    "generic": "Ça n'a pas été enregistré. Vérifie la connexion et réessaie."
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "title": "Heute",
+  "must": "Muss",
+  "markDone": "{{title}} als erledigt markieren",
+  "markOpen": "{{title}} wieder als offen markieren",
+  "deadlineSoon": "Fällig am {{date}}",
+  "pushed": "{{count}}× verschoben",
+  "sheet": {
+    "title": "Aufgabe",
+    "titleLabel": "Titel",
+    "notesLabel": "Notizen",
+    "doDateLabel": "Do Date",
+    "deadlineLabel": "Deadline",
+    "mustLabel": "Muss heute",
+    "anchorLabel": "Anker",
+    "statusLabel": "Status",
+    "delete": "Aufgabe löschen",
+    "deleteQuestion": "Diese Aufgabe löschen?",
+    "deleteText": "Sie ist dann endgültig weg. Rückgängig geht nicht.",
+    "deleteConfirm": "Löschen",
+    "cancel": "Behalten",
+    "replaceQuestion": "Den jetzigen Anker ersetzen?",
+    "replaceAction": "Ersetzen",
+    "keepAnchor": "Den jetzigen behalten"
+  },
+  "status": {
+    "todo": "Zu tun",
+    "doing": "In Arbeit",
+    "waiting": "Wartet",
+    "done": "Erledigt",
+    "skipped": "Heute nicht"
+  },
+  "warnings": {
+    "must_many": "Das sind viele Muss-Aufgaben für einen Tag. Vielleicht kann eine warten.",
+    "deadline_before_do_date": "Die Deadline liegt vor dem Tag, an dem du damit anfangen willst."
+  },
+  "errors": {
+    "must_limit": "Fünf Muss-Aufgaben sind genug für einen Tag. Mach eine davon zuerst wieder zu einer normalen Aufgabe.",
+    "generic": "Das hat nicht funktioniert. Versuch es gleich noch einmal."
+  }
+}

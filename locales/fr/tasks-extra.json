@@ -1,0 +1,49 @@
+{
+  "subtasks": {
+    "heading": "Sous-tâches",
+    "progress": "{{done}} sur {{total}} faites",
+    "empty": "Pas encore de sous-tâches.",
+    "addLabel": "Ajouter une sous-tâche",
+    "addAction": "Ajouter",
+    "markDone": "Marquer {{title}} comme fait",
+    "markOpen": "Retirer la coche de {{title}}"
+  },
+  "repeat": {
+    "heading": "Répéter",
+    "freqLabel": "Répéter",
+    "freq": {
+      "daily": "Tous les jours",
+      "weekdays": "Chaque jour ouvré",
+      "weekly": "Certains jours de la semaine",
+      "every_n_days": "Tous les quelques jours",
+      "monthly": "Chaque mois"
+    },
+    "weekdaysLabel": "Quels jours",
+    "intervalLabel": "Tous les combien de jours",
+    "monthDayLabel": "Quel jour du mois",
+    "startHint": "Commence aujourd'hui.",
+    "add": "Répéter à partir d'aujourd'hui",
+    "empty": "Cette tâche ne se répète pas encore.",
+    "rule": {
+      "daily": "Tous les jours",
+      "weekdays": "Chaque jour ouvré",
+      "weekly": "Chaque semaine le {{days}}",
+      "every_n_days": "Tous les {{interval}} jours",
+      "monthly": "Chaque mois le {{day}}"
+    }
+  },
+  "space": {
+    "heading": "Espace et responsable",
+    "label": "Espace",
+    "assigneeLabel": "Responsable",
+    "nobody": "Personne pour l'instant",
+    "take": "Je la prends"
+  },
+  "errors": {
+    "subtask_too_deep": "Les sous-tâches vont sur un seul niveau.",
+    "subtask_other_space": "La tâche au-dessus est dans un autre espace.",
+    "unknown_parent": "La tâche au-dessus n'existe plus.",
+    "unknown_project": "Ce projet n'existe plus.",
+    "generic": "Ça n'a pas été enregistré. Vérifie la connexion et réessaie."
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "nav": "スペース",
+  "title": "スペース",
+  "loading": "少々お待ちください。",
+  "loadError": "スペースを読み込めませんでした。接続を確認して、もう一度お試しください。",
+  "empty": "まだ共有スペースはありません。個人スペースで一日は足ります。",
+  "add": "新しいスペース",
+  "open": "{{name}}を開く",
+  "kind": {
+    "personal": "個人スペース",
+    "shared": "共有スペース"
+  },
+  "memberCount_other": "{{count}}人",
+  "backToSpaces": "すべてのスペース",
+  "peopleHeading": "メンバー",
+  "peopleEmpty": "いまはあなただけです。",
+  "role": {
+    "owner": "オーナー",
+    "member": "メンバー"
+  },
+  "remove": "外す",
+  "removeLabel": "{{name}}を外す",
+  "renameLabel": "スペース名",
+  "renameAction": "名前を変える",
+  "invite": "誰かを招待",
+  "inviteHint": "このリンクは一度だけ使えて、七日で切れます。いまだけ表示されます。",
+  "inviteLinkLabel": "招待リンク",
+  "copy": "リンクをコピー",
+  "copied": "リンクをコピーしました",
+  "share": "共有",
+  "inviteDone": "完了",
+  "leave": "スペースを離れる",
+  "delete": "スペースを削除",
+  "deleteQuestion": "このスペースを削除しますか？",
+  "deleteText": "中のものもすべて消えます。確認のためスペース名を入力してください。",
+  "deleteNameLabel": "スペース名を入力",
+  "deleteConfirm": "削除",
+  "cancel": "残す",
+  "sheet": {
+    "createTitle": "新しいスペース",
+    "nameLabel": "スペース",
+    "hint": "できたら誰でも招待できます。",
+    "save": "保存",
+    "cancel": "キャンセル"
+  },
+  "join": {
+    "title": "スペースに参加",
+    "action": "スペースに参加する",
+    "hint": "このスペースのタスクが見えて、やりたいものを取れます。",
+    "joined": "{{name}}に入りました。",
+    "open": "{{name}}を開く",
+    "openFallback": "スペースを開く"
+  },
+  "errors": {
+    "name_mismatch": "名前が一致しませんでした。スペースはそのままです。",
+    "owner_cannot_leave": "オーナーはスペースを離れられません。代わりに削除してください。",
+    "personal_space": "個人スペースは残ります。",
+    "owner_only": "それはオーナーだけができます。",
+    "already_assigned": "ほかの人がこのタスクをすでに取っています。",
+    "not_your_plan": "このタスクを予定できるのは担当の人だけです。",
+    "invite_invalid": "この招待はもう使えません。新しいものをご依頼ください。",
+    "generic": "保存できませんでした。接続を確認して、もう一度お試しください。"
+  }
+}

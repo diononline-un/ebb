@@ -1,0 +1,64 @@
+{
+  "progressLabel": "準備の進み具合",
+  "loading": "少々お待ちください。",
+  "welcome": {
+    "title": "一日の準備をしましょう。",
+    "text": "短い九つのステップで、どれも必須ではありません。あとからいくらでも変えられます。",
+    "timezoneNote": "一日は{{timezone}}で始まります。",
+    "start": "はじめる"
+  },
+  "goals": {
+    "question": "何のためにやりますか？",
+    "hint": "目標はひとつで十分です。三つもあれば充分です。",
+    "suggestionsLabel": "例",
+    "ownLabel": "自分で書く",
+    "ownPlaceholder": "目標を短い言葉で",
+    "continue": "次へ",
+    "skip": "スキップ",
+    "limit": "三つの目標で始められます。"
+  },
+  "habits": {
+    "question": "定期的に続けたいことは？",
+    "hint": "習慣は二つで始められます。あとから増やせます。",
+    "suggestionsLabel": "候補",
+    "ownLabel": "自分で書く",
+    "ownPlaceholder": "習慣を短い言葉で",
+    "continue": "次へ",
+    "skip": "スキップ",
+    "limit": "二つの習慣で十分です。"
+  },
+  "dump": {
+    "question": "忘れてはいけないことは？",
+    "continue": "次へ",
+    "skip": "スキップ"
+  },
+  "toTasks": {
+    "question": "このうちタスクなのはどれですか？",
+    "continue": "次へ",
+    "skip": "スキップ",
+    "empty": "待っているものはありません。それで大丈夫です。"
+  },
+  "rituals": {
+    "question": "一日はいつ始めますか？",
+    "morningLabel": "朝の儀式",
+    "resetDayLabel": "ウィークリーリセットの曜日",
+    "resetTimeLabel": "時刻",
+    "iosHint": "iPhone では、まずアプリをホーム画面に置いてください。それからでないとリマインダーは届きません。",
+    "reminderHint": "リマインダーは夜は静かにしています。ウィークリーリセットは{{day}}を振り返ります。",
+    "finish": "完了",
+    "skip": "スキップ"
+  },
+  "goalSuggestions": [
+    "仕事で落ち着いていたい",
+    "夜は自分のために",
+    "始めたことを終える"
+  ],
+  "habitSuggestions": [
+    "10分の片づけ",
+    "寝る前の1ページ",
+    "昼食後の散歩"
+  ],
+  "errors": {
+    "generic": "保存できませんでした。接続を確認して、もう一度お試しください。"
+  }
+}

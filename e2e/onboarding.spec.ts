@@ -1,4 +1,5 @@
-import { expect, test, type Page } from '@playwright/test'
+import type { Page } from '@playwright/test'
+import { expect, test } from './fixtures.ts'
 import { APP_NAME } from '../src/shared/brand.ts'
 
 const PASSWORD = 'correct horse battery'

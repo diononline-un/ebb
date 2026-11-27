@@ -49,10 +49,7 @@ export const auth = betterAuth({
     max: 100,
     customRules: {
       '/sign-in/email': { window: 60, max: 10 },
-      // The dev server runs without a proxy, so Better Auth finds no client IP and puts every request
-      // in one bucket; the e2e suite signs up once per spec and would trip the production limit.
-      // Production and selfhost keep five.
-      '/sign-up/email': { window: 60, max: env.APP_MODE === 'development' ? 50 : 5 },
+      '/sign-up/email': { window: 60, max: 5 },
       '/request-password-reset': { window: 60, max: 3 },
     },
   },

@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { CalendarCheck, ChevronRight, FolderKanban, Repeat, ShieldCheck, Target, Users } from 'lucide-react'
+import { Bell, CalendarCheck, ChevronRight, FolderKanban, Repeat, ShieldCheck, Target, Users } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { EmptyState } from '../ui/EmptyState.tsx'
 
@@ -17,6 +17,8 @@ function MorePage() {
   const { t: tSpaces } = useTranslation('spaces')
   // The legal pages: their link labels belong to the legal package.
   const { t: tLegal } = useTranslation('legal')
+  // The reminders: their label belongs to the settings package.
+  const { t: tSettings } = useTranslation('settings')
 
   return (
     <section className="flex flex-col gap-8 lg:gap-12">
@@ -64,6 +66,16 @@ function MorePage() {
           >
             <ShieldCheck size={20} aria-hidden="true" />
             <span className="flex-1">{t('more.security')}</span>
+            <ChevronRight size={20} aria-hidden="true" className="text-ink-3" />
+          </Link>
+        </li>
+        <li className="border-b border-line">
+          <Link
+            to="/settings/notifications"
+            className="flex min-h-13 items-center gap-3 text-body motion-quick hover:text-ink-2"
+          >
+            <Bell size={20} aria-hidden="true" />
+            <span className="flex-1">{tSettings('nav')}</span>
             <ChevronRight size={20} aria-hidden="true" className="text-ink-3" />
           </Link>
         </li>

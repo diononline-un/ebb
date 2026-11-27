@@ -1,0 +1,46 @@
+{
+  "title": "Reminders",
+  "nav": "Reminders",
+  "loading": "Loading your settings",
+  "loadError": "Your settings could not load. Try again in a moment.",
+  "push": {
+    "unsupported": "This browser cannot show reminders.",
+    "iosHint": "On iPhone, reminders only arrive once ebbe sits on your home screen. The install hint on Today has the steps.",
+    "turnOn": "Turn on reminders on this device",
+    "turnOff": "Turn off",
+    "on": "On for this device",
+    "missing": "Reminders are not set up on this server."
+  },
+  "types": {
+    "title": "Reminder types",
+    "morning": "Morning ritual",
+    "morningHint": "One reminder to start your morning ritual.",
+    "morningTime": "Morning time",
+    "weeklyReset": "Weekly reset",
+    "weeklyResetHint": "One reminder when the week gets its reset.",
+    "weeklyResetDay": "Weekly reset day",
+    "weeklyResetTime": "Weekly reset time",
+    "errands": "Errands",
+    "errandsHint": "One reminder on your errand day.",
+    "errandsDay": "Errand day",
+    "habits": "Habits",
+    "habitsHint": "The time is set at each habit itself.",
+    "habitsLink": "Open habits",
+    "timer": "Focus timer",
+    "timerHint": "One reminder when a focus session ends.",
+    "trial": "Trial ending",
+    "trialHint": "One quiet line before your trial ends."
+  },
+  "weekdays": {
+    "none": "None"
+  },
+  "quiet": {
+    "title": "Quiet hours",
+    "start": "From",
+    "end": "To",
+    "hint": "Only the focus timer sends during these hours."
+  },
+  "errors": {
+    "generic": "That did not save. Check your connection and try again."
+  }
+}

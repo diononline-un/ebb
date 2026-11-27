@@ -12,6 +12,7 @@ import { requestLog } from './middleware/log.ts'
 import { requireUser, sessionMiddleware, userOf } from './middleware/session.ts'
 import { accountRoutes } from './routes/account.ts'
 import { billingRoutes } from './routes/billing.ts'
+import { billingConfigRoutes } from './routes/billing-config.ts'
 import { dayRoutes } from './routes/day.ts'
 import { devRoutes } from './routes/dev.ts'
 import { dumpRoutes } from './routes/dump.ts'
@@ -75,6 +76,7 @@ export function createApp(): Hono<AppEnv> {
   app.route('/api/account', accountRoutes)
   app.route('/api/billing', billingRoutes)
   app.route('/api/billing/seats', seatRoutes)
+  app.route('/api/billing-config', billingConfigRoutes)
   app.route('/api/dump', dumpRoutes)
   app.route('/api/events', eventRoutes)
   app.route('/api/export', exportRoutes)

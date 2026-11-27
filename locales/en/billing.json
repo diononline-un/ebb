@@ -1,4 +1,36 @@
 {
+  "nav": "Subscription",
+  "title": "Subscription",
+  "backToMore": "Back to More",
+  "status": {
+    "trial": "Your trial runs until {{date}}. Nothing to pay before then.",
+    "own": "Your plan is active.",
+    "canceled": "Your plan is canceled. It stays open until the end of the paid period.",
+    "seat": "A plan in a shared space covers you. There is nothing to pay here."
+  },
+  "founder": "This is the founder plan. The checkout shows the price.",
+  "paymentsNotSetUp": "Payments are not set up yet.",
+  "checkoutError": "The checkout did not open. Try again in a moment.",
+  "manage": "Manage subscription",
+  "portalError": "The customer portal did not open. Try again in a moment.",
+  "seats": {
+    "heading": "Seats",
+    "limit": "You can cover up to {{max}} people besides yourself.",
+    "candidatesHeading": "People you share a space with",
+    "pending": "Pending",
+    "cover": "Cover",
+    "release": "Release",
+    "empty": "Nobody is left to cover right now.",
+    "errors": {
+      "not_your_subscription": "Seats belong to your own plan, and this one is not yours.",
+      "already_covered": "That person already has a seat.",
+      "not_a_co_member": "That person is not in a shared space with you.",
+      "seat_limit": "That would go past your seat limit.",
+      "billing_not_configured": "Payments are not set up yet, so seats cannot change.",
+      "billing_failed": "Paddle did not answer. Nothing changed, try again in a moment.",
+      "generic": "That did not work. Try again in a moment."
+    }
+  },
   "readOnly": {
     "line": "Your trial has ended. Everything is still here, and you can export it any time.",
     "action": "Subscribe"

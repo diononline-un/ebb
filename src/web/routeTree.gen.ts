@@ -34,6 +34,7 @@ import { Route as JoinTokenRouteImport } from './routes/join.$token'
 import { Route as LegalDocRouteImport } from './routes/legal.$doc'
 import { Route as ProjectsProjectIdRouteImport } from './routes/projects_.$projectId'
 import { Route as ResetHistoryRouteImport } from './routes/reset_.history'
+import { Route as SettingsBillingRouteImport } from './routes/settings.billing'
 import { Route as SettingsNotificationsRouteImport } from './routes/settings.notifications'
 import { Route as SettingsSecurityRouteImport } from './routes/settings.security'
 import { Route as SpacesSpaceIdRouteImport } from './routes/spaces_.$spaceId'
@@ -163,6 +164,11 @@ const ResetHistoryRoute = ResetHistoryRouteImport.update({
   path: '/reset/history',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsBillingRoute = SettingsBillingRouteImport.update({
+  id: '/settings/billing',
+  path: '/settings/billing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsNotificationsRoute = SettingsNotificationsRouteImport.update({
   id: '/settings/notifications',
   path: '/settings/notifications',
@@ -205,6 +211,7 @@ export interface FileRoutesByFullPath {
   '/legal/$doc': typeof LegalDocRoute
   '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/reset/history': typeof ResetHistoryRoute
+  '/settings/billing': typeof SettingsBillingRoute
   '/settings/notifications': typeof SettingsNotificationsRoute
   '/settings/security': typeof SettingsSecurityRoute
   '/spaces/$spaceId': typeof SpacesSpaceIdRoute
@@ -235,6 +242,7 @@ export interface FileRoutesByTo {
   '/legal/$doc': typeof LegalDocRoute
   '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/reset/history': typeof ResetHistoryRoute
+  '/settings/billing': typeof SettingsBillingRoute
   '/settings/notifications': typeof SettingsNotificationsRoute
   '/settings/security': typeof SettingsSecurityRoute
   '/spaces/$spaceId': typeof SpacesSpaceIdRoute
@@ -266,6 +274,7 @@ export interface FileRoutesById {
   '/legal/$doc': typeof LegalDocRoute
   '/projects_/$projectId': typeof ProjectsProjectIdRoute
   '/reset_/history': typeof ResetHistoryRoute
+  '/settings/billing': typeof SettingsBillingRoute
   '/settings/notifications': typeof SettingsNotificationsRoute
   '/settings/security': typeof SettingsSecurityRoute
   '/spaces_/$spaceId': typeof SpacesSpaceIdRoute
@@ -298,6 +307,7 @@ export interface FileRouteTypes {
     | '/legal/$doc'
     | '/projects/$projectId'
     | '/reset/history'
+    | '/settings/billing'
     | '/settings/notifications'
     | '/settings/security'
     | '/spaces/$spaceId'
@@ -328,6 +338,7 @@ export interface FileRouteTypes {
     | '/legal/$doc'
     | '/projects/$projectId'
     | '/reset/history'
+    | '/settings/billing'
     | '/settings/notifications'
     | '/settings/security'
     | '/spaces/$spaceId'
@@ -358,6 +369,7 @@ export interface FileRouteTypes {
     | '/legal/$doc'
     | '/projects_/$projectId'
     | '/reset_/history'
+    | '/settings/billing'
     | '/settings/notifications'
     | '/settings/security'
     | '/spaces_/$spaceId'
@@ -389,6 +401,7 @@ export interface RootRouteChildren {
   LegalDocRoute: typeof LegalDocRoute
   ProjectsProjectIdRoute: typeof ProjectsProjectIdRoute
   ResetHistoryRoute: typeof ResetHistoryRoute
+  SettingsBillingRoute: typeof SettingsBillingRoute
   SettingsNotificationsRoute: typeof SettingsNotificationsRoute
   SettingsSecurityRoute: typeof SettingsSecurityRoute
   SpacesSpaceIdRoute: typeof SpacesSpaceIdRoute
@@ -571,6 +584,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetHistoryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings/billing': {
+      id: '/settings/billing'
+      path: '/settings/billing'
+      fullPath: '/settings/billing'
+      preLoaderRoute: typeof SettingsBillingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings/notifications': {
       id: '/settings/notifications'
       path: '/settings/notifications'
@@ -621,6 +641,7 @@ const rootRouteChildren: RootRouteChildren = {
   LegalDocRoute: LegalDocRoute,
   ProjectsProjectIdRoute: ProjectsProjectIdRoute,
   ResetHistoryRoute: ResetHistoryRoute,
+  SettingsBillingRoute: SettingsBillingRoute,
   SettingsNotificationsRoute: SettingsNotificationsRoute,
   SettingsSecurityRoute: SettingsSecurityRoute,
   SpacesSpaceIdRoute: SpacesSpaceIdRoute,

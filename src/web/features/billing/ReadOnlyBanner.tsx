@@ -15,7 +15,7 @@ export function ReadOnlyBanner() {
   return (
     <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-control border border-line px-4 py-3">
       <p className="max-w-[65ch] text-small text-ink-2">{t('readOnly.line')}</p>
-      <Link to="/more" className="text-small text-ink-2 underline hover:text-ink">
+      <Link to="/settings/billing" className="text-small text-ink-2 underline hover:text-ink">
         {t('readOnly.action')}
       </Link>
     </div>

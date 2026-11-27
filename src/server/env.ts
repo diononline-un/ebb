@@ -33,6 +33,9 @@ const schema = z.object({
   // Billing (E8): without a webhook secret the route answers 503, so development needs no Paddle.
   PADDLE_WEBHOOK_SECRET: z.string().optional(),
   PADDLE_API_KEY: z.string().optional(),
+  // Paddle.js token for the checkout overlay (E8-P5). Public by design, yet it still comes from the
+  // environment; its `test_` prefix is what tells sandbox from production.
+  PADDLE_CLIENT_TOKEN: z.string().optional(),
   PADDLE_PRICE_FOUNDER: z.string().optional(),
   PADDLE_PRICE_STANDARD: z.string().optional(),
   PADDLE_PRICE_SEAT: z.string().optional(),

@@ -1,6 +1,17 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { Bell, CalendarCheck, ChevronRight, FolderKanban, Repeat, ShieldCheck, Target, Users } from 'lucide-react'
+import {
+  Bell,
+  CalendarCheck,
+  ChevronRight,
+  CreditCard,
+  FolderKanban,
+  Repeat,
+  ShieldCheck,
+  Target,
+  Users,
+} from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { useMe } from '../features/onboarding/api.ts'
 import { EmptyState } from '../ui/EmptyState.tsx'
 
 export const Route = createFileRoute('/more')({
@@ -19,6 +30,10 @@ function MorePage() {
   const { t: tLegal } = useTranslation('legal')
   // The reminders: their label belongs to the settings package.
   const { t: tSettings } = useTranslation('settings')
+  // The subscription: its label belongs to the billing package.
+  const { t: tBilling } = useTranslation('billing')
+  // Self-host has no billing at all (E8-P7), so the entry disappears with it.
+  const selfhost = useMe().data?.access.selfhost === true
 
   return (
     <section className="flex flex-col gap-8 lg:gap-12">
@@ -79,6 +94,18 @@ function MorePage() {
             <ChevronRight size={20} aria-hidden="true" className="text-ink-3" />
           </Link>
         </li>
+        {selfhost ? null : (
+          <li className="border-b border-line">
+            <Link
+              to="/settings/billing"
+              className="flex min-h-13 items-center gap-3 text-body motion-quick hover:text-ink-2"
+            >
+              <CreditCard size={20} aria-hidden="true" />
+              <span className="flex-1">{tBilling('nav')}</span>
+              <ChevronRight size={20} aria-hidden="true" className="text-ink-3" />
+            </Link>
+          </li>
+        )}
       </ul>
       <EmptyState title={t('more.empty')} />
       <nav aria-label={tLegal('links.label')} className="flex flex-wrap gap-4 text-small text-ink-2">

@@ -11,6 +11,11 @@ export type PaddleSubscriptionPatch = {
 
 export type PaddleClient = {
   updateSubscription(id: string, body: PaddleSubscriptionPatch): Promise<void>
+  /**
+   * A link into the Paddle customer portal (E8-P5). Optional so a fake that only changes seats stays
+   * usable; the route answers 503 when the client has no portal.
+   */
+  createPortalSession?(customerId: string): Promise<string>
 }
 
 /** Paddle answered with a status other than 2xx. The body stays out of the log. */
@@ -39,16 +44,30 @@ export function paddleClient(): PaddleClient | null {
   if (!key) return null
   const base = key.startsWith('pdl_sdbx_') ? 'https://sandbox-api.paddle.com' : 'https://api.paddle.com'
 
+  const call = (method: 'POST' | 'PATCH', path: string, body: unknown) =>
+    fetch(`${base}${path}`, {
+      method,
+      headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json' },
+      body: JSON.stringify(body),
+      // A billing call that never answers would hold the request; ten seconds is plenty for Paddle.
+      signal: AbortSignal.timeout(10_000),
+    })
+
   return {
     async updateSubscription(id, body) {
-      const response = await fetch(`${base}/subscriptions/${encodeURIComponent(id)}`, {
-        method: 'PATCH',
-        headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json' },
-        body: JSON.stringify(body),
-        // A billing call that never answers would hold the request; ten seconds is plenty for Paddle.
-        signal: AbortSignal.timeout(10_000),
-      })
+      const response = await call('PATCH', `/subscriptions/${encodeURIComponent(id)}`, body)
       if (!response.ok) throw new PaddleError(response.status)
+    },
+
+    async createPortalSession(customerId) {
+      // An empty body asks for the portal's default pages; Paddle answers with one link per page.
+      const response = await call('POST', `/customers/${encodeURIComponent(customerId)}/portal-sessions`, {})
+      if (!response.ok) throw new PaddleError(response.status)
+      const answer = (await response.json()) as { data?: { urls?: { general?: { overview?: unknown } } } }
+      const url = answer.data?.urls?.general?.overview
+      // 2xx without a link is an answer we cannot use; 502 says "Paddle broke the contract".
+      if (typeof url !== 'string' || url.length === 0) throw new PaddleError(502)
+      return url
     },
   }
 }

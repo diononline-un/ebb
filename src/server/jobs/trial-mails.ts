@@ -142,7 +142,9 @@ export async function runTrialMails(now: Date = new Date()): Promise<TrialMailRe
       }
     } catch (error) {
       // No mail address in the log; the user id is enough to find the account.
-      console.error(`trial mail failed for user ${account.userId}`, error)
+      // Code and name only: SMTP error objects and messages can carry the recipient address.
+      const code = error instanceof Error ? ((error as { code?: string }).code ?? error.name) : 'unknown'
+      console.error(`trial mail failed for user ${account.userId}: ${code}`)
     }
   }
 

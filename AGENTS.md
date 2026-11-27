@@ -26,7 +26,7 @@ python3 scripts/check-design.py   # Design-Drift gegen DESIGN.md
 
 ## Regeln
 
-- **Mandantentrennung ist heilig.** Jede Abfrage im Request-Pfad läuft in `withUser(userId, tx => …)`. `withSystem` nur in `src/server/jobs/`, `src/server/billing/webhook.ts`, Auth-Hooks und `cli.ts`, jeweils mit Kommentar, warum.
+- **Mandantentrennung ist heilig.** Jede Abfrage im Request-Pfad läuft in `withUser(userId, tx => …)`. `withSystem` nur in `src/server/jobs/`, `src/server/billing/webhook.ts`, `src/server/domain/account/delete.ts` (Auth-Zeile löschen, User-ID nur aus der Sitzung), Auth-Hooks und `cli.ts`, jeweils mit Kommentar, warum.
 - **Neue Tabellen** bekommen in derselben Migration `ENABLE` + `FORCE ROW LEVEL SECURITY` und Policies. Auth-Tabellen (Better Auth) gehören nur der Rolle `ebb_auth`.
 - **Jeder neue Endpunkt** kommt in `tests/isolation.routes.ts`. Der Isolationstest prüft dann automatisch, dass fremde IDs `404` liefern.
 - **Migrationen** nur vorwärts: `migrations/NNNN_name.sql` mit der nächsten freien Nummer **aus dem Block des eigenen Epics** (`docs/architektur.md` → Migrationsblöcke).

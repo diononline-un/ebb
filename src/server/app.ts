@@ -25,6 +25,7 @@ import { projectRoutes } from './routes/projects.ts'
 import { pushRoutes } from './routes/push.ts'
 import { recurrenceRoutes } from './routes/recurrences.ts'
 import { resetRoutes } from './routes/reset.ts'
+import { seatRoutes } from './routes/seats.ts'
 import { spaceRoutes } from './routes/spaces.ts'
 import { settingsRoutes } from './routes/settings.ts'
 import { taskRoutes } from './routes/tasks.ts'
@@ -73,6 +74,7 @@ export function createApp(): Hono<AppEnv> {
   app.route('/api/settings', settingsRoutes)
   app.route('/api/account', accountRoutes)
   app.route('/api/billing', billingRoutes)
+  app.route('/api/billing/seats', seatRoutes)
   app.route('/api/dump', dumpRoutes)
   app.route('/api/events', eventRoutes)
   app.route('/api/export', exportRoutes)

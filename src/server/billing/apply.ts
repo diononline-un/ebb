@@ -25,6 +25,15 @@ export function payerOf(subscription: PaddleSubscription): string | null {
   return text((custom as Record<string, unknown>)['userId'])
 }
 
+/** The people Paddle says the subscription covers, besides the payer; null when it reports none. */
+export function seatUserIdsOf(subscription: PaddleSubscription): string[] | null {
+  const custom = subscription.customData
+  if (!custom || typeof custom !== 'object') return null
+  const list = (custom as Record<string, unknown>)['seatUserIds']
+  if (!Array.isArray(list)) return null
+  return list.map(text).filter((id): id is string => id !== null)
+}
+
 /** The period end, as Paddle sends it inside the billing period object. */
 export function periodEndOf(subscription: PaddleSubscription): Date | null {
   const period = subscription.currentBillingPeriod
@@ -44,6 +53,26 @@ export function priceIdsOf(subscription: PaddleSubscription): string[] {
     .filter((value): value is string => value !== null)
 }
 
+/**
+ * E8-P6: Paddle sends one item per price with the number of seats in `quantity`; the extra seats are
+ * their sum. Counting items instead undercounts as soon as a subscription has more than one seat.
+ */
+export function extraSeatsOf(subscription: PaddleSubscription, seatPriceId: string | null): number {
+  if (!seatPriceId) return 0
+  const items = subscription.items
+  if (!Array.isArray(items)) return 0
+
+  let total = 0
+  for (const item of items) {
+    if (!item || typeof item !== 'object') continue
+    const record = item as Record<string, unknown>
+    if (text(record['priceId']) !== seatPriceId) continue
+    const quantity = record['quantity']
+    total += typeof quantity === 'number' && Number.isInteger(quantity) && quantity >= 0 ? quantity : 1
+  }
+  return total
+}
+
 export type ApplyContext = {
   /** The seat price id from the environment; every other price is the base plan. */
   seatPriceId: string | null
@@ -52,8 +81,54 @@ export type ApplyContext = {
 export type ApplyResult = { action: 'skipped' | 'stored'; reason?: string }
 
 /**
- * One event, one transaction. A subscription event stores the subscription and, when it carries the
- * seat price, the seats of its shared spaces; a transaction only flips the payer onto the row.
+ * Replaces the seats of one subscription with Paddle's list: the payer always stays, then at most
+ * `extraSeats` people from the list that exist, everything else goes. Someone already sitting on
+ * another subscription is skipped, never moved (docs/specs/E08-billing.md).
+ */
+async function syncSeats(
+  tx: Tx,
+  subscriptionId: string,
+  payer: string,
+  wanted: string[],
+  extraSeats: number,
+): Promise<void> {
+  const candidates = [...new Set(wanted)].filter((id) => id !== payer)
+  const known = candidates.length
+    ? new Set(
+        (
+          await tx.unsafe<{ id: string }[]>('select id from "user" where id = any($1::text[])', [candidates])
+        ).map((row) => row.id),
+      )
+    : new Set<string>()
+
+  const keep: string[] = []
+  for (const id of candidates) {
+    if (keep.length >= extraSeats) break
+    if (known.has(id)) keep.push(id)
+  }
+
+  await tx.unsafe(
+    `delete from subscription_seat
+      where subscription_id = $1 and user_id <> $2 and not (user_id = any($3::text[]))`,
+    [subscriptionId, payer, keep],
+  )
+  await tx`
+    insert into subscription_seat (subscription_id, user_id)
+    values (${subscriptionId}, ${payer})
+    on conflict (user_id) do nothing`
+  if (keep.length > 0) {
+    await tx.unsafe(
+      `insert into subscription_seat (subscription_id, user_id)
+       select $1, id from "user" where id = any($2::text[])
+       on conflict (user_id) do nothing`,
+      [subscriptionId, keep],
+    )
+  }
+}
+
+/**
+ * One event, one transaction. A subscription event stores the subscription and, when it carries
+ * `custom_data.seatUserIds`, the seats of its shared spaces; a transaction only flips the payer in.
  */
 export async function applyEvent(
   tx: Tx,
@@ -76,10 +151,11 @@ export async function applyEvent(
   const prices = priceIdsOf(subscription)
   const seatPrice = context.seatPriceId
   const basePriceId = prices.find((price) => price !== seatPrice) ?? prices[0] ?? ''
-  const extraSeats = seatPrice ? prices.filter((price) => price === seatPrice).length : 0
+  const extraSeats = extraSeatsOf(subscription, seatPrice)
   const periodEnd = periodEndOf(subscription)
+  const seatUserIds = seatUserIdsOf(subscription)
 
-  await tx`
+  const [stored] = await tx<{ id: string }[]>`
     insert into subscription (payer_user_id, paddle_subscription_id, paddle_customer_id, status,
                               base_price_id, extra_seats, current_period_end)
     values (${payer}, ${subscriptionId}, ${customerId}, ${status}, ${basePriceId}, ${extraSeats}, ${periodEnd})
@@ -90,13 +166,21 @@ export async function applyEvent(
           base_price_id = excluded.base_price_id,
           extra_seats = excluded.extra_seats,
           current_period_end = excluded.current_period_end,
-          updated_at = now()`
+          updated_at = now()
+    returning id`
+  if (!stored) return { action: 'skipped', reason: 'no_subscription' }
 
-  // The payer always sits on their own subscription.
-  await tx`
-    insert into subscription_seat (subscription_id, user_id)
-    select id, payer_user_id from subscription where paddle_subscription_id = ${subscriptionId}
-    on conflict (user_id) do nothing`
+  if (seatUserIds) {
+    await syncSeats(tx, stored.id, payer, seatUserIds, extraSeats)
+    // Paddle confirmed the list, so the wish that led to it is done.
+    await tx`delete from seat_request where subscription_id = ${stored.id}`
+  } else {
+    // Older payloads carry no list: the payer always sits on their own subscription.
+    await tx`
+      insert into subscription_seat (subscription_id, user_id)
+      values (${stored.id}, ${payer})
+      on conflict (user_id) do nothing`
+  }
 
   return { action: 'stored' }
 }

@@ -1,7 +1,11 @@
 import { afterAll, beforeEach, describe, expect, it } from 'vitest'
 import { closeDb, withSystem } from '../src/server/db.ts'
+import { env } from '../src/server/env.ts'
 import { processBillingEvents } from '../src/server/jobs/billing.ts'
 import { createUser, ownerSql, resetDb } from './harness.ts'
+
+// E8-P6: the job needs the seat price id to tell the base plan from the seats.
+Object.defineProperty(env, 'PADDLE_PRICE_SEAT', { value: 'pri_seat', configurable: true })
 
 beforeEach(resetDb)
 afterAll(async () => {
@@ -68,5 +72,17 @@ describe('processBillingEvents', () => {
 
   it('does nothing and says so when the store is empty', async () => {
     expect(await processBillingEvents()).toEqual({ processed: 0, failed: 0 })
+  })
+
+  it('counts the quantity of the seat item, not the number of items', async () => {
+    const payer = await createUser()
+    const stored = subscription(payer.id)
+    const subscriptionData = (stored.data as { subscription: Record<string, unknown> }).subscription
+    subscriptionData.items = [{ priceId: 'pri_base' }, { priceId: 'pri_seat', quantity: 3 }]
+    await storeEvent('evt_seats', '2026-11-22T11:00:00.000Z', stored)
+
+    expect(await processBillingEvents()).toEqual({ processed: 1, failed: 0 })
+    const [row] = await withSystem((tx) => tx<{ extraSeats: number }[]>`select extra_seats from subscription`)
+    expect(row?.extraSeats).toBe(3)
   })
 })

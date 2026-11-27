@@ -2,11 +2,13 @@ import { Hono } from 'hono'
 import type { AppEnv } from './app-env.ts'
 import { auth } from './auth.ts'
 import { withUser } from './db.ts'
+import { deepHealth } from './domain/health/deep.ts'
 import { loadAccess } from './domain/users/access.ts'
 import { loadMe } from './domain/users/me.ts'
 import { env } from './env.ts'
 import { dayStartMiddleware } from './middleware/day-start.ts'
 import { entitlementMiddleware } from './middleware/entitlement.ts'
+import { requestLog } from './middleware/log.ts'
 import { requireUser, sessionMiddleware, userOf } from './middleware/session.ts'
 import { accountRoutes } from './routes/account.ts'
 import { billingRoutes } from './routes/billing.ts'
@@ -29,7 +31,16 @@ import { taskRoutes } from './routes/tasks.ts'
 export function createApp(): Hono<AppEnv> {
   const app = new Hono<AppEnv>()
 
+  // First of all: one JSON line per API response (E9-P8). Health checks are skipped inside.
+  app.use('/api/*', requestLog)
+
   app.get('/api/health', (c) => c.json({ ok: true }))
+
+  // For the uptime monitor: database reachable and the billing queue not stuck (docs/betrieb.md).
+  app.get('/api/health/deep', async (c) => {
+    const health = await deepHealth()
+    return c.json(health, health.ok ? 200 : 503)
+  })
 
   app.on(['GET', 'POST'], '/api/auth/*', (c) => auth.handler(c.req.raw))
 

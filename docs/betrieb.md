@@ -216,3 +216,46 @@ docker compose -f docker-compose.prod.yml up -d app
 In Paddle eine Notification Destination auf `https://<domain>/api/billing/webhook` setzen. Ohne
 `PADDLE_WEBHOOK_SECRET` antwortet die Route mit 503, mit falschem Secret mit 401. Beides steht im
 App-Log, wenn Paddle zustellt.
+
+## Monitoring
+
+Ein externer Uptime-Monitor (jeder HTTP-Check genügt) fragt alle 60 Sekunden
+`https://<domain>/api/health/deep` ab. Alarmiert wird nach zwei Fehlschlägen in Folge, damit ein
+einzelner Aussetzer keinen Weckruf auslöst.
+
+Die Route antwortet mit `200`, solange die Datenbank erreichbar ist und kein Billing-Ereignis länger
+als zehn Minuten offen liegt; sonst mit `503`. Der Body ist immer dasselbe Objekt:
+
+| Feld | Bedeutung |
+|---|---|
+| `ok` | `true`, wenn Datenbank und Billing-Warteschlange in Ordnung sind |
+| `db` | `true`, wenn die Datenbank auf `select 1` antwortet |
+| `billingLagSeconds` | Alter des ältesten offenen Billing-Ereignisses in Sekunden, `null` ohne offene Zeile |
+
+`GET /api/health` bleibt der billige Lebenszeichen-Check für den Compose-Healthcheck; die tiefe
+Prüfung ist für den externen Monitor gedacht. Beide Routen nennen keine Person und brauchen keine
+Anmeldung.
+
+### Logs
+
+Die App schreibt je API-Antwort eine JSON-Zeile auf stdout, in `production` und `selfhost` bei jedem
+Request:
+
+```json
+{"t":"2026-11-27T10:00:00.000Z","method":"GET","route":"/api/tasks/:id","status":200,"ms":14}
+```
+
+- `t`: Antwortzeitpunkt in UTC.
+- `method`: HTTP-Methode.
+- `route`: das Routen-Muster, nie der echte Pfad. Damit stehen keine UUIDs, Einladungs-Tokens
+  (`/api/spaces/join/:token`) oder Mail-Adressen im Log.
+- `status`: der HTTP-Status der Antwort.
+- `ms`: Dauer vom Eingang bis zur Antwort in Millisekunden.
+
+Query, Header, Body, User-ID und IP-Adresse landen bewusst nicht im Log. `GET /api/health` und
+`GET /api/health/deep` werden übersprungen, damit Uptime-Checks kein Rauschen erzeugen. In
+`APP_MODE=development` ist die Ausgabe aus, außer `LOG_REQUESTS=1` steht in der Umgebung.
+
+Ansehen mit `docker compose -f docker-compose.prod.yml logs app`. Die Rotation ist in
+`docker-compose.prod.yml` je Dienst gesetzt (`max-size: 10m`, `max-file: "5"`), ältere Zeilen fallen
+also von selbst weg.

@@ -36,6 +36,8 @@ const schema = z.object({
   PRICE_BASE_ACTIVE: z.enum(['founder', 'standard']).default('founder'),
   TRIAL_REQUIRES_CARD: z.enum(['true', 'false']).default('false'),
   MAX_EXTRA_SEATS: z.coerce.number().int().min(0).max(20).default(5),
+  // Request log (E9-P8): off in development unless set to 1; production and selfhost log by default.
+  LOG_REQUESTS: z.enum(['0', '1']).optional(),
 })
 
 const parsed = schema

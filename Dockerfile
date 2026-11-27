@@ -17,6 +17,8 @@ RUN npm ci --omit=dev && npm cache clean --force
 COPY --from=build /app/dist/web ./dist/web
 COPY src ./src
 COPY migrations ./migrations
+# The reminder job reads its push texts and the release flags (locales/.meta.json) at runtime.
+COPY locales ./locales
 COPY scripts/migrate.ts ./scripts/migrate.ts
 COPY docker/entrypoint.sh ./docker/entrypoint.sh
 # Host umask differs between machines; the node user must be able to read everything it runs.

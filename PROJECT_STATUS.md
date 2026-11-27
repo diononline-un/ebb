@@ -1,15 +1,16 @@
 # Projektstatus
 
-**Stand:** 2026-11-27 · **Phase:** E1 bis E10 gebaut und geprüft auf `main` · offen: Lasttest (E9-P6) und die Punkte für Dion unten
+**Stand:** 2026-11-27 · **Phase:** E1 bis E10 gebaut und geprüft auf `main` · offen: nur die Punkte für Dion unten
 
 | Bereich | Stand |
 |---|---|
 | Planung | Analyse, PRD, Architektur, DESIGN.md 1.0.2 (Name „ebbe“), Specs, `docs/entwicklungsplan.md` |
 | E1–E7 | fertig, geprüft, auf `main` (E7-P5b: Plan-Seite nennt Bereiche) |
 | E8 Billing | P1–P8 fertig: Zugriff, Webhook, Ereignis-Job, 402-Sperre, Abo-Seite mit Checkout (läuft, sobald Paddle-Variablen gesetzt sind), Sitze, Self-Host minimal, Trial-Mails |
-| E9 Betrieb | P1–P5, P7, P8 fertig: Push (Endpoint-Allowlist gegen SSRF), Erinnerungs-Job, Einstellungsseite, Export, Löschung, Compose/Caddy/Backups (Restore-Drill bestanden), Monitoring. P6 Lasttest offen |
+| E9 Betrieb | P1–P5, P7, P8 fertig: Push (Endpoint-Allowlist gegen SSRF), Erinnerungs-Job, Einstellungsseite, Export, Löschung, Compose/Caddy/Backups (Restore-Drill bestanden), Monitoring, Lasttest (P6) plus P-1 (Caches für Tagesbeginn und Zugriff) |
 | E10 Launch | P1–P6 fertig: Locale-Prüfung, Übersetzungen ES/FR/DE/JA/ZH-CN (maschinell, `reviewed: false`, unsichtbar), Rechtsseiten mit Platzhaltern, Landingpage, PWA, Produkt-Events |
-| Tests | 751 Vitest (72 Dateien) grün · Check 0 Fehler · Design-Drift 0 (242 Dateien) · `i18n:check` grün · E2E zuletzt 8/8 vor T-4, nach T-4 offen (siehe unten) |
+| Tests | 755 Vitest (73 Dateien) grün · Check 0 Fehler · Design-Drift 0 (242 Dateien) · `i18n:check` grün · E2E zuletzt 8/8 vor T-4, nach T-4 offen (siehe unten) |
+| Last | 100 req/s auf der geteilten Dev-VPS: p95 323 ms nach P-1 (vorher 773, Ziel 200). Rest steckt in der Sitzungsprüfung von Better Auth (~2 Transaktionen je Request), Details `docs/betrieb.md` → „Lasttest“ |
 | Bundle | Einstiegs-Chunk 226 KB gzip (Budget 250). Wächst: 205 KB nach T-6, seitdem +21 KB |
 
 **Arbeitsordner:** `/home/dsh/Projekte/ebb` (Klon von `diononline-un/ebb`, Branch `main`). Pakete laufen über die Schleife in `~/Projekte/ebb-loop/` (Worker startet dsh je `ready`-Issue, Prüfung durch Claude/Sonnet, Merge per `merge.sh`).

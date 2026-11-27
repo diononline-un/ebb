@@ -1,0 +1,26 @@
+{
+  "morning": {
+    "title": "Your morning, when you're ready",
+    "body": "A few quiet minutes to choose the day."
+  },
+  "habit": {
+    "title": "Time for {{name}}",
+    "body": "One small step today is enough."
+  },
+  "weeklyReset": {
+    "title": "Weekly reset",
+    "body": "Look back at the week and choose one small change."
+  },
+  "errands": {
+    "title": "Errand day",
+    "body": "The errands are waiting. Pick what fits today."
+  },
+  "timer": {
+    "title": "Time for a break",
+    "body": "Your focus session is done. Stand up and breathe."
+  },
+  "trial": {
+    "title": "Your trial ends soon",
+    "body": "Everything stays as it is. Pick a plan when you're ready."
+  }
+}

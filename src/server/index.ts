@@ -3,6 +3,7 @@ import { serveStatic } from '@hono/node-server/serve-static'
 import { createApp } from './app.ts'
 import { env } from './env.ts'
 import { startBillingJob } from './jobs/billing.ts'
+import { startReminderJob } from './jobs/reminders.ts'
 import { startRetentionJob } from './jobs/retention.ts'
 import { startTrialMailJob } from './jobs/trial-mails.ts'
 
@@ -27,6 +28,10 @@ void stopTrialMailJob
 // Retention (E9-P5) runs once a day: inactivity warnings and the accounts they lead to.
 const stopRetentionJob = startRetentionJob()
 void stopRetentionJob
+
+// Reminders (E9-P2) run in every mode, selfhost included: the six types are per-person switches.
+const stopReminderJob = startReminderJob()
+void stopReminderJob
 
 serve({ fetch: app.fetch, port }, (info) => {
   console.log(`ebb listening on http://127.0.0.1:${info.port}`)

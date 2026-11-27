@@ -1,11 +1,31 @@
 import { createMiddleware } from 'hono/factory'
+import { localDate } from '../../shared/day.ts'
 import type { AppContext, AppEnv } from '../app-env.ts'
 import { withUser } from '../db.ts'
-import { startDayIfNeeded } from '../domain/day/start-day.ts'
+import { startDayIfNeededWithSettings } from '../domain/day/start-day.ts'
 import { env } from '../env.ts'
 
 // Paths that never start a day: sign-in itself, health checks, dev helpers, billing callbacks.
 const SKIP = /^\/api\/(?:auth|dev|health)(?:\/|$)|^\/api\/billing\/webhook$/
+
+/** How long a started day is reused before the settings are read again. */
+const DAY_START_MS = 60_000
+
+type DayStartCache = { today: string; timeZone: string; dayStartMinute: number; until: number }
+
+/**
+ * Where each person's day started, so the first request of a day pays for the settings read and the
+ * next ones do not (E9-P6: every request cost ~16 ms of CPU, spread over several transactions).
+ *
+ * shortcut: one process only; with more than one instance this has to move to a shared store. P-1
+ * allows no Redis, so the process keeps it (docs/betrieb.md, "Lasttest").
+ */
+const dayStarts = new Map<string, DayStartCache>()
+
+/** Drops the cached day of one person; the next request reads the settings and starts again. */
+export function forgetDay(userId: string): void {
+  dayStarts.delete(userId)
+}
 
 /**
  * Development only: how far the clock is moved for one user, in minutes. E2-P11 uses it to check the
@@ -17,6 +37,8 @@ export function setDevClockOffset(userId: string, offsetMinutes: number): void {
   if (env.APP_MODE !== 'development') return
   if (offsetMinutes === 0) clockOffsets.delete(userId)
   else clockOffsets.set(userId, offsetMinutes)
+  // The cached day belongs to the old clock position.
+  forgetDay(userId)
 }
 
 function nowFor(userId: string): Date {
@@ -28,8 +50,23 @@ function nowFor(userId: string): Date {
 export const dayStartMiddleware = createMiddleware<AppEnv>(async (c, next) => {
   const user = c.var.user
   if (user && !SKIP.test(c.req.path)) {
-    const { today } = await withUser(user.id, (tx) => startDayIfNeeded(tx, nowFor(user.id)))
-    c.set('today', today)
+    const cached = dayStarts.get(user.id)
+    // The window alone is not enough: the dev clock or a jump at midnight must not keep the old
+    // day. localDate() is pure wall-clock arithmetic, so this check costs no query.
+    const hit =
+      cached !== undefined &&
+      Date.now() < cached.until &&
+      localDate(nowFor(user.id), cached.timeZone, cached.dayStartMinute) === cached.today
+
+    if (hit) {
+      c.set('today', cached.today)
+    } else {
+      const { today, timeZone, dayStartMinute } = await withUser(user.id, (tx) =>
+        startDayIfNeededWithSettings(tx, nowFor(user.id)),
+      )
+      c.set('today', today)
+      dayStarts.set(user.id, { today, timeZone, dayStartMinute, until: Date.now() + DAY_START_MS })
+    }
   }
   await next()
 })

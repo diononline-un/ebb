@@ -9,15 +9,31 @@ export type DayStart = {
   rolledCount: number | null
 }
 
+export type DayStartDetails = DayStart & {
+  /** The settings the day was computed from: middleware/day-start.ts caches them with the day. */
+  timeZone: string
+  dayStartMinute: number
+}
+
 /**
  * Starts the user's day exactly once and rolls unfinished work into today's inbox.
  * Runs inside withUser on the first request of a day (middleware/day-start.ts); no cron (A3).
  */
 export async function startDayIfNeeded(tx: Tx, now: Date): Promise<DayStart> {
+  const { today, rolledCount } = await startDayIfNeededWithSettings(tx, now)
+  return { today, rolledCount }
+}
+
+/**
+ * The day start plus the settings it read anyway, so the middleware can reuse them without a second
+ * query (E9-P6). Same work as startDayIfNeeded, only a wider answer.
+ */
+export async function startDayIfNeededWithSettings(tx: Tx, now: Date): Promise<DayStartDetails> {
   const [settings] = await tx<{ timezone: string; dayStartMinute: number }[]>`
     select timezone, day_start_minute from user_settings where user_id = app.uid()`
   if (!settings) throw new Error('missing user_settings row')
-  const today = localDate(now, settings.timezone, settings.dayStartMinute)
+  const { timezone: timeZone, dayStartMinute } = settings
+  const today = localDate(now, timeZone, dayStartMinute)
 
   // Claim the day. Parallel requests wait on the row lock and re-check the condition after the
   // first commit, so exactly one of them gets a row back and does the rollover.
@@ -25,7 +41,7 @@ export async function startDayIfNeeded(tx: Tx, now: Date): Promise<DayStart> {
     update user_settings set last_day_started = ${today}
     where user_id = app.uid() and (last_day_started is null or last_day_started < ${today})
     returning 1`
-  if (claimed.length === 0) return { today, rolledCount: null }
+  if (claimed.length === 0) return { today, rolledCount: null, timeZone, dayStartMinute }
 
   // The rollover rule lives here and nowhere else (docs/specs/E02-kern.md): started or open work
   // from past days comes back to today's inbox, re-triaged from scratch; the deadline stays.
@@ -43,5 +59,5 @@ export async function startDayIfNeeded(tx: Tx, now: Date): Promise<DayStart> {
     insert into day_entry (date, rolled_count) values (${today}, ${rolled.length})
     on conflict (user_id, date) do update set rolled_count = day_entry.rolled_count + excluded.rolled_count`
 
-  return { today, rolledCount: rolled.length }
+  return { today, rolledCount: rolled.length, timeZone, dayStartMinute }
 }

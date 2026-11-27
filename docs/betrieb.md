@@ -348,3 +348,74 @@ zwischen p95 663 und 929 ms; die VPS trägt auch andere Projekte.
 
 Verbesserungen an Poolgröße, Abfragezahl oder RLS-Aufrufen gehören deshalb in ein eigenes Paket,
 nicht in den Lasttest.
+
+### Messwerte nach P-1 (2026-11-27, dieselbe Maschine)
+
+Gleicher Ablauf und dieselbe Datenbank wie oben (5000 Konten, 250 000 Aufgaben, 200 Sitzungen,
+100 req/s für 120 s, höchstens 50 gleichzeitig), jetzt mit dem Prozess-Cache aus P-1: Tagesbeginn
+und Zugriff laufen für fast jeden Request ohne Datenbank.
+
+Sechs Läufe mit P-1 am selben Tag streuten zwischen p95 149 und 901 ms, weil die Maschine während
+der Messungen auch andere Arbeit trug (unter anderem einen zweiten Agenten). Der erste Lauf direkt
+nach dem Seed lag bei p95 675 ms und p50 86 ms, also im Bereich der Werte oben. Die Tabelle nimmt den
+120-Sekunden-Lauf nach 15 s Warmlauf.
+
+| Größe | Ziel | Gemessen |
+|---|---|---|
+| Requests | 12 000 (100 req/s × 120 s) | 12 000, erreicht 100 req/s |
+| Fehler (Status ≥ 400 oder Verbindungsfehler) | 0 | 0 |
+| p50 gesamt | – | 43 ms |
+| p95 gesamt | unter 200 ms | **323 ms** |
+| p99 gesamt | – | 630 ms |
+| Transaktionen je Request | – | 3,1 (vorher 4,3) |
+| CPU des Node-Prozesses | – | 7,5 ms je Request, 75 % eines Kerns |
+
+| Route | Requests | p50 | p95 | p99 |
+|---|---|---|---|---|
+| `GET /api/today` | 6059 | 47 ms | 325 ms | 590 ms |
+| `PATCH /api/tasks/:id` | 1785 | 50 ms | 351 ms | 692 ms |
+| `POST /api/dump` | 1238 | 39 ms | 340 ms | 677 ms |
+| `GET /api/tasks?view=week` | 1190 | 30 ms | 278 ms | 579 ms |
+| `GET /api/habits/today` | 1182 | 32 ms | 287 ms | 659 ms |
+| `POST /api/tasks` | 546 | 45 ms | 331 ms | 680 ms |
+| gesamt | 12 000 | 43 ms | 323 ms | 630 ms |
+
+**Was der Cache bringt.** Zweimal derselbe Lauf, einmal mit dem Stand davor (Commit `e578673`),
+einmal mit P-1, dieselbe Datenbank und je 15 s Warmlauf. Beim zweiten Paar lief der alte Stand
+zuerst, damit nicht die Reihenfolge den Unterschied erklärt.
+
+| Lauf | p50 | p95 | p99 |
+|---|---|---|---|
+| vor P-1, 120 s | 87 ms | 773 ms | 1340 ms |
+| mit P-1, 120 s | 43 ms | 323 ms | 630 ms |
+| vor P-1, 60 s (lief zuerst) | 85 ms | 464 ms | 1184 ms |
+| mit P-1, 60 s (lief danach) | 35 ms | 251 ms | 623 ms |
+
+Je Request sinken die Transaktionen von 4,29 auf 3,09 und die CPU im Node-Prozess von 8,2 auf
+7,5 ms. Entfernt sind der Tagesbeginn (auf jedem Request) und der Zugriff (nur auf schreibenden
+Routen, rund 30 % der Mischlast); das sind die 1,2 Transaktionen. p50 halbiert sich, p95 bleibt
+über 200 ms.
+
+### Nächste Ursache nach P-1
+
+Einzeln und ohne Last gemessen, je 200 Anfragen mit derselben Sitzung (Transaktionen aus
+`pg_stat_database.xact_commit`, dort zählt auch eine Abfrage ohne `BEGIN`):
+
+| Request | Transaktionen je Request | Antwortzeit |
+|---|---|---|
+| `GET /api/health` (keine Sitzung, keine Abfrage) | 0 | 3,3 ms |
+| `GET /api/dev/mails` (nur Sitzungsprüfung, keine Abfrage der Route) | 1,93 | 10,6 ms |
+| `GET /api/today` (Sitzung und Tagesansicht, Cache warm) | 2,77 | 33,5 ms |
+
+Von den 3,1 Transaktionen je Request gehören rund zwei zur Sitzungsprüfung
+(`auth.api.getSession`) und eine zur Route. Die Abfragen selbst bleiben schnell (siehe `EXPLAIN`
+oben, Tagesansicht unter 1 ms); die Zeit steckt in den Roundtrips. Der Request-Log des Servers
+zeigt für `GET /api/today` 17 bis 45 ms je Request; die Sitzungsprüfung allein macht davon rund 7 ms
+aus. Im Lauf mit 100 req/s liegen Node (75 bis 87 %) und PostgreSQL (72 bis 85 %) bei je rund einem
+Kern: Bei 50 gleichzeitigen Requests entsteht p95 als Warteschlange vor dem einen Node-Prozess, nicht
+aus einer langsamen Abfrage.
+
+Der nächste Hebel wäre die Sitzungsprüfung mit ihren zwei Datenbankzugriffen. Ein Sitzungs-Cache ist
+in P-1 ausgeschlossen („Überall abmelden“ muss sofort wirken, Abschnitt „Nicht tun“), deshalb gehört
+er in ein eigenes Paket, zusammen mit den Roundtrips je Request.
+

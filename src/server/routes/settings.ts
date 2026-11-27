@@ -3,6 +3,7 @@ import { SettingsPatch } from '../../shared/schemas/settings.ts'
 import type { AppEnv } from '../app-env.ts'
 import { withUser } from '../db.ts'
 import { getSettings, patchSettings } from '../domain/settings/settings.ts'
+import { forgetDay } from '../middleware/day-start.ts'
 import { requireUser, userOf } from '../middleware/session.ts'
 import { fieldErrors, invalidBody, readJson } from './http.ts'
 
@@ -15,5 +16,8 @@ export const settingsRoutes = new Hono<AppEnv>()
     const parsed = SettingsPatch.safeParse(json.body)
     if (!parsed.success) return invalidBody(c, fieldErrors(parsed.error))
 
-    return c.json(await withUser(userOf(c).id, (tx) => patchSettings(tx, parsed.data)))
+    const settings = await withUser(userOf(c).id, (tx) => patchSettings(tx, parsed.data))
+    // A new time zone or day start moves where the day begins, so the cached day is stale.
+    forgetDay(userOf(c).id)
+    return c.json(settings)
   })

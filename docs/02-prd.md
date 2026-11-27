@@ -1,7 +1,7 @@
-# PRD: Planungs-App für volle Köpfe (Arbeitstitel „Ebb“)
+# PRD: Planungs-App für volle Köpfe „Ebbe“
 
 Stand: 2026-11-21 · Status: Entwurf v1 · Grundlage: [01-analyse.md](01-analyse.md)
-Arbeitstitel „Ebb“ ist ein Platzhalter (Energie geht auf und ab). Der Name ist **nicht** markenrechtlich geprüft.
+Produktname „Ebbe“ (Entscheidung 2026-11-27, vorher Arbeitstitel „Ebb“). Der Name ist **nicht** markenrechtlich geprüft; die Prüfung kommt vor dem Launch. Technische Bezeichner (`ebb_*`-Rollen, CSS-Klassen, Speicherschlüssel, Repo) bleiben `ebb`.
 
 ## 0. Entscheidungen (2026-11-21)
 

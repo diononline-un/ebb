@@ -4,7 +4,7 @@
 
 | Bereich | Stand |
 |---|---|
-| Planung | Analyse, PRD, Architektur, DESIGN.md 1.0.1, Specs |
+| Planung | Analyse, PRD, Architektur, DESIGN.md 1.0.2, Specs |
 | E1 Fundament | 9/9 fertig, geprüft, auf `main` |
 | E2 Kern-Ablauf | 11/11 fertig, geprüft, auf `main` |
 | E3 Energie | 4/4 fertig, geprüft, auf `main` (Ritual, Low-Modus, Fokus-Timer; D1: Ritual auch am Wochenende) |
@@ -12,9 +12,9 @@
 | E5 Projekte, Wiederholungen, Erledigungen | 8/8 fertig, geprüft, auf `main` |
 | E6 Weekly Reset | 4/4 fertig, geprüft, auf `main` |
 | E7 Geteilte Bereiche | 6/6 fertig, geprüft, auf `main` (Rest: Plan-Seite zeigt keine Bereichsnamen) |
-| E8 Billing | P1–P4 + Ereignis-Job auf `main`; offen P6 Sitze, P8 Trial-Mails; blockiert P5, P7 |
+| E8 Billing | P1–P4 + Ereignis-Job auf `main`; offen P5 (Attrappe), P6 Sitze, P7 (minimal), P8 Trial-Mails |
 | E9 Betrieb | P4 Export, P5 Löschung auf `main`; offen P1–P3, P6–P8 |
-| E10 Launch | P6 Produkt-Events auf `main`; offen P1, P5; blockiert P2–P4 |
+| E10 Launch | P6 Produkt-Events auf `main`; offen P1–P5 (Entscheidungen 2026-11-27 im Plan) |
 | Tests | 541 Vitest (56 Dateien) + 8 Playwright grün · Check 0 Fehler · Design-Drift 0 (208 Dateien) |
 | Bundle | erster Chunk 111 KB gzip (Budget 250), Seiten als eigene Chunks (Stand E3, nicht neu gemessen) |
 
@@ -33,5 +33,5 @@
 
 **Bekannte Risiken:** keine Paddle-Kündigung vor der Kontolöschung (kein API-Client), Löschung sofort ohne Gnadenfrist, `last_seen_at` schreibt niemand fort, `PATCH /api/tasks` kennt kein `spaceId`, Webhook prüft nur den ersten `h1`-Wert (Secret-Rotation).
 
-**Offen (PRD §13):** Produktname + Markenprüfung, Rechtstexte, E-Mail-Provider, Ende der Founder-Phase.
+**Offen (PRD §13):** Markenprüfung für „Ebbe“, Betreiberangaben für die Rechtstexte, E-Mail-Provider (beim Deploy), Paddle live, Ende der Founder-Phase.
 **Später:** Build-Audit `vite-plugin-pwa` (nur Build-Zeit), erster GHCR-Push mit Tag `v*`, leere Blöcke als Drag-Ziel.

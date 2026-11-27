@@ -1,6 +1,6 @@
-# Design Constitution: Ebb (Arbeitstitel)
+# Design Constitution: Ebbe
 
-**Version** 1.0 · **Stand** 2026-11-21 · **Amended by** Claude (Richtung „Ebbe“, freigegeben von Dion)
+**Version** 1.0.2 · **Stand** 2026-11-27 · **Amended by** Claude (Richtung „Ebbe“, freigegeben von Dion)
 **Status:** bindend. Vor jeder UI-Arbeit lesen. Änderungen nur über §12, nie durch Improvisation.
 
 ---
@@ -252,3 +252,4 @@ Die Linie wird nirgends sonst verwendet. Sie ist das Wiedererkennungsmerkmal.
 |---|---|---|---|
 | 1.0 | 2026-11-21 | erste Fassung, Richtung „Ebbe“ | Start vor dem ersten UI-Paket |
 | 1.0.1 | 2026-11-21 | CJK-Fallback-Schriften aus §3 in den Token-Block übernommen | Token-Block und §3 waren nicht synchron; der Checker hätte den Fallback als fremde Schrift gezählt (Bericht E1-P6) |
+| 1.0.2 | 2026-11-27 | Produktname „Ebbe“ statt Arbeitstitel „Ebb“ | Entscheidung Dion; passt zur Richtung aus 1.0, keine Token-Änderung |

@@ -24,6 +24,7 @@ Je Paket ein Issue mit `ready` + `exec:deepseek`, nachgeschärft am echten Code 
 
 | Paket | Inhalt | Quelle |
 |---|---|---|
+| R-1 | Produktname „Ebbe“ an allen sichtbaren Stellen | Entscheidung 2026-11-27 |
 | E7-P5b | Plan-Seite zeigt Bereichsnamen | Handoff, offen aus P5 |
 | T-1 | Vier ältere Web-Tests von `createElement`/`@ts-nocheck` auf `.test.tsx` | Status „Später“ |
 | T-2 | „Done“ im Low-Modus beendet den laufenden Timer | Status „Später“ (Bug) |
@@ -44,17 +45,25 @@ Je Paket ein Issue mit `ready` + `exec:deepseek`, nachgeschärft am echten Code 
 | E9-P7 Compose, Caddy, Backups | DeepSeek | – |
 | E9-P8 Monitoring und Logs | DeepSeek | E9-P7 |
 | E9-P6 Lasttest | DeepSeek | E9-P7 |
+| E8-P5 Checkout-Attrappe | DeepSeek | – |
+| E8-P7 Self-Host minimal | DeepSeek | – |
+| E10-P2 Übersetzungen maschinell | DeepSeek | E10-P1 |
+| E10-P3 Rechtsseiten-Gerüst | DeepSeek | – |
+| E10-P4 Landingpage | DeepSeek | R-1 |
 | Kern-Nacharbeit | Kern (Claude) | `last_seen_at` fortschreiben, `PATCH /api/tasks` mit `spaceId`, Gnadenfrist vor Löschung |
 
-## Blockiert (Entscheidung von Dion)
+## Entscheidungen von Dion (2026-11-27)
 
-- E8-P5 Checkout: Paddle-Sandbox, Preis-IDs, Währung, Intervall.
-- E8-P7 Self-Host: Umfang (Lizenz, Sitze, Update-Weg).
-- E10-P2 Übersetzungen: maschinell + Review oder extern.
-- E10-P3 Rechtsseiten: Betreiberangaben.
-- E10-P4 Landingpage: Produktname, Markenprüfung.
+- **Name:** Produkt heißt „Ebbe“. Nur sichtbare Stellen wechseln (Paket R-1). `ebb_*`-Rollen, CSS-Klassen `ebb-*`, Speicherschlüssel `ebb.*`, IndexedDB `ebb-offline`, npm-/Compose-Name und Repo bleiben, sonst gehen Offline-Daten und Sitzungen verloren. Markenprüfung vor dem Launch.
+- **VAPID (E9-P1):** Dev-Schlüssel lokal erzeugt, nur in `.env.example`; Produktion je Deployment per Secret.
+- **E8-P5 Checkout:** erst Attrappe mit Platzhalter-Preis-IDs und Fake, echtes Paddle später.
+- **E8-P7 Self-Host:** minimal. Keine Lizenz, keine Sitzgrenze, Billing-UI aus, Update per Image-Tag mit Anleitung.
+- **E10-P2 Übersetzungen:** maschinell aus `locales/en`, vor Launch Muttersprachler-Review; bis dahin hinter Schalter.
+- **E10-P3 Rechtsseiten:** Gerüst mit Platzhaltern `[…]`, Build-Check schlägt fehl, solange einer übrig ist.
+- **E10-P4 Landingpage:** mit „Ebbe“, Texte als Schlüssel in `locales`.
+- **Mail:** Anbieter offen, Code spricht nur `SMTP_URL`; Wahl beim Deploy (E9-P7).
 
-Diese Issues bekommen `blocked` und bleiben aus der Schleife.
+Damit ist nichts mehr blockiert. Offen bleiben nur Paddle live und die Betreiberangaben, beide nach dem Bau.
 
 ## Schleife dsh ↔ Claude
 

@@ -1,6 +1,6 @@
-import { Link, useRouterState } from '@tanstack/react-router'
+import { Link, useRouter, useRouterState } from '@tanstack/react-router'
 import { CalendarDays, Menu as MenuIcon, NotebookPen, Plus, Sun, type LucideIcon } from 'lucide-react'
-import { useState, type ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { cn } from '../../lib/cn.ts'
 import { ReadOnlyBanner } from '../billing/ReadOnlyBanner.tsx'
@@ -27,6 +27,11 @@ export const FULLSCREEN_PATHS = ['/ritual', '/triage', '/welcome'] as const
 export function isFullscreenPath(pathname: string): boolean {
   const path = pathname.replace(/\/$/, '')
   return (FULLSCREEN_PATHS as readonly string[]).includes(path)
+}
+
+/** The PWA shortcut opens `/today?capture=1`; only the value 1 opens the sheet. */
+export function wantsCapture(search: string): boolean {
+  return new URLSearchParams(search).get('capture') === '1'
 }
 
 function NavLinks({ layout }: { layout: 'bar' | 'rail' }) {
@@ -57,10 +62,19 @@ function NavLinks({ layout }: { layout: 'bar' | 'rail' }) {
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useTranslation('shell')
+  const router = useRouter()
   const [capturing, setCapturing] = useState(false)
   const fullscreen = useRouterState({
     select: (state) => isFullscreenPath(state.location.pathname),
   })
+
+  // Mount only: the relaunched app opens the sheet once, so the marker leaves the URL right away.
+  useEffect(() => {
+    const { pathname, searchStr } = router.state.location
+    if (isFullscreenPath(pathname) || !wantsCapture(searchStr)) return
+    setCapturing(true)
+    void router.navigate({ href: pathname, replace: true })
+  }, [router])
 
   return (
     <div className="min-h-dvh lg:flex">

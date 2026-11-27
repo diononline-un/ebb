@@ -17,7 +17,9 @@
     "test": "vitest run",
     "e2e": "playwright test",
     "db:migrate": "node --env-file-if-exists=.env scripts/migrate.ts",
-    "db:test-setup": "node --env-file-if-exists=.env scripts/test-setup.ts"
+    "db:test-setup": "node --env-file-if-exists=.env scripts/test-setup.ts",
+    "i18n:check": "node scripts/check-locales.ts",
+    "i18n:pseudo": "node scripts/pseudo-locale.ts"
   },
   "dependencies": {
     "@better-auth/passkey": "^1.7.27",

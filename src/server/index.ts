@@ -4,6 +4,7 @@ import { createApp } from './app.ts'
 import { env } from './env.ts'
 import { startBillingJob } from './jobs/billing.ts'
 import { startRetentionJob } from './jobs/retention.ts'
+import { startTrialMailJob } from './jobs/trial-mails.ts'
 
 const port = env.PORT
 const app = createApp()
@@ -18,6 +19,10 @@ if (env.NODE_ENV === 'production') {
 // Billing events are stored by the webhook and applied here; selfhost has no billing at all.
 const stopBillingJob = env.APP_MODE === 'selfhost' ? () => {} : startBillingJob()
 void stopBillingJob
+
+// Trial mails (E8-P8) run hourly; selfhost has no trial that could end.
+const stopTrialMailJob = env.APP_MODE === 'selfhost' ? () => {} : startTrialMailJob()
+void stopTrialMailJob
 
 // Retention (E9-P5) runs once a day: inactivity warnings and the accounts they lead to.
 const stopRetentionJob = startRetentionJob()

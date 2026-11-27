@@ -1,3 +1,4 @@
+import { APP_NAME } from '../../shared/brand.ts'
 import { withSystem, type Tx } from '../db.ts'
 import { deleteAccount } from '../domain/account/delete.ts'
 import { env } from '../env.ts'
@@ -82,7 +83,7 @@ export async function runRetention(now: Date = new Date()): Promise<RetentionRes
     if (daysLeft <= FINAL_WARN_DAYS_BEFORE && account.deletionFinalWarnedAt === null) {
       await sendMail({
         to: account.email,
-        subject: 'Your Ebb account will be deleted in 7 days',
+        subject: `Your ${APP_NAME} account will be deleted in 7 days`,
         text: `Nobody signed in to this account for almost a year, and it has no running plan. We will delete it and everything in it on ${date}.\n\nSign in once to keep it. Export your data first if you want a copy.`,
       })
       await withSystem(
@@ -98,7 +99,7 @@ export async function runRetention(now: Date = new Date()): Promise<RetentionRes
     if (daysLeft <= WARN_DAYS_BEFORE && account.deletionWarnedAt === null) {
       await sendMail({
         to: account.email,
-        subject: 'Your Ebb account will be deleted',
+        subject: `Your ${APP_NAME} account will be deleted`,
         text: `Nobody signed in to this account for almost a year, and it has no running plan. We will delete it and everything in it on ${date}.\n\nSign in once to keep it. Export your data first if you want a copy.`,
       })
       await withSystem(

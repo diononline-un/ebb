@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { APP_NAME } from '../shared/brand.ts'
 
 // The only module that reads process.env. Development gets working defaults; deployed modes
 // (production, selfhost) must set every secret explicitly and fail fast otherwise.
@@ -25,7 +26,7 @@ const schema = z.object({
   AUTH_SECRET: deployed ? z.string().min(32) : z.string().default('development-only-secret-do-not-deploy-0000'),
   // Without SMTP: development captures mails (GET /api/dev/mails), selfhost skips verification.
   SMTP_URL: z.string().optional(),
-  MAIL_FROM: z.string().default('Ebb <no-reply@localhost>'),
+  MAIL_FROM: z.string().default(`${APP_NAME} <no-reply@localhost>`),
   // Billing (E8): without a webhook secret the route answers 503, so development needs no Paddle.
   PADDLE_WEBHOOK_SECRET: z.string().optional(),
   PADDLE_API_KEY: z.string().optional(),

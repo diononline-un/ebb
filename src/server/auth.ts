@@ -1,6 +1,7 @@
 import { passkey } from '@better-auth/passkey'
 import { betterAuth } from 'better-auth'
 import pg from 'pg'
+import { APP_NAME } from '../shared/brand.ts'
 import { bootstrapUser } from './domain/users/bootstrap.ts'
 import { dbUrl, env } from './env.ts'
 import { sendMail } from './mail.ts'
@@ -12,7 +13,7 @@ const pool = new pg.Pool({ connectionString: dbUrl('auth'), max: 5 })
 const verifyEmail = !(env.APP_MODE === 'selfhost' && !env.SMTP_URL)
 
 export const auth = betterAuth({
-  appName: 'Ebb',
+  appName: APP_NAME,
   baseURL: env.APP_URL,
   basePath: '/api/auth',
   secret: env.AUTH_SECRET,
@@ -25,7 +26,7 @@ export const auth = betterAuth({
     sendResetPassword: async ({ user, url }) => {
       await sendMail({
         to: user.email,
-        subject: 'Reset your Ebb password',
+        subject: `Reset your ${APP_NAME} password`,
         text: `Someone asked to reset the password for this account.\n\nSet a new one here: ${url}\n\nIf that was not you, ignore this mail. Nothing changes.`,
       })
     },
@@ -36,7 +37,7 @@ export const auth = betterAuth({
     sendVerificationEmail: async ({ user, url }) => {
       await sendMail({
         to: user.email,
-        subject: 'Confirm your email for Ebb',
+        subject: `Confirm your email for ${APP_NAME}`,
         text: `Confirm your email to start planning: ${url}\n\nIf you did not sign up, ignore this mail.`,
       })
     },
@@ -60,7 +61,7 @@ export const auth = betterAuth({
     // Caddy replaces client-sent X-Forwarded-For, so the first entry is the real client (docs/architektur.md).
     ipAddress: { ipAddressHeaders: ['x-forwarded-for'] },
   },
-  plugins: [passkey({ rpID: new URL(env.APP_URL).hostname, rpName: 'Ebb', origin: env.APP_URL })],
+  plugins: [passkey({ rpID: new URL(env.APP_URL).hostname, rpName: APP_NAME, origin: env.APP_URL })],
   databaseHooks: {
     user: {
       create: {

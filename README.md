@@ -1,4 +1,4 @@
-# Ebb
+# ebbe
 
 Ein Tagesplaner für Erwachsene mit vollem Kopf: Gedanken in den Dump, Zeilen zu Aufgaben machen, jede Aufgabe mit der Konsequenz-Frage einsortieren, einen Anker wählen und in Blöcken abarbeiten. Produkt: `docs/02-prd.md`, Aufbau: `docs/architektur.md`, Gestaltung: `DESIGN.md`.
 

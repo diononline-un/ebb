@@ -3,6 +3,7 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
+import { APP_NAME } from './src/shared/brand.ts'
 
 export default defineConfig({
   plugins: [
@@ -21,8 +22,8 @@ export default defineConfig({
       filename: 'sw.ts',
       registerType: 'autoUpdate',
       manifest: {
-        name: 'Ebb',
-        short_name: 'Ebb',
+        name: APP_NAME,
+        short_name: APP_NAME,
         lang: 'en',
         start_url: '/',
         scope: '/',

@@ -1,7 +1,8 @@
 import { expect, test, type Page } from '@playwright/test'
+import { APP_NAME } from '../src/shared/brand.ts'
 
 const PASSWORD = 'correct horse battery'
-const VERIFICATION_SUBJECT = 'Confirm your email for Ebb'
+const VERIFICATION_SUBJECT = `Confirm your email for ${APP_NAME}`
 
 function uniqueEmail(prefix: string): string {
   return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@example.test`

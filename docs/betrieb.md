@@ -113,6 +113,12 @@ Ziel: einen Backup-Ordner in eine leere Postgres-Instanz spielen und die Zeilenz
 Das Skript braucht `POSTGRES_PASSWORD`, `EBB_DB_NAME` und den Ordner im Volume `backups`
 (Compose-Name in diesem Stack: `ebb_backups`).
 
+> **Nie `docker compose down -v` auf dem Produktions-Host.** `-v` löscht alle Volumes, auch `ebb_backups`
+> und `pgdata`. Für einen Neustart reicht `down` ohne `-v`.
+> Legt ein `docker run -v ebb_backups:…` das Volume vor Compose an, warnt Compose später
+> („volume already exists but was not created by Docker Compose“). Das ist harmlos; vermeiden lässt es
+> sich mit `docker compose -f docker-compose.prod.yml create backup` vorher.
+
 ### Drill auf einem zweiten Host
 
 1. Repo und `.env` auf den zweiten Host kopieren. `.env` braucht dieselben Werte für

@@ -11,10 +11,13 @@ export type SeatAction = 'cover' | 'release'
 
 export type Seat = { userId: string; name: string }
 
+/** A wish Paddle has not confirmed yet. */
+export type PendingRequest = { userId: string; action: SeatAction }
+
 export type SeatOverview = {
   subscriptionId: string | null
   covered: Seat[]
-  pending: { userId: string; action: SeatAction }[]
+  pending: PendingRequest[]
   candidates: Seat[]
   max: number
 }
@@ -74,32 +77,76 @@ async function sharesSharedSpace(tx: Tx, memberId: string): Promise<boolean> {
   return Boolean(row)
 }
 
+/** The open wishes of the subscription, oldest first: their order survives into Paddle's list. */
+async function openRequests(tx: Tx, subscriptionId: string): Promise<PendingRequest[]> {
+  return tx<PendingRequest[]>`
+    select user_id, action from seat_request where subscription_id = ${subscriptionId}
+     order by requested_at`
+}
+
+/** Confirmed seats without the payer, and the wishes that Paddle has not confirmed yet. */
+async function seatState(
+  tx: Tx,
+  subscriptionId: string,
+  payerId: string,
+): Promise<{ confirmed: string[]; open: PendingRequest[] }> {
+  const covered = await coveredSeats(tx, subscriptionId)
+  return {
+    confirmed: covered.map((seat) => seat.userId).filter((id) => id !== payerId),
+    open: await openRequests(tx, subscriptionId),
+  }
+}
+
+/**
+ * The seat list Paddle holds after the next call: confirmed seats without the payer, plus open cover
+ * wishes, minus open release wishes, and then the new action. A wish that is still waiting for its
+ * webhook must not fall out of the list, or a second cover would drop the first one.
+ */
+function nextSeatUserIds(
+  state: { confirmed: string[]; open: PendingRequest[] },
+  memberId: string,
+  action: SeatAction,
+): string[] {
+  const list = new Set(state.confirmed)
+  for (const request of state.open) {
+    if (request.action === 'cover') list.add(request.userId)
+    else list.delete(request.userId)
+  }
+  if (action === 'cover') list.add(memberId)
+  else list.delete(memberId)
+  return [...list]
+}
+
+/** Someone who already sits on another subscription cannot be covered as well. */
+async function isSeated(tx: Tx, userId: string): Promise<boolean> {
+  const rows = await tx<{ userId: string }[]>`
+    select seated_among as user_id from app.seated_among(${[userId]})`
+  return rows.length > 0
+}
+
 /** Members of the caller's shared spaces that are neither covered, pending, nor the caller. */
 async function candidatesFor(
   tx: Tx,
   userId: string,
   covered: Seat[],
-  pending: { userId: string; action: SeatAction }[],
+  pending: PendingRequest[],
 ): Promise<Seat[]> {
   const hidden = new Set([userId, ...covered.map((seat) => seat.userId)])
   for (const request of pending) if (request.action === 'cover') hidden.add(request.userId)
 
-  // RLS already limits `space` to the caller's spaces; only shared ones carry other people.
-  const spaces = await tx<{ id: string }[]>`select id from space where kind = 'shared'`
-  const seen = new Set<string>()
-  const candidates: Seat[] = []
-  for (const space of spaces) {
-    const members = await tx<Seat[]>`select user_id, name from app.space_members(${space.id})`
-    for (const member of members) {
-      if (hidden.has(member.userId) || seen.has(member.userId)) continue
-      seen.add(member.userId)
-      // Someone who already sits on another subscription cannot be covered as well.
-      const [seated] = await tx<{ seated: boolean }[]>`select app.is_seated(${member.userId}) as seated`
-      if (seated?.seated) continue
-      candidates.push({ userId: member.userId, name: member.name })
-    }
-  }
-  return candidates
+  // One query for everyone the caller shares a shared space with, one for those who already sit:
+  // no query per space or per person.
+  const members = (await tx<Seat[]>`select user_id, name from app.shared_members()`).filter(
+    (member) => !hidden.has(member.userId),
+  )
+  if (members.length === 0) return []
+  const seated = new Set(
+    (
+      await tx<{ userId: string }[]>`
+        select seated_among as user_id from app.seated_among(${members.map((member) => member.userId)})`
+    ).map((row) => row.userId),
+  )
+  return members.filter((member) => !seated.has(member.userId))
 }
 
 export async function seatOverview(userId: string): Promise<SeatOverview> {
@@ -111,8 +158,7 @@ export async function seatOverview(userId: string): Promise<SeatOverview> {
     }
 
     const covered = await coveredSeats(tx, own.id)
-    const pending = await tx<{ userId: string; action: SeatAction }[]>`
-      select user_id, action from seat_request where subscription_id = ${own.id} order by requested_at`
+    const pending = await openRequests(tx, own.id)
     const candidates = await candidatesFor(tx, userId, covered, pending)
     return { subscriptionId: own.id, covered, pending, candidates, max: env.MAX_EXTRA_SEATS }
   })
@@ -131,17 +177,19 @@ type SeatPlan = { paddleSubscriptionId: string; basePriceId: string; seatUserIds
 
 async function coverPlan(tx: Tx, userId: string, subscriptionId: string, memberId: string): Promise<SeatPlan> {
   const subscription = await paidSubscription(tx, subscriptionId)
-  // The payer keeps their own seat for good.
-  if (memberId === userId) throw new SeatError(409, 'already_covered')
+  const state = await seatState(tx, subscriptionId, userId)
+  // The payer keeps their own seat for good; a confirmed seat or an open cover wish already holds one.
+  if (
+    memberId === userId ||
+    state.confirmed.includes(memberId) ||
+    state.open.some((request) => request.userId === memberId && request.action === 'cover')
+  ) {
+    throw new SeatError(409, 'already_covered')
+  }
   if (!(await sharesSharedSpace(tx, memberId))) throw new SeatError(422, 'not_a_co_member')
+  if (await isSeated(tx, memberId)) throw new SeatError(409, 'already_covered')
 
-  const [seated] = await tx<{ seated: boolean }[]>`select app.is_seated(${memberId}) as seated`
-  if (seated?.seated) throw new SeatError(409, 'already_covered')
-
-  const others = (await coveredSeats(tx, subscriptionId))
-    .map((seat) => seat.userId)
-    .filter((id) => id !== userId)
-  const seatUserIds = [...others, memberId]
+  const seatUserIds = nextSeatUserIds(state, memberId, 'cover')
   if (seatUserIds.length > env.MAX_EXTRA_SEATS) throw new SeatError(422, 'seat_limit')
 
   return {
@@ -153,17 +201,18 @@ async function coverPlan(tx: Tx, userId: string, subscriptionId: string, memberI
 
 async function releasePlan(tx: Tx, userId: string, subscriptionId: string, memberId: string): Promise<SeatPlan> {
   const subscription = await paidSubscription(tx, subscriptionId)
-  const others = (await coveredSeats(tx, subscriptionId))
-    .map((seat) => seat.userId)
-    .filter((id) => id !== userId)
+  const state = await seatState(tx, subscriptionId, userId)
   // Releasing is always allowed, even after the person left the shared space: otherwise a seat that
-  // nobody can remove would keep costing money. Only a seat that exists can go.
-  if (memberId === userId || !others.includes(memberId)) throw new SeatError(409, 'not_covered')
+  // nobody can remove would keep costing money. Only a seat or an open cover wish can go, and a wish
+  // that is already being released cannot go twice.
+  const open = state.open.find((request) => request.userId === memberId)
+  const releasable = (state.confirmed.includes(memberId) || open?.action === 'cover') && open?.action !== 'release'
+  if (memberId === userId || !releasable) throw new SeatError(409, 'not_covered')
 
   return {
     paddleSubscriptionId: subscription.paddleSubscriptionId,
     basePriceId: subscription.basePriceId,
-    seatUserIds: others.filter((id) => id !== memberId),
+    seatUserIds: nextSeatUserIds(state, memberId, 'release'),
   }
 }
 

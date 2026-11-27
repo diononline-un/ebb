@@ -15,6 +15,11 @@ const PADDLE_ID = 'sub_01'
 Object.defineProperty(env, 'PADDLE_PRICE_SEAT', { value: SEAT_PRICE, configurable: true })
 Object.defineProperty(env, 'MAX_EXTRA_SEATS', { value: 1, configurable: true })
 
+/** One test covers two people at once; the reset in beforeEach keeps the others at one seat. */
+function setMaxSeats(max: number): void {
+  Object.defineProperty(env, 'MAX_EXTRA_SEATS', { value: max, configurable: true })
+}
+
 type Call = { id: string; body: PaddleSubscriptionPatch }
 let calls: Call[] = []
 
@@ -29,6 +34,7 @@ function fakePaddle(): PaddleClient {
 beforeEach(async () => {
   await resetDb()
   calls = []
+  setMaxSeats(1)
   setPaddleClientForTests(fakePaddle())
 })
 
@@ -160,6 +166,25 @@ describe('cover', () => {
     expect(view.pending).toEqual([{ userId: member.id, action: 'cover' }])
     expect(view.covered.map((seat) => seat.userId)).toEqual([payer.id])
     expect(view.candidates).toEqual([])
+  })
+
+  it('keeps an open wish in the list when a second person is covered before the webhook', async () => {
+    const payer = await createUser()
+    const first = await createUser()
+    const second = await createUser()
+    await sharedSpaceWith(payer, [first, second])
+    await apply(payer)
+    setMaxSeats(2)
+
+    expect((await as(payer).post('/api/billing/seats/cover', { memberId: first.id })).status).toBe(204)
+    expect((await as(payer).post('/api/billing/seats/cover', { memberId: second.id })).status).toBe(204)
+
+    // No webhook in between: the first wish is still open, so Paddle's list must keep it.
+    expect(calls.map((call) => call.body.custom_data.seatUserIds)).toEqual([[first.id], [first.id, second.id]])
+    expect(calls[1]?.body.items).toEqual([
+      { price_id: BASE_PRICE, quantity: 1 },
+      { price_id: SEAT_PRICE, quantity: 2 },
+    ])
   })
 
   it('turns the confirmed list into a seat that gives the covered person access', async () => {
@@ -315,6 +340,23 @@ describe('release', () => {
     expect(await coveredUserIds()).toEqual([payer.id])
     const me = (await (await as(member).get('/api/me')).json()) as { access: { access: boolean; reason: string } }
     expect(me.access).toMatchObject({ access: false, reason: 'none' })
+  })
+
+  it('takes a wish back when the person is released before the webhook', async () => {
+    const payer = await createUser()
+    const member = await createUser()
+    await sharedSpaceWith(payer, [member])
+    await apply(payer)
+
+    expect((await as(payer).post('/api/billing/seats/cover', { memberId: member.id })).status).toBe(204)
+    expect((await as(payer).post('/api/billing/seats/release', { memberId: member.id })).status).toBe(204)
+
+    // Paddle never confirmed the cover, so the second call drops the wish and sends no seat item.
+    expect(calls[1]?.body).toEqual({
+      items: [{ price_id: BASE_PRICE, quantity: 1 }],
+      custom_data: { userId: payer.id, seatUserIds: [] },
+      proration_billing_mode: 'prorated_immediately',
+    })
   })
 
   it('refuses a person who has no seat', async () => {

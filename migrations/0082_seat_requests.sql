@@ -84,24 +84,40 @@ END
 $$;
 
 -- A person sits on at most one subscription. ebb_app cannot see other people's seats, so the payer
--- asks here; only people from the caller's shared spaces get a true answer.
-CREATE FUNCTION app.is_seated(p_user text) RETURNS boolean
+-- asks here; only people from the caller's shared spaces get an answer. One call for a whole list
+-- keeps the candidate query constant instead of one call per member.
+CREATE FUNCTION app.seated_among(p_users text[]) RETURNS SETOF text
   LANGUAGE sql STABLE SECURITY DEFINER
   SET search_path = pg_catalog, public
   AS $$
-    SELECT EXISTS (
-      SELECT 1
-        FROM public.subscription_seat seat
-       WHERE seat.user_id = p_user
-         AND EXISTS (
-           SELECT 1
-             FROM public.space s
-             JOIN public.space_member mine ON mine.space_id = s.id AND mine.user_id = app.uid()
-             JOIN public.space_member other ON other.space_id = s.id AND other.user_id = p_user
-            WHERE s.kind = 'shared'))
+    SELECT seat.user_id
+      FROM public.subscription_seat seat
+     WHERE seat.user_id = ANY (p_users)
+       AND EXISTS (
+         SELECT 1
+           FROM public.space s
+           JOIN public.space_member mine ON mine.space_id = s.id AND mine.user_id = app.uid()
+           JOIN public.space_member other ON other.space_id = s.id AND other.user_id = seat.user_id
+          WHERE s.kind = 'shared')
   $$;
 
-REVOKE ALL ON FUNCTION app.request_seat(uuid, text, text), app.covered_seats(uuid), app.is_seated(text)
-  FROM PUBLIC;
-GRANT EXECUTE ON FUNCTION app.request_seat(uuid, text, text), app.covered_seats(uuid), app.is_seated(text)
-  TO ebb_app;
+-- Everyone the caller shares a shared space with, with names: "user" belongs to ebb_auth, so only a
+-- definer function may join it. One call replaces one app.space_members per space and one seated
+-- lookup per member.
+CREATE FUNCTION app.shared_members() RETURNS TABLE (user_id text, name text)
+  LANGUAGE sql STABLE SECURITY DEFINER
+  SET search_path = pg_catalog, public
+  AS $$
+    SELECT DISTINCT m.user_id, u.name::text
+      FROM public.space s
+      JOIN public.space_member mine ON mine.space_id = s.id AND mine.user_id = app.uid()
+      JOIN public.space_member m ON m.space_id = s.id
+      JOIN "user" u ON u.id = m.user_id
+     WHERE s.kind = 'shared' AND m.user_id <> app.uid()
+     ORDER BY 2, 1
+  $$;
+
+REVOKE ALL ON FUNCTION app.request_seat(uuid, text, text), app.covered_seats(uuid),
+  app.seated_among(text[]), app.shared_members() FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION app.request_seat(uuid, text, text), app.covered_seats(uuid),
+  app.seated_among(text[]), app.shared_members() TO ebb_app;

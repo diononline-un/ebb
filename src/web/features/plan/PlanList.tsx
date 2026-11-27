@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Task, TaskPatch } from '../../../shared/schemas/task.ts'
-import { TaskRow } from '../tasks/TaskRow.tsx'
+import { SpaceNamesProvider, TaskRow } from '../tasks/TaskRow.tsx'
 import { TaskSheet } from '../tasks/TaskSheet.tsx'
 import { deleteTask, usePatchTask, useToday, type TaskPatcher } from '../tasks/api.ts'
 import { formatDay, useTaskList, type ListView } from './api.ts'
@@ -55,33 +55,35 @@ export function PlanList({ view }: { view: ListView }) {
   }
 
   return (
-    <div className="flex flex-col gap-8">
-      {groups.map((group) => (
-        <section key={group.date ?? view} className="flex flex-col gap-2">
-          {group.date ? <h2 className="text-heading">{formatDay(group.date, i18n.language)}</h2> : null}
-          <ul className="flex flex-col">
-            {group.tasks.map((task) => (
-              <TaskRow
-                key={task.id}
-                task={task}
-                today={today}
-                onToggle={toggle}
-                onOpen={(entry) => setSelectedId(entry.id)}
-                showPushCount
-              />
-            ))}
-          </ul>
-        </section>
-      ))}
+    <SpaceNamesProvider spaces={query.data.spaces}>
+      <div className="flex flex-col gap-8">
+        {groups.map((group) => (
+          <section key={group.date ?? view} className="flex flex-col gap-2">
+            {group.date ? <h2 className="text-heading">{formatDay(group.date, i18n.language)}</h2> : null}
+            <ul className="flex flex-col">
+              {group.tasks.map((task) => (
+                <TaskRow
+                  key={task.id}
+                  task={task}
+                  today={today}
+                  onToggle={toggle}
+                  onOpen={(entry) => setSelectedId(entry.id)}
+                  showPushCount
+                />
+              ))}
+            </ul>
+          </section>
+        ))}
 
-      <TaskSheet
-        task={selected}
-        onOpenChange={(open) => {
-          if (!open) setSelectedId(null)
-        }}
-        onPatch={patch}
-        onDelete={remove}
-      />
-    </div>
+        <TaskSheet
+          task={selected}
+          onOpenChange={(open) => {
+            if (!open) setSelectedId(null)
+          }}
+          onPatch={patch}
+          onDelete={remove}
+        />
+      </div>
+    </SpaceNamesProvider>
   )
 }

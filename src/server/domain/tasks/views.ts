@@ -42,6 +42,12 @@ function groupedByDate(rows: GroupedRow[]): TaskListView['groups'] {
   return [...groups.entries()].map(([date, tasks]) => ({ date, tasks }))
 }
 
+/** The payload of a Plan view: its groups and the spaces of everything in them (E7). */
+async function listOf(tx: Tx, view: ListView, groups: TaskListView['groups']): Promise<TaskListView> {
+  const tasks = groups.flatMap((group) => group.tasks)
+  return TaskListViewSchema.parse({ view, groups, spaces: await spacesOf(tx, tasks) })
+}
+
 /**
  * The Today screen: everything assigned to the user for their day. The anchor and the must tasks
  * appear only in their own fields, never again in a slot (docs/specs/E02-kern.md).
@@ -103,7 +109,7 @@ export async function loadTaskList(tx: Tx, view: ListView, today: string): Promi
           order by do_date nulls last, position, created_at, id`,
         [today],
       )
-      return TaskListViewSchema.parse({ view, groups: singleGroup(rows) })
+      return listOf(tx, view, singleGroup(rows))
     }
 
     case 'tomorrow': {
@@ -113,7 +119,7 @@ export async function loadTaskList(tx: Tx, view: ListView, today: string): Promi
           order by position, created_at, id`,
         [tomorrow],
       )
-      return TaskListViewSchema.parse({ view, groups: singleGroup(rows) })
+      return listOf(tx, view, singleGroup(rows))
     }
 
     case 'week': {
@@ -123,7 +129,7 @@ export async function loadTaskList(tx: Tx, view: ListView, today: string): Promi
           order by do_date, position, created_at, id`,
         [tomorrow, addDays(today, 7)],
       )
-      return TaskListViewSchema.parse({ view, groups: groupedByDate(rows) })
+      return listOf(tx, view, groupedByDate(rows))
     }
 
     case 'errands': {
@@ -132,7 +138,7 @@ export async function loadTaskList(tx: Tx, view: ListView, today: string): Promi
           where assignee_id = app.uid() and slot = 'errands' and status in ('todo', 'doing')
           order by position, created_at, id`,
       )
-      return TaskListViewSchema.parse({ view, groups: singleGroup(rows) })
+      return listOf(tx, view, singleGroup(rows))
     }
 
     case 'waiting': {
@@ -141,7 +147,7 @@ export async function loadTaskList(tx: Tx, view: ListView, today: string): Promi
           where assignee_id = app.uid() and status = 'waiting'
           order by do_date nulls last, position, created_at, id`,
       )
-      return TaskListViewSchema.parse({ view, groups: singleGroup(rows) })
+      return listOf(tx, view, singleGroup(rows))
     }
 
     case 'done': {
@@ -153,7 +159,7 @@ export async function loadTaskList(tx: Tx, view: ListView, today: string): Promi
           order by do_date desc nulls last, completed_at desc, id`,
         [addDays(today, -30)],
       )
-      return TaskListViewSchema.parse({ view, groups: groupedByDate(rows) })
+      return listOf(tx, view, groupedByDate(rows))
     }
 
     case 'skipped': {
@@ -163,7 +169,7 @@ export async function loadTaskList(tx: Tx, view: ListView, today: string): Promi
           order by do_date desc nulls last, updated_at desc, id`,
         [addDays(today, -30)],
       )
-      return TaskListViewSchema.parse({ view, groups: groupedByDate(rows) })
+      return listOf(tx, view, groupedByDate(rows))
     }
   }
 }

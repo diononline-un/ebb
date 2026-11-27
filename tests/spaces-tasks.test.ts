@@ -1,7 +1,7 @@
 import { afterAll, beforeEach, describe, expect, it } from 'vitest'
 import { closeDb } from '../src/server/db.ts'
 import type { InviteIssued, Space } from '../src/shared/schemas/spaces.ts'
-import type { Task, TodayView } from '../src/shared/schemas/task.ts'
+import type { Task, TaskListView, TodayView } from '../src/shared/schemas/task.ts'
 import { as, createUser, ownerSql, resetDb, type TestUser } from './harness.ts'
 
 beforeEach(resetDb)
@@ -137,5 +137,36 @@ describe('the day of a member', () => {
     const today = (await (await as(member).get('/api/today')).json()) as TodayView
     expect(today.slots.inbox.map((row) => row.title)).toContain('shared work')
     expect(today.spaces?.find((row) => row.id === space.id)?.name).toBe('Home')
+  })
+})
+
+describe('the plan of a member', () => {
+  const inboxOf = async (user: TestUser) =>
+    (await (await as(user).get('/api/tasks?view=inbox')).json()) as TaskListView
+
+  it('names the shared space of an assigned task', async () => {
+    const owner = await createUser()
+    const member = await createUser()
+    const space = await sharedWith(owner, member)
+    const task = await addTask(owner, { title: 'shared work', spaceId: space.id })
+    await as(owner).patch(`/api/tasks/${task.id}`, { assigneeId: member.id })
+
+    const inbox = await inboxOf(member)
+    expect(inbox.groups.flatMap((group) => group.tasks).map((row) => row.title)).toEqual(['shared work'])
+    expect(inbox.spaces?.find((row) => row.id === space.id)?.name).toBe('Home')
+  })
+
+  it('brings only the personal space for a personal task, no foreign one', async () => {
+    const owner = await createUser()
+    const member = await createUser()
+    const space = await sharedWith(owner, member)
+    // The shared task stays the owner's, so the member's inbox only holds their own task.
+    await addTask(owner, { title: 'not mine', spaceId: space.id })
+    await addTask(member, { title: 'mine' })
+
+    const me = (await (await as(member).get('/api/me')).json()) as { personalSpaceId: string | null }
+    const inbox = await inboxOf(member)
+    expect(inbox.groups.flatMap((group) => group.tasks).map((row) => row.title)).toEqual(['mine'])
+    expect(inbox.spaces?.map((row) => row.id)).toEqual([me.personalSpaceId])
   })
 })

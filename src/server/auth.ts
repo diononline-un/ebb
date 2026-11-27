@@ -1,5 +1,6 @@
 import { passkey } from '@better-auth/passkey'
-import { betterAuth } from 'better-auth'
+import { APIError, betterAuth } from 'better-auth'
+import { createAuthMiddleware } from 'better-auth/api'
 import pg from 'pg'
 import { APP_NAME } from '../shared/brand.ts'
 import { bootstrapUser } from './domain/users/bootstrap.ts'
@@ -10,7 +11,25 @@ import { sendMail } from './mail.ts'
 const pool = new pg.Pool({ connectionString: dbUrl('auth'), max: 5 })
 
 // Selfhost without SMTP cannot deliver verification mails, so it signs people in without them.
-const verifyEmail = !(env.APP_MODE === 'selfhost' && !env.SMTP_URL)
+export const verifyEmail = !(env.APP_MODE === 'selfhost' && !env.SMTP_URL)
+
+// Set only by cli.ts inside its own process: with REGISTRATION=closed the operator still creates
+// accounts. Nothing reachable over HTTP can set it.
+let allowNextSignup = false
+
+/** Lets the next account creation through the closed-registration gate. Only cli.ts calls this. */
+export function allowSignupFromCli(): void {
+  allowNextSignup = true
+}
+
+/**
+ * Registration gate (E8-P7): `open` takes everyone, `closed` the very first account and whatever
+ * the CLI creates in its own process.
+ */
+export function registrationAllowed(mode: 'open' | 'closed', userCount: number, viaCli: boolean): boolean {
+  if (mode === 'open') return true
+  return viaCli || userCount === 0
+}
 
 export const auth = betterAuth({
   appName: APP_NAME,
@@ -67,5 +86,21 @@ export const auth = betterAuth({
         },
       },
     },
+  },
+  hooks: {
+    // Registration gate (E8-P7). It lives in hooks.before and not in databaseHooks.user.create.before
+    // because Better Auth answers every 403 from user creation with a generic 200 duplicate response
+    // while email verification is on: the refusal and its code would never reach the client.
+    before: createAuthMiddleware(async (ctx) => {
+      if (ctx.path !== '/sign-up/email') return
+      const viaCli = allowNextSignup
+      allowNextSignup = false
+      // Counted over Better Auth's own pool (ebb_auth): the request role cannot read the auth
+      // tables, so this is neither withSystem nor SQL of our own.
+      const userCount = await ctx.context.internalAdapter.countTotalUsers()
+      if (!registrationAllowed(env.REGISTRATION, userCount, viaCli)) {
+        throw new APIError('FORBIDDEN', { message: 'Registration is closed', code: 'registration_closed' })
+      }
+    }),
   },
 })

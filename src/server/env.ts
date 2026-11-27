@@ -10,6 +10,9 @@ const secret = deployed ? z.string().min(12) : z.string().min(1).default('ebb_de
 
 const schema = z.object({
   APP_MODE: z.enum(['development', 'production', 'selfhost']).default('development'),
+  // Self-host (E8-P7): `closed` lets only the very first account through, every later one comes
+  // from the CLI. `open` is the sign-up for everyone.
+  REGISTRATION: z.enum(['open', 'closed']).default('open'),
   NODE_ENV: z.string().default('development'),
   APP_URL: deployed ? z.url() : z.url().default('http://localhost:2042'),
   PORT: z.coerce.number().int().positive().default(2040),

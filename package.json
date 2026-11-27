@@ -18,6 +18,7 @@
     "e2e": "playwright test",
     "db:migrate": "node --env-file-if-exists=.env scripts/migrate.ts",
     "db:test-setup": "node --env-file-if-exists=.env scripts/test-setup.ts",
+    "cli": "node --env-file-if-exists=.env src/server/cli.ts",
     "i18n:check": "node scripts/check-locales.ts",
     "i18n:pseudo": "node scripts/pseudo-locale.ts"
   },

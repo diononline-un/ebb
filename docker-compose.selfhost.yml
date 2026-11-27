@@ -1,0 +1,34 @@
+# Self-host stack (E8-P7): app and postgres, nothing published except the app on loopback for your
+# own proxy. The shared service definitions come from the production stack; this file only changes
+# what self-host needs. Backups run like in production. `docker compose -f docker-compose.selfhost.yml`
+# is the short form for every command below.
+name: ebb
+
+services:
+  app:
+    extends:
+      file: docker-compose.prod.yml
+      service: app
+    environment:
+      APP_MODE: selfhost
+    ports:
+      # Loopback only: Caddy, nginx or whatever terminates TLS in front of it.
+      - "127.0.0.1:2040:2040"
+
+  postgres:
+    extends:
+      file: docker-compose.prod.yml
+      service: postgres
+
+  backup:
+    extends:
+      file: docker-compose.prod.yml
+      service: backup
+
+  # No Caddy here on purpose: self-host runs behind the proxy of your choice. To terminate TLS in
+  # this stack, copy the `caddy` service and the `caddy_data`/`caddy_config` volumes from
+  # docker-compose.prod.yml into this file, set EBB_DOMAIN in .env and remove the app port.
+
+volumes:
+  pgdata:
+  backups:

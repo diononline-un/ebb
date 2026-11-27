@@ -46,7 +46,14 @@ describe('parseMarkdown', () => {
     },
   )
 
-  it.each(['javascript:alert(1)', '//evil.example', 'relative/path'])('turns %s into text', (href) => {
+  it.each([
+    'javascript:alert(1)',
+    '//evil.example',
+    'relative/path',
+    '/\\evil.com',
+    '/\t/evil.com',
+    'https:evil',
+  ])('turns %s into text', (href) => {
     expect(parseMarkdown(`[label](${href})`)).toEqual([
       { type: 'paragraph', inlines: [{ type: 'text', text: `[label](${href})` }] },
     ])

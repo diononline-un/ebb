@@ -16,9 +16,14 @@ const INLINE = /\*\*(.+?)\*\*|\[([^\]]+)\]\(([^)]*)\)/
 const HEADING = /^(#{1,3})\s+(.*)$/
 const LIST_ITEM = /^-\s+(.*)$/
 
+// Control characters, whitespace and backslashes never belong in an href: browsers strip tabs and
+// newlines and turn "/\" into "//", so "/\evil.com" would become a link to a foreign host.
+const UNSAFE_HREF = /[\x00-\x20\x7f\\]/
+
 /** https, mailto and app paths are clickable; protocol-relative //host and every other scheme are not. */
 function isAllowedHref(href: string): boolean {
-  return /^https:/i.test(href) || /^mailto:/i.test(href) || (href.startsWith('/') && !href.startsWith('//'))
+  if (UNSAFE_HREF.test(href)) return false
+  return /^https:\/\//i.test(href) || /^mailto:/i.test(href) || (href.startsWith('/') && href[1] !== '/')
 }
 
 function pushText(inlines: Inline[], text: string): void {

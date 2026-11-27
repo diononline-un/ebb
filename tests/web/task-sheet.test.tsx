@@ -1,8 +1,5 @@
-// @ts-nocheck — the component under test is a .tsx module and tsconfig.server (which checks
-// tests/) sets no jsx flag. Turning it on would change a config outside this package.
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react'
-import { createElement } from 'react'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { i18nReady } from '../../src/web/lib/i18n.ts'
 import { ApiError } from '../../src/web/lib/api.ts'
@@ -61,12 +58,7 @@ describe('TaskSheetFields', () => {
     })
 
     const { getByLabelText, findByText, getByRole } = render(
-      createElement(TaskSheetFields, {
-        task: TASK,
-        onPatch,
-        onDelete: async () => {},
-        onClose: () => {},
-      }),
+      <TaskSheetFields task={TASK} onPatch={onPatch} onDelete={async () => {}} onClose={() => {}} />,
     )
 
     fireEvent.click(getByLabelText('Anchor'))
@@ -88,12 +80,7 @@ describe('TaskSheetFields', () => {
     })
 
     const { getByLabelText, findByRole } = render(
-      createElement(TaskSheetFields, {
-        task: TASK,
-        onPatch,
-        onDelete: async () => {},
-        onClose: () => {},
-      }),
+      <TaskSheetFields task={TASK} onPatch={onPatch} onDelete={async () => {}} onClose={() => {}} />,
     )
 
     fireEvent.click(getByLabelText('Must today'))
@@ -110,12 +97,7 @@ describe('TaskSheetFields', () => {
     }))
 
     const { getByLabelText, findByText } = render(
-      createElement(TaskSheetFields, {
-        task: TASK,
-        onPatch,
-        onDelete: async () => {},
-        onClose: () => {},
-      }),
+      <TaskSheetFields task={TASK} onPatch={onPatch} onDelete={async () => {}} onClose={() => {}} />,
     )
 
     fireEvent.click(getByLabelText('Must today'))

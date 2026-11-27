@@ -1,12 +1,8 @@
-// @ts-nocheck — the component under test is a .tsx module and tsconfig.server (which checks
-// tests/) sets no jsx flag. Turning it on would change a config outside this package.
 // @vitest-environment jsdom
-import { render } from '@testing-library/react'
-import { createElement } from 'react'
+import { cleanup, render } from '@testing-library/react'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { i18nReady } from '../../src/web/lib/i18n.ts'
 import { TaskRow } from '../../src/web/features/tasks/TaskRow.tsx'
-import { cleanup } from '@testing-library/react'
 import type { Task } from '../../src/shared/schemas/task.ts'
 
 beforeAll(async () => {
@@ -34,6 +30,9 @@ function makeTask(overrides: Partial<Task> = {}): Task {
     position: 0,
     anchor: false,
     pushCount: 0,
+    projectId: null,
+    parentId: null,
+    recurrenceId: null,
     completedAt: null,
     createdAt: '2026-11-21T09:00:00.000Z',
     updatedAt: '2026-11-21T09:00:00.000Z',
@@ -44,11 +43,9 @@ function makeTask(overrides: Partial<Task> = {}): Task {
 function renderRow(task: Task, showPushCount = false) {
   const noop = vi.fn()
   const container = render(
-    createElement(
-      'ul',
-      null,
-      createElement(TaskRow, { task, today: '2026-11-21', onToggle: noop, onOpen: noop, showPushCount }),
-    ),
+    <ul>
+      <TaskRow task={task} today="2026-11-21" onToggle={noop} onOpen={noop} showPushCount={showPushCount} />
+    </ul>,
   )
   return container
 }

@@ -1,8 +1,6 @@
-// @ts-nocheck — the component under test is a .tsx module and tsconfig.server (which checks
-// tests/) sets no jsx flag. Turning it on would change a config outside this package.
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react'
-import { createElement } from 'react'
+import type { RenderResult } from '@testing-library/react'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { i18nReady } from '../../src/web/lib/i18n.ts'
 import { MoveMenu } from '../../src/web/features/today/MoveMenu.tsx'
@@ -15,7 +13,7 @@ afterEach(() => {
   cleanup()
 })
 
-function openMenu(getByRole) {
+function openMenu({ getByRole }: Pick<RenderResult, 'getByRole'>) {
   const trigger = getByRole('button', { name: /Move/ })
   trigger.focus()
   fireEvent.keyDown(trigger, { key: 'Enter' })
@@ -25,9 +23,9 @@ function openMenu(getByRole) {
 describe('MoveMenu', () => {
   it('moves a task into a block without any pointer', async () => {
     const onMove = vi.fn()
-    const { getByRole, findByText } = render(createElement(MoveMenu, { taskTitle: 'write the invoice', onMove }))
+    const { getByRole, findByText } = render(<MoveMenu taskTitle="write the invoice" onMove={onMove} />)
 
-    openMenu(getByRole)
+    openMenu({ getByRole })
     const item = await findByText('Block 2')
     fireEvent.click(item)
 
@@ -37,9 +35,9 @@ describe('MoveMenu', () => {
 
   it('offers the inbox, errands and another day', async () => {
     const onMove = vi.fn()
-    const { getByRole, findByText } = render(createElement(MoveMenu, { taskTitle: 'write the invoice', onMove }))
+    const { getByRole, findByText } = render(<MoveMenu taskTitle="write the invoice" onMove={onMove} />)
 
-    openMenu(getByRole)
+    openMenu({ getByRole })
     expect(await findByText('To the inbox')).toBeTruthy()
     expect(await findByText('To errands')).toBeTruthy()
     expect(await findByText('To another day…')).toBeTruthy()
@@ -48,15 +46,13 @@ describe('MoveMenu', () => {
 
   it('sends errands as a slot and another day as a date', async () => {
     const onMove = vi.fn()
-    const { getByRole, findByText, findByLabelText } = render(
-      createElement(MoveMenu, { taskTitle: 'write the invoice', onMove }),
-    )
+    const { getByRole, findByText, findByLabelText } = render(<MoveMenu taskTitle="write the invoice" onMove={onMove} />)
 
-    openMenu(getByRole)
+    openMenu({ getByRole })
     fireEvent.click(await findByText('To errands'))
     await waitFor(() => expect(onMove).toHaveBeenCalledWith({ slot: 'errands' }))
 
-    openMenu(getByRole)
+    openMenu({ getByRole })
     fireEvent.click(await findByText('To another day…'))
     const input = await findByLabelText('Date')
     fireEvent.change(input, { target: { value: '2026-12-01' } })

@@ -11,6 +11,9 @@ import { userOf } from './session.ts'
 const EXEMPT = [
   /^\/api\/auth\//,
   /^\/api\/billing\//,
+  // The customer portal is where an expired subscription gets a new card; blocking it would lock
+  // the door to the one way back in.
+  /^\/api\/billing-config\/portal$/,
   /^\/api\/export\b/,
   // Settings carry language, time zone and the reminder hours; without them nobody could even
   // switch the interface to a language they read.

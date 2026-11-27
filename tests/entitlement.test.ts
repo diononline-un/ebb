@@ -20,6 +20,7 @@ const SAFE = new Set(['GET', 'HEAD', 'OPTIONS'])
 const EXEMPT = [
   /^\/api\/auth\//,
   /^\/api\/billing\//,
+  /^\/api\/billing-config\/portal$/,
   /^\/api\/export\b/,
   /^\/api\/settings\b/,
   /^\/api\/account\b/,
@@ -53,6 +54,8 @@ describe('writing without access', () => {
     expect((await as(user).get('/api/export')).status).toBe(200)
     expect((await as(user).patch('/api/settings', { locale: 'en' })).status).toBe(200)
     expect((await as(user).get('/api/me')).status).toBe(200)
+    // The portal stays reachable: without a Paddle key it answers 503, never 402.
+    expect((await as(user).post('/api/billing-config/portal', {})).status).not.toBe(402)
   })
 
   it('tells the client why it is read-only', async () => {

@@ -15,6 +15,8 @@ function MorePage() {
   const { t: tReset } = useTranslation('reset')
   // And the spaces: their label belongs to the spaces package.
   const { t: tSpaces } = useTranslation('spaces')
+  // The legal pages: their link labels belong to the legal package.
+  const { t: tLegal } = useTranslation('legal')
 
   return (
     <section className="flex flex-col gap-8 lg:gap-12">
@@ -67,6 +69,17 @@ function MorePage() {
         </li>
       </ul>
       <EmptyState title={t('more.empty')} />
+      <nav aria-label={tLegal('links.label')} className="flex flex-wrap gap-4 text-small text-ink-2">
+        <Link to="/legal/$doc" params={{ doc: 'imprint' }} className="hover:text-ink">
+          {tLegal('links.imprint')}
+        </Link>
+        <Link to="/legal/$doc" params={{ doc: 'privacy' }} className="hover:text-ink">
+          {tLegal('links.privacy')}
+        </Link>
+        <Link to="/legal/$doc" params={{ doc: 'terms' }} className="hover:text-ink">
+          {tLegal('links.terms')}
+        </Link>
+      </nav>
     </section>
   )
 }

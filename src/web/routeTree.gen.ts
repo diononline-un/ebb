@@ -31,6 +31,7 @@ import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as GoalsGoalIdRouteImport } from './routes/goals_.$goalId'
 import { Route as JoinTokenRouteImport } from './routes/join.$token'
+import { Route as LegalDocRouteImport } from './routes/legal.$doc'
 import { Route as ProjectsProjectIdRouteImport } from './routes/projects_.$projectId'
 import { Route as ResetHistoryRouteImport } from './routes/reset_.history'
 import { Route as SettingsSecurityRouteImport } from './routes/settings.security'
@@ -146,6 +147,11 @@ const JoinTokenRoute = JoinTokenRouteImport.update({
   path: '/join/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LegalDocRoute = LegalDocRouteImport.update({
+  id: '/legal/$doc',
+  path: '/legal/$doc',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjectsProjectIdRoute = ProjectsProjectIdRouteImport.update({
   id: '/projects_/$projectId',
   path: '/projects/$projectId',
@@ -190,6 +196,7 @@ export interface FileRoutesByFullPath {
   '/welcome': typeof WelcomeRoute
   '/goals/$goalId': typeof GoalsGoalIdRoute
   '/join/$token': typeof JoinTokenRoute
+  '/legal/$doc': typeof LegalDocRoute
   '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/reset/history': typeof ResetHistoryRoute
   '/settings/security': typeof SettingsSecurityRoute
@@ -218,6 +225,7 @@ export interface FileRoutesByTo {
   '/welcome': typeof WelcomeRoute
   '/goals/$goalId': typeof GoalsGoalIdRoute
   '/join/$token': typeof JoinTokenRoute
+  '/legal/$doc': typeof LegalDocRoute
   '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/reset/history': typeof ResetHistoryRoute
   '/settings/security': typeof SettingsSecurityRoute
@@ -247,6 +255,7 @@ export interface FileRoutesById {
   '/welcome': typeof WelcomeRoute
   '/goals_/$goalId': typeof GoalsGoalIdRoute
   '/join/$token': typeof JoinTokenRoute
+  '/legal/$doc': typeof LegalDocRoute
   '/projects_/$projectId': typeof ProjectsProjectIdRoute
   '/reset_/history': typeof ResetHistoryRoute
   '/settings/security': typeof SettingsSecurityRoute
@@ -277,6 +286,7 @@ export interface FileRouteTypes {
     | '/welcome'
     | '/goals/$goalId'
     | '/join/$token'
+    | '/legal/$doc'
     | '/projects/$projectId'
     | '/reset/history'
     | '/settings/security'
@@ -305,6 +315,7 @@ export interface FileRouteTypes {
     | '/welcome'
     | '/goals/$goalId'
     | '/join/$token'
+    | '/legal/$doc'
     | '/projects/$projectId'
     | '/reset/history'
     | '/settings/security'
@@ -333,6 +344,7 @@ export interface FileRouteTypes {
     | '/welcome'
     | '/goals_/$goalId'
     | '/join/$token'
+    | '/legal/$doc'
     | '/projects_/$projectId'
     | '/reset_/history'
     | '/settings/security'
@@ -362,6 +374,7 @@ export interface RootRouteChildren {
   WelcomeRoute: typeof WelcomeRoute
   GoalsGoalIdRoute: typeof GoalsGoalIdRoute
   JoinTokenRoute: typeof JoinTokenRoute
+  LegalDocRoute: typeof LegalDocRoute
   ProjectsProjectIdRoute: typeof ProjectsProjectIdRoute
   ResetHistoryRoute: typeof ResetHistoryRoute
   SettingsSecurityRoute: typeof SettingsSecurityRoute
@@ -524,6 +537,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JoinTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/legal/$doc': {
+      id: '/legal/$doc'
+      path: '/legal/$doc'
+      fullPath: '/legal/$doc'
+      preLoaderRoute: typeof LegalDocRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/projects_/$projectId': {
       id: '/projects_/$projectId'
       path: '/projects/$projectId'
@@ -578,6 +598,7 @@ const rootRouteChildren: RootRouteChildren = {
   WelcomeRoute: WelcomeRoute,
   GoalsGoalIdRoute: GoalsGoalIdRoute,
   JoinTokenRoute: JoinTokenRoute,
+  LegalDocRoute: LegalDocRoute,
   ProjectsProjectIdRoute: ProjectsProjectIdRoute,
   ResetHistoryRoute: ResetHistoryRoute,
   SettingsSecurityRoute: SettingsSecurityRoute,

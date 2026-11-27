@@ -5,9 +5,16 @@ import { useMe } from '../features/onboarding/api.ts'
 import { authClient } from '../lib/auth-client.ts'
 import { router } from '../router.tsx'
 
-// Auth screens and the legal pages render without a session and without the navigation bar;
-// everything else needs one.
-const PUBLIC_PATHS = new Set(['/sign-in', '/sign-up', '/verify-email', '/forgot-password', '/reset-password'])
+// The landing page, the auth screens and the legal pages render without a session and without the
+// navigation bar; everything else needs one.
+const PUBLIC_PATHS = new Set([
+  '/',
+  '/sign-in',
+  '/sign-up',
+  '/verify-email',
+  '/forgot-password',
+  '/reset-password',
+])
 
 export function isPublicPath(pathname: string): boolean {
   return PUBLIC_PATHS.has(pathname) || pathname.startsWith('/legal/')

@@ -1,0 +1,60 @@
+{
+  "header": {
+    "signIn": "Sign in"
+  },
+  "hero": {
+    "title": "Plan your day one question at a time",
+    "line": "For mornings when your head is full and the list has no order yet.",
+    "cta": "Start 7 days free",
+    "note": "No card needed"
+  },
+  "morning": {
+    "title": "How a morning goes",
+    "steps": {
+      "energy": "Say how much energy you have. One word is enough.",
+      "yesterday": "See what came along from yesterday, with no verdict attached.",
+      "thoughts": "Put the loose thoughts somewhere they can wait.",
+      "questions": "Answer one question per task until the anchor is clear: \"What breaks if this waits until tomorrow?\""
+    }
+  },
+  "low": {
+    "title": "On a low day",
+    "body": "Low mode keeps one task on the screen, plus the first ten-minute step. Everything else ebbs away until you are ready."
+  },
+  "notHere": {
+    "title": "What you won't find here",
+    "body": "No chains of good days, no points, no red marks for what moved, no counter on the app icon. A low day is information, not a debt."
+  },
+  "together": {
+    "title": "Together, if you want",
+    "body": "Shared spaces for a household, a family or a small team. You see who takes what on, and nobody gets nudged."
+  },
+  "price": {
+    "title": "Price",
+    "body": "7 days free. Then 30 € a year at founder pricing, locked for as long as you stay. Each extra member is 5 € a year.",
+    "selfHost": "You can also run ebbe yourself, and you can export your data at any time."
+  },
+  "faq": {
+    "title": "FAQ",
+    "app": {
+      "question": "Is there an app?",
+      "answer": "Yes. ebbe is an installable PWA that sits on your homescreen like any other app."
+    },
+    "data": {
+      "question": "Where does my data live?",
+      "answer": "On the server that runs your account. When you host ebbe yourself, it stays on your own machine."
+    },
+    "export": {
+      "question": "Can I export and delete my data?",
+      "answer": "Yes. Export gives you a file with everything, and delete removes the account and its data."
+    },
+    "trial": {
+      "question": "What happens after the trial?",
+      "answer": "Your days stay readable and you can still export everything. A subscription brings planning back."
+    },
+    "adhd": {
+      "question": "Is this made for ADHD?",
+      "answer": "It is made for full heads. It helps with focus and overwhelm, and it makes no medical promise."
+    }
+  }
+}

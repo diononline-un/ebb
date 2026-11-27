@@ -22,6 +22,7 @@ import { goalRoutes } from './routes/goals.ts'
 import { habitRoutes } from './routes/habits.ts'
 import { onboardingRoutes } from './routes/onboarding.ts'
 import { projectRoutes } from './routes/projects.ts'
+import { pushRoutes } from './routes/push.ts'
 import { recurrenceRoutes } from './routes/recurrences.ts'
 import { resetRoutes } from './routes/reset.ts'
 import { spaceRoutes } from './routes/spaces.ts'
@@ -82,6 +83,7 @@ export function createApp(): Hono<AppEnv> {
   app.route('/api/habits', habitRoutes)
   app.route('/api/onboarding', onboardingRoutes)
   app.route('/api/projects', projectRoutes)
+  app.route('/api/push', pushRoutes)
   app.route('/api/recurrences', recurrenceRoutes)
   app.route('/api/reset', resetRoutes)
   app.route('/api/spaces', spaceRoutes)

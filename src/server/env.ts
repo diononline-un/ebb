@@ -38,6 +38,14 @@ const schema = z.object({
   MAX_EXTRA_SEATS: z.coerce.number().int().min(0).max(20).default(5),
   // Request log (E9-P8): off in development unless set to 1; production and selfhost log by default.
   LOG_REQUESTS: z.enum(['0', '1']).optional(),
+  // Push (E9-P1): all three or none. Production generates its own keys per deployment as a secret;
+  // .env.example carries development keys only. Any missing value keeps push off.
+  VAPID_PUBLIC_KEY: z.string().optional(),
+  VAPID_PRIVATE_KEY: z.string().optional(),
+  VAPID_SUBJECT: z
+    .string()
+    .regex(/^(mailto:|https:\/\/)/, 'must be mailto: or https:')
+    .optional(),
 })
 
 const parsed = schema

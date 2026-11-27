@@ -4,6 +4,7 @@ import type { AppEnv } from '../app-env.ts'
 import { devMails } from '../mail.ts'
 import { setDevClockOffset } from '../middleware/day-start.ts'
 import { requireUser, userOf } from '../middleware/session.ts'
+import { clearDevPushes, devPushes } from '../push/send.ts'
 
 const ClockBody = z.object({
   /** Minutes the user's clock is moved forward (or back, with a negative value). Zero resets it. */
@@ -20,6 +21,11 @@ const ClockBody = z.object({
  */
 export const devRoutes = new Hono<AppEnv>()
   .get('/mails', (c) => c.json(devMails()))
+  .get('/pushes', (c) => c.json(devPushes()))
+  .delete('/pushes', (c) => {
+    clearDevPushes()
+    return c.body(null, 204)
+  })
   .post('/clock', requireUser, async (c) => {
     let body: unknown
     try {

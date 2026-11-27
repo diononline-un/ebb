@@ -1,37 +1,39 @@
 # Projektstatus
 
-**Stand:** 2026-11-27 · **Phase:** E1 bis E7 auf `main`, E8–E10 teilweise · Plan: `docs/entwicklungsplan.md`
+**Stand:** 2026-11-27 · **Phase:** E1 bis E10 gebaut und geprüft auf `main` · offen: Lasttest (E9-P6) und die Punkte für Dion unten
 
 | Bereich | Stand |
 |---|---|
-| Planung | Analyse, PRD, Architektur, DESIGN.md 1.0.2, Specs |
-| E1 Fundament | 9/9 fertig, geprüft, auf `main` |
-| E2 Kern-Ablauf | 11/11 fertig, geprüft, auf `main` |
-| E3 Energie | 4/4 fertig, geprüft, auf `main` (Ritual, Low-Modus, Fokus-Timer; D1: Ritual auch am Wochenende) |
-| E4 Ziele, Habits, Onboarding | 6/6 fertig, geprüft, auf `main` |
-| E5 Projekte, Wiederholungen, Erledigungen | 8/8 fertig, geprüft, auf `main` |
-| E6 Weekly Reset | 4/4 fertig, geprüft, auf `main` |
-| E7 Geteilte Bereiche | 6/6 fertig, geprüft, auf `main` (Rest: Plan-Seite zeigt keine Bereichsnamen) |
-| E8 Billing | P1–P4 + Ereignis-Job auf `main`; offen P5 (Attrappe), P6 Sitze, P7 (minimal), P8 Trial-Mails |
-| E9 Betrieb | P4 Export, P5 Löschung auf `main`; offen P1–P3, P6–P8 |
-| E10 Launch | P6 Produkt-Events auf `main`; offen P1–P5 (Entscheidungen 2026-11-27 im Plan) |
-| Tests | 541 Vitest (56 Dateien) + 8 Playwright grün · Check 0 Fehler · Design-Drift 0 (208 Dateien) |
-| Bundle | erster Chunk 111 KB gzip (Budget 250), Seiten als eigene Chunks (Stand E3, nicht neu gemessen) |
+| Planung | Analyse, PRD, Architektur, DESIGN.md 1.0.2 (Name „ebbe“), Specs, `docs/entwicklungsplan.md` |
+| E1–E7 | fertig, geprüft, auf `main` (E7-P5b: Plan-Seite nennt Bereiche) |
+| E8 Billing | P1–P8 fertig: Zugriff, Webhook, Ereignis-Job, 402-Sperre, Abo-Seite mit Checkout (läuft, sobald Paddle-Variablen gesetzt sind), Sitze, Self-Host minimal, Trial-Mails |
+| E9 Betrieb | P1–P5, P7, P8 fertig: Push (Endpoint-Allowlist gegen SSRF), Erinnerungs-Job, Einstellungsseite, Export, Löschung, Compose/Caddy/Backups (Restore-Drill bestanden), Monitoring. P6 Lasttest offen |
+| E10 Launch | P1–P6 fertig: Locale-Prüfung, Übersetzungen ES/FR/DE/JA/ZH-CN (maschinell, `reviewed: false`, unsichtbar), Rechtsseiten mit Platzhaltern, Landingpage, PWA, Produkt-Events |
+| Tests | 751 Vitest (72 Dateien) grün · Check 0 Fehler · Design-Drift 0 (242 Dateien) · `i18n:check` grün · E2E zuletzt 8/8 vor T-4, nach T-4 offen (siehe unten) |
+| Bundle | Einstiegs-Chunk 226 KB gzip (Budget 250). Wächst: 205 KB nach T-6, seitdem +21 KB |
 
-**Arbeitsordner:** `/home/dsh/Projekte/ebb` (Klon von `diononline-un/ebb`, Branch `main`). Neue Arbeit auf `ds/<paket-id>` von `origin/main`.
+**Arbeitsordner:** `/home/dsh/Projekte/ebb` (Klon von `diononline-un/ebb`, Branch `main`). Pakete laufen über die Schleife in `~/Projekte/ebb-loop/` (Worker startet dsh je `ready`-Issue, Prüfung durch Claude/Sonnet, Merge per `merge.sh`).
 
 **Entwicklung:** `docker compose up -d postgres` (Container `ebb-postgres-1`), `npm run db:migrate`, `npm run dev`; E2E mit laufendem dev: `npm run e2e`.
 
 **Ports (Port-Ring):** 2040 App/API · 2041 Postgres · 2042 Vite
 
-**Abweichungen von den Specs (E05–E10 sind nicht am Code nachgeschärft):**
+**Abweichungen von den Specs (E05–E10 sind nicht am Code nachgeschärft, die Issues sind es):**
 - `GET /api/tasks/:id` liefert `{ task, subtasks, progress }`.
-- Sign-up-Limit im Dev-Modus 50 (Produktion/Selfhost 5), sonst kippt die E2E-Suite am gemeinsamen Bucket.
 - `POST /api/onboarding/done` setzt `ritual_done_at` für den Tag.
-- 402-Sperre nimmt aus: `/api/auth`, `/api/billing`, `/api/export`, `/api/settings`, `/api/account`, `/api/events`.
+- 402-Sperre nimmt aus: `/api/auth`, `/api/billing/*`, `/api/billing-config/portal`, `/api/export`, `/api/settings`, `/api/account`, `/api/events`.
 - `0090`: `ebb_system` darf `"user"` löschen und `session("userId","createdAt")` lesen (Kontolöschung, Aufbewahrung).
+- Push: VAPID aus der Umgebung statt `instance_config`; Erinnerungen in `reminder_sent` statt `*_sent_on`-Spalten.
+- Sitze: Paddle hält die Liste in `custom_data.seatUserIds`, lokal nur Wünsche (`seat_request`).
+- Kern-Pakete E8-P6 und E9-P2 hat dsh gebaut, Claude hat sie selbst geprüft.
 
-**Bekannte Risiken:** keine Paddle-Kündigung vor der Kontolöschung (kein API-Client), Löschung sofort ohne Gnadenfrist, `last_seen_at` schreibt niemand fort, `PATCH /api/tasks` kennt kein `spaceId`, Webhook prüft nur den ersten `h1`-Wert (Secret-Rotation).
+**Bekannte Risiken:** keine Paddle-Kündigung vor der Kontolöschung, Löschung sofort ohne Gnadenfrist, `last_seen_at` schreibt niemand fort, `PATCH /api/tasks` kennt kein `spaceId`, Webhook prüft nur den ersten `h1`-Wert, keine CSP (Paddle.js braucht `cdn.paddle.com`), Vitest-Timeouts unter paralleler Last (5 s), Einstiegs-Chunk wächst.
 
-**Offen (PRD §13):** Markenprüfung für „ebbe“, Betreiberangaben für die Rechtstexte, E-Mail-Provider (beim Deploy), Paddle live, Ende der Founder-Phase.
-**Später:** Build-Audit `vite-plugin-pwa` (nur Build-Zeit), erster GHCR-Push mit Tag `v*`, leere Blöcke als Drag-Ziel.
+**Für Dion:**
+- Paddle live: Variablen setzen (`docs/betrieb.md` → „Paddle live schalten“).
+- Betreiberangaben in `content/legal/*` (`[[…]]`); bis dahin bricht der Release-Build absichtlich ab.
+- Muttersprachler-Review (`docs/uebersetzung-review.md`), danach `reviewed: true`.
+- Markenprüfung „ebbe“, App-Icon (DESIGN §8), Mail-Anbieter beim Deploy.
+- Verwaister Dev-Prozess PID 290286 auf Port 2040 (Audit-Lauf); danach E2E nach T-4 zweimal laufen lassen.
+
+**Später:** Build-Audit `vite-plugin-pwa`, erster GHCR-Push mit Tag `v*`, leere Blöcke als Drag-Ziel.

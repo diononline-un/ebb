@@ -8,6 +8,7 @@ import { Input } from '../../ui/Input.tsx'
 import { Sheet } from '../../ui/Sheet.tsx'
 import { Textarea } from '../../ui/Textarea.tsx'
 import { TideLine } from '../../ui/TideLine.tsx'
+import { useCurrentFocus, useStopFocus } from '../focus/api.ts'
 import { CurrentFocusTimer } from '../focus/FocusTimer.tsx'
 import { StartFocusButton } from '../focus/StartFocusButton.tsx'
 import { usePatchTask, useToday } from '../tasks/api.ts'
@@ -31,6 +32,8 @@ export function LowMode({ view, onPatch, onGoToToday }: LowModeProps) {
   const [stopping, setStopping] = useState(false)
   const [choosing, setChoosing] = useState(false)
   const [note, setNote] = useState('')
+  const current = useCurrentFocus()
+  const stop = useStopFocus()
 
   const candidates = lowCandidates(view)
   const task = (chosen ? candidates.find((item) => item.id === chosen) : undefined) ?? pickLowTask(view)
@@ -46,6 +49,9 @@ export function LowMode({ view, onPatch, onGoToToday }: LowModeProps) {
     await onPatch(task.id, { status: 'done' })
     setJustDone(true)
     setChosen(null)
+    // Only the finished task's session ends; a timer for another task keeps running.
+    const session = current.data
+    if (session?.taskId === task.id) await stop.mutateAsync(session.id)
   }
 
   const stopForToday = async () => {

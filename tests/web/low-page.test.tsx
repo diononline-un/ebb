@@ -1,16 +1,24 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
+import type { FocusSession } from '../../src/shared/schemas/focus.ts'
 import type { Task, TodayView } from '../../src/shared/schemas/task.ts'
 import { LowMode } from '../../src/web/features/low/LowPage.tsx'
 import { i18nReady } from '../../src/web/lib/i18n.ts'
+
+// The running session and the stop call: this test decides what the server says.
+const focus = vi.hoisted(() => ({
+  current: null as FocusSession | null,
+  stop: vi.fn(async (_id: string) => {}),
+  mutate: vi.fn(),
+}))
 
 // The start button and the timer have their own tests; here they only have to exist without a query client.
 vi.mock('../../src/web/features/focus/api.ts', () => ({
   useStartFocus: () => ({ mutate: () => {}, isPending: false }),
   useTimerDefault: () => 25,
-  useCurrentFocus: () => ({ data: null }),
-  useStopFocus: () => ({ mutate: () => {} }),
+  useCurrentFocus: () => ({ data: focus.current }),
+  useStopFocus: () => ({ mutate: focus.mutate, mutateAsync: focus.stop }),
 }))
 
 beforeAll(async () => {
@@ -19,7 +27,23 @@ beforeAll(async () => {
 
 afterEach(() => {
   cleanup()
+  focus.current = null
+  focus.stop.mockReset()
+  focus.mutate.mockReset()
 })
+
+/** A session that still has time left, so the timer does not end it on its own. */
+function session(patch: Partial<FocusSession> = {}): FocusSession {
+  return {
+    id: '0b5f0a2e-4c66-4f6e-9e35-5a1c1d1f2a3b',
+    taskId: null,
+    slot: null,
+    plannedMinutes: 10,
+    startedAt: new Date().toISOString(),
+    endedAt: null,
+    ...patch,
+  }
+}
 
 function task(title: string, patch: Partial<Task> = {}): Task {
   return {
@@ -116,5 +140,35 @@ describe('LowMode', () => {
 
     await waitFor(() => expect(onPatch).toHaveBeenCalledWith(only.id, { nextStep: 'called the landlord' }))
     expect(onGoToToday).toHaveBeenCalled()
+  })
+
+  it('stops the running session when its task is done', async () => {
+    const only = task('write the invoice')
+    const running = session({ taskId: only.id })
+    focus.current = running
+    const onPatch = vi.fn(async () => undefined)
+    const { getByRole } = render(
+      <LowMode view={view({ slots: { inbox: [only], block1: [], block2: [], block3: [], block4: [] } })} onPatch={onPatch} onGoToToday={() => {}} />,
+    )
+
+    fireEvent.click(getByRole('button', { name: 'Done' }))
+
+    await waitFor(() => expect(onPatch).toHaveBeenCalledWith(only.id, { status: 'done' }))
+    // useStopFocus POSTs /api/focus/<id>/stop with exactly this id.
+    await waitFor(() => expect(focus.stop).toHaveBeenCalledWith(running.id))
+  })
+
+  it('leaves a session that belongs to another task running', async () => {
+    const only = task('write the invoice')
+    focus.current = session({ taskId: 'other-task-id' })
+    const onPatch = vi.fn(async () => undefined)
+    const { getByRole } = render(
+      <LowMode view={view({ slots: { inbox: [only], block1: [], block2: [], block3: [], block4: [] } })} onPatch={onPatch} onGoToToday={() => {}} />,
+    )
+
+    fireEvent.click(getByRole('button', { name: 'Done' }))
+
+    await waitFor(() => expect(onPatch).toHaveBeenCalledWith(only.id, { status: 'done' }))
+    expect(focus.stop).not.toHaveBeenCalled()
   })
 })

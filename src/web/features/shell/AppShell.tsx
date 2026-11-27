@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useRouterState } from '@tanstack/react-router'
 import { CalendarDays, Menu as MenuIcon, NotebookPen, Plus, Sun, type LucideIcon } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -19,6 +19,15 @@ const NAV_ENTRIES: NavEntry[] = [
   { to: '/plan', labelKey: 'nav.plan', icon: CalendarDays },
   { to: '/more', labelKey: 'nav.more', icon: MenuIcon },
 ]
+
+// Ritual, triage and onboarding cover the whole screen; what the shell renders behind them must leave
+// the tab order even though it is still visible (WCAG 2.4.3).
+export const FULLSCREEN_PATHS = ['/ritual', '/triage', '/welcome'] as const
+
+export function isFullscreenPath(pathname: string): boolean {
+  const path = pathname.replace(/\/$/, '')
+  return (FULLSCREEN_PATHS as readonly string[]).includes(path)
+}
 
 function NavLinks({ layout }: { layout: 'bar' | 'rail' }) {
   const { t } = useTranslation('shell')
@@ -49,10 +58,13 @@ function NavLinks({ layout }: { layout: 'bar' | 'rail' }) {
 export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useTranslation('shell')
   const [capturing, setCapturing] = useState(false)
+  const fullscreen = useRouterState({
+    select: (state) => isFullscreenPath(state.location.pathname),
+  })
 
   return (
     <div className="min-h-dvh lg:flex">
-      <aside className="hidden shrink-0 border-r border-line p-6 lg:flex lg:w-60 lg:flex-col">
+      <aside inert={fullscreen} className="hidden shrink-0 border-r border-line p-6 lg:flex lg:w-60 lg:flex-col">
         <span className="text-heading">{t('common:app.name')}</span>
         <NavLinks layout="rail" />
       </aside>
@@ -66,6 +78,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <button
         type="button"
         aria-label={t('quickCapture')}
+        inert={fullscreen}
         onClick={() => setCapturing(true)}
         className="fixed right-4 bottom-24 flex size-14 items-center justify-center rounded-pill bg-signal text-signal-ink shadow-float motion-quick hover:bg-signal-hover lg:hidden"
       >
@@ -75,6 +88,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <nav
         aria-label={t('nav.label')}
+        inert={fullscreen}
         className="fixed inset-x-0 bottom-0 border-t border-line bg-ground lg:hidden"
       >
         <NavLinks layout="bar" />

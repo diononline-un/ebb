@@ -248,7 +248,7 @@ Request:
 - `t`: Antwortzeitpunkt in UTC.
 - `method`: HTTP-Methode.
 - `route`: das Routen-Muster, nie der echte Pfad. Damit stehen keine UUIDs, Einladungs-Tokens
-  (`/api/spaces/join/:token`) oder Mail-Adressen im Log.
+  (`/api/tasks/:id` statt der echten Id) oder Mail-Adressen im Log.
 - `status`: der HTTP-Status der Antwort.
 - `ms`: Dauer vom Eingang bis zur Antwort in Millisekunden.
 

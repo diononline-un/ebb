@@ -9,7 +9,7 @@
 | E8 Billing | P1–P8 fertig: Zugriff, Webhook, Ereignis-Job, 402-Sperre, Abo-Seite mit Checkout (läuft, sobald Paddle-Variablen gesetzt sind), Sitze, Self-Host minimal, Trial-Mails |
 | E9 Betrieb | P1–P5, P7, P8 fertig: Push (Endpoint-Allowlist gegen SSRF), Erinnerungs-Job, Einstellungsseite, Export, Löschung, Compose/Caddy/Backups (Restore-Drill bestanden), Monitoring, Lasttest (P6) plus P-1 (Caches für Tagesbeginn und Zugriff) |
 | E10 Launch | P1–P6 fertig: Locale-Prüfung, Übersetzungen ES/FR/DE/JA/ZH-CN (maschinell, `reviewed: false`, unsichtbar), Rechtsseiten mit Platzhaltern, Landingpage, PWA, Produkt-Events |
-| Tests | 755 Vitest (73 Dateien) grün · Check 0 Fehler · Design-Drift 0 (242 Dateien) · `i18n:check` grün · E2E zuletzt 8/8 vor T-4, nach T-4 offen (siehe unten) |
+| Tests | 755 Vitest (73 Dateien) grün · Check 0 Fehler · Design-Drift 0 (242 Dateien) · `i18n:check` grün · E2E 8/8 zweimal hintereinander auf `363117c` |
 | Last | 100 req/s auf der geteilten Dev-VPS: p95 323 ms nach P-1 (vorher 773, Ziel 200). Rest steckt in der Sitzungsprüfung von Better Auth (~2 Transaktionen je Request), Details `docs/betrieb.md` → „Lasttest“ |
 | Bundle | Einstiegs-Chunk 226 KB gzip (Budget 250). Wächst: 205 KB nach T-6, seitdem +21 KB |
 
@@ -35,6 +35,5 @@
 - Betreiberangaben in `content/legal/*` (`[[…]]`); bis dahin bricht der Release-Build absichtlich ab.
 - Muttersprachler-Review (`docs/uebersetzung-review.md`), danach `reviewed: true`.
 - Markenprüfung „ebbe“, App-Icon (DESIGN §8), Mail-Anbieter beim Deploy.
-- Verwaister Dev-Prozess PID 290286 auf Port 2040 (Audit-Lauf); danach E2E nach T-4 zweimal laufen lassen.
 
 **Später:** Build-Audit `vite-plugin-pwa`, erster GHCR-Push mit Tag `v*`, leere Blöcke als Drag-Ziel.
